@@ -1,83 +1,145 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
+import { SoftwareCard } from "@/components/ui/software-card";
+import { 
+  Cpu, 
+  Network, 
+  Aperture, 
+  Mic, 
+  Database, 
+  ShieldCheck,
+  LayoutTemplate,
+  TerminalSquare,
+  ArrowRight 
+} from "lucide-react";
+import Link from "next/link";
+
+const softwareProducts = [
+  {
+    icon: <Cpu size={18} />,
+    badge: { text: "PREMIUM", variant: "premium" as const },
+    name: "Nexus Engine",
+    description: "Advanced autonomous AI workflow engine for high-scale enterprise operations.",
+    tags: ["AI", "Automation", "Workflow", "Enterprise"],
+    metrics: { downloads: "24K", version: "v2.4", users: "1.8K" },
+    glowColor: "rgba(168, 85, 247, 0.15)", // Purple
+  },
+  {
+    icon: <Network size={18} />,
+    badge: { text: "NEW", variant: "new" as const },
+    name: "Synapse Mesh",
+    description: "Multi-agent orchestration system. Deploy swarms of agents to solve complex logic.",
+    tags: ["Agent", "Orchestration", "System", "Logic"],
+    metrics: { downloads: "12K", version: "v1.1", users: "850" },
+    glowColor: "rgba(59, 130, 246, 0.15)", // Blue
+  },
+  {
+    icon: <Aperture size={18} />,
+    badge: { text: "POPULAR", variant: "popular" as const },
+    name: "Prism Core",
+    description: "AI image generation infrastructure. High-fidelity rendering with sub-second latency.",
+    tags: ["Generation", "Image", "Infrastructure", "API"],
+    metrics: { downloads: "89K", version: "v4.0", users: "12K" },
+    glowColor: "rgba(249, 115, 22, 0.15)", // Orange
+  },
+  {
+    icon: <Mic size={18} />,
+    badge: { text: "UPDATED", variant: "updated" as const },
+    name: "Aura Voice",
+    description: "Voice intelligence architecture. Real-time transcription and emotional analysis.",
+    tags: ["Voice", "Audio", "Analysis", "Real-time"],
+    metrics: { downloads: "45K", version: "v3.2", users: "4.2K" },
+    glowColor: "rgba(16, 185, 129, 0.15)", // Emerald
+  },
+  {
+    icon: <Database size={18} />,
+    badge: { text: "BETA", variant: "beta" as const },
+    name: "Quantum DB",
+    description: "Serverless semantic vector search database optimized for LLM contexts.",
+    tags: ["Database", "Vector", "Search", "Serverless"],
+    metrics: { downloads: "5K", version: "v0.9", users: "300" },
+    glowColor: "rgba(212, 212, 216, 0.15)", // Zinc
+  },
+  {
+    icon: <ShieldCheck size={18} />,
+    badge: { text: "PREMIUM", variant: "premium" as const },
+    name: "Aegis Guard",
+    description: "AI-driven security and validation layer for protecting models against prompt injection.",
+    tags: ["Security", "Validation", "Firewall", "LLM"],
+    metrics: { downloads: "32K", version: "v2.1", users: "2.5K" },
+    glowColor: "rgba(168, 85, 247, 0.15)", // Purple
+  },
+  {
+    icon: <LayoutTemplate size={18} />,
+    badge: { text: "NEW", variant: "new" as const },
+    name: "Nebula UI",
+    description: "Generative interface components library dynamically built by AI models.",
+    tags: ["UI", "Components", "Generative", "Design"],
+    metrics: { downloads: "18K", version: "v1.0", users: "1.2K" },
+    glowColor: "rgba(236, 72, 153, 0.15)", // Pink
+  },
+  {
+    icon: <TerminalSquare size={18} />,
+    badge: { text: "POPULAR", variant: "popular" as const },
+    name: "Cortex API",
+    description: "Unified endpoint for 100+ open-source and proprietary language models.",
+    tags: ["API", "LLM", "Gateway", "Unified"],
+    metrics: { downloads: "120K", version: "v5.5", users: "22K" },
+    glowColor: "rgba(234, 179, 8, 0.15)", // Yellow
+  }
+];
 
 export function ProductGrid() {
   return (
-    <section id="products" className="py-40 max-w-[1200px] mx-auto px-8 relative z-10">
-      <div className="mb-20 text-center md:text-left">
-        <h2 className="font-display-lg text-[64px] tracking-tighter text-gradient mb-6">Featured AI Products</h2>
-        <p className="font-body-lg text-[17px] text-on-surface-variant font-light max-w-2xl">Enterprise-grade software solutions engineered for scale and speed.</p>
+    <section 
+      id="products" 
+      className="py-32 relative z-10 bg-black overflow-hidden"
+    >
+      {/* Premium Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-        {/* Main Product */}
-        <div className="lg:col-span-8 bg-glass border-glass inner-glow rounded-2xl p-8 lg:p-10 flex flex-col justify-between group overflow-hidden relative hover-float premium-shadow min-h-[500px]">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 z-0"></div>
-          <div className="absolute -top-32 -right-32 w-72 h-72 bg-secondary/10 blur-[80px] rounded-full z-0 group-hover:bg-secondary/20 transition-colors duration-1000"></div>
-          
-          <div className="relative z-10 mb-10">
-            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full font-label-mono text-[10px] text-secondary mb-6 uppercase tracking-[0.2em]">
-              PRODUCT // 01
-            </div>
-            <h3 className="font-headline-lg text-[44px] text-primary mb-4 tracking-tight">Neural Data Pipeline</h3>
-            <p className="font-body-md text-[15px] text-on-surface-variant max-w-lg font-light leading-relaxed">
-              Seamlessly aggregate, process, and analyze vast datasets in real-time with autonomous agents.
-            </p>
-          </div>
-
-          <div className="relative z-10 w-full h-[280px] rounded-xl overflow-hidden border border-white/10 bg-black mt-auto shadow-2xl">
-            <img 
-              alt="Data visualization" 
-              className="w-full h-full object-cover opacity-60 mix-blend-screen group-hover:opacity-90 group-hover:scale-105 transition-all duration-1000 ease-out" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWrPrE5DyCKBt_mQevHs0BG3CnkIf8wSX5oqDtxgCQ2dkboI9EPAjYQZa7_GoiF30JcKKzqiGGBOdZB6G5fe8eIw5dlJszhG30Q_T9pZK8swJhPsBK4Rrk2HW4perVGauumsBcRdy6xbOlt7n5zHF6u19n1PLi_EA1MLThE7wP8tiUQQj476FlqNPj4nxq9NjBxX1r7akDVfQlYZTjZAvzgXESwoDORBSIDXwxZqb2KtOhDIAOo_j3rL7w8t9jo1YCmmWnLPdLqGw"
-            />
-          </div>
-
-          <div className="relative z-10 flex gap-4 mt-8">
-            <button className="bg-glass border border-white/20 text-primary px-6 py-3 rounded-full font-label-mono text-[10px] hover:bg-white/10 transition-all duration-500 flex items-center gap-2 uppercase tracking-widest hover-float">
-              <span className="material-symbols-outlined text-[16px]">download</span> Software Downloads
-            </button>
-          </div>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-8 relative z-10">
+        
+        {/* Section Header */}
+        <div className="mb-20 text-center md:text-left max-w-3xl">
+          <h2 className="font-display-lg text-4xl md:text-5xl tracking-tighter text-white mb-6 font-medium">
+            AI Software <span className="text-zinc-500">Library</span>
+          </h2>
+          <p className="font-body-lg text-base md:text-lg text-zinc-400 font-light leading-relaxed">
+            Advanced AI products engineered for creators, automation, and next-generation intelligence.
+          </p>
         </div>
 
-        {/* Secondary Products */}
-        <div className="lg:col-span-4 flex flex-col gap-6 lg:gap-8">
-          
-          <div className="flex-1 bg-glass border-glass inner-glow rounded-2xl p-7 lg:p-8 flex flex-col justify-between group relative overflow-hidden hover-float premium-shadow">
-            <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-white/5 blur-[60px] rounded-full z-0 group-hover:bg-white/10 transition-colors duration-1000"></div>
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full font-label-mono text-[10px] text-secondary mb-6 uppercase tracking-[0.2em]">
-                PRODUCT // 02
-              </div>
-              <h3 className="font-headline-lg-mobile text-[32px] text-primary mb-3 tracking-tight">Automata Studio</h3>
-              <p className="font-body-md text-[14px] text-on-surface-variant font-light leading-relaxed">
-                Visual builder for complex AI workflows.
-              </p>
+        {/* 4-Column Grid with higher negative space (gap) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+          {softwareProducts.map((product, idx) => (
+            <div key={idx} style={{ "--glow-color": product.glowColor } as React.CSSProperties}>
+              <SoftwareCard {...product} />
             </div>
-            <button className="mt-8 bg-transparent border border-white/20 text-primary px-6 py-3 rounded-full font-label-mono text-[10px] hover:border-white hover:bg-white/5 transition-all duration-500 w-fit flex items-center gap-2 uppercase tracking-widest relative z-10">
-              <span className="material-symbols-outlined text-[16px]">play_arrow</span> Live Demo
-            </button>
-          </div>
-
-          <div className="flex-1 bg-glass border-glass inner-glow rounded-2xl p-7 lg:p-8 flex flex-col justify-between group relative overflow-hidden hover-float premium-shadow">
-            <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/5 blur-[60px] rounded-full z-0 group-hover:bg-white/10 transition-colors duration-1000"></div>
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full font-label-mono text-[10px] text-secondary mb-6 uppercase tracking-[0.2em]">
-                PRODUCT // 03
-              </div>
-              <h3 className="font-headline-lg-mobile text-[32px] text-primary mb-3 tracking-tight">Synapse API</h3>
-              <p className="font-body-md text-[14px] text-on-surface-variant font-light leading-relaxed">
-                Low-latency language model routing.
-              </p>
-            </div>
-            <button className="mt-8 bg-transparent border border-white/20 text-primary px-6 py-3 rounded-full font-label-mono text-[10px] hover:border-white hover:bg-white/5 transition-all duration-500 w-fit flex items-center gap-2 uppercase tracking-widest relative z-10">
-              <span className="material-symbols-outlined text-[16px]">play_arrow</span> Live Demo
-            </button>
-          </div>
-
+          ))}
         </div>
+
+        {/* Bottom Action Area */}
+        <div className="mt-20 flex justify-center md:justify-end">
+          <Link 
+            href="/software-library"
+            className="group flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 backdrop-blur-md"
+          >
+            <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">
+              Explore Entire Ecosystem
+            </span>
+            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
+              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </Link>
+        </div>
+
       </div>
     </section>
-  )
+  );
 }
