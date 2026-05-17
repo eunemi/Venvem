@@ -2,16 +2,16 @@
 
 import React from "react";
 import { SoftwareCard } from "@/components/ui/software-card";
-import { 
-  Cpu, 
-  Network, 
-  Aperture, 
-  Mic, 
-  Database, 
+import {
+  Cpu,
+  Network,
+  Aperture,
+  Mic,
+  Database,
   ShieldCheck,
   LayoutTemplate,
   TerminalSquare,
-  ArrowRight 
+  ArrowRight
 } from "lucide-react";
 import Link from "next/link";
 
@@ -92,8 +92,8 @@ const softwareProducts = [
 
 export function ProductGrid() {
   return (
-    <section 
-      id="products" 
+    <section
+      id="products"
       className="py-32 relative z-10 bg-black overflow-hidden"
     >
       {/* Premium Background Effects */}
@@ -104,7 +104,7 @@ export function ProductGrid() {
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="mb-20 text-center md:text-left max-w-3xl">
           <h2 className="font-display-lg text-4xl md:text-5xl tracking-tighter text-white mb-6 font-medium">
@@ -126,7 +126,7 @@ export function ProductGrid() {
 
         {/* Bottom Action Area */}
         <div className="mt-20 flex justify-center md:justify-end">
-          <Link 
+          <Link
             href="/software-library"
             className="group flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 backdrop-blur-md"
           >
