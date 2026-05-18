@@ -43,7 +43,7 @@ export function SoftwareCard({
     <motion.div
       whileHover="hover"
       initial="initial"
-      className="group relative flex flex-col justify-between p-5 rounded-2xl bg-zinc-950/50 border border-white/5 backdrop-blur-md overflow-hidden transition-all duration-500 ease-out hover:bg-zinc-900/80 hover:border-white/10"
+      className="group relative flex flex-col justify-between p-5 rounded-2xl bg-zinc-950/50 border border-white/5 backdrop-blur-md overflow-hidden transition-colors duration-500 ease-out hover:bg-zinc-900/80 hover:border-white/10 transform-gpu translate-z-0"
       style={{
         boxShadow: "0 0 0 0 rgba(0,0,0,0)",
       }}
@@ -57,7 +57,7 @@ export function SoftwareCard({
     >
       {/* Background ambient glow effect on hover */}
       <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform-gpu translate-z-0"
         style={{
           background: "radial-gradient(circle at 50% 0%, var(--glow-color, rgba(255,255,255,0.05)) 0%, transparent 70%)",
         }}

@@ -97,10 +97,10 @@ export function ProductGrid() {
       className="py-32 relative z-10 bg-black overflow-hidden"
     >
       {/* Premium Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
+      <div className="absolute inset-0 pointer-events-none transform-gpu">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full translate-z-0" />
+        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full translate-z-0" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] translate-z-0" />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-8 relative z-10">
