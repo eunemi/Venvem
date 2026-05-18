@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { 
-  LayoutDashboard, 
-  Package, 
-  Users, 
-  Settings, 
-  Upload, 
-  Plus, 
+import {
+  LayoutDashboard,
+  Package,
+  Users,
+  Settings,
+  Upload,
+  Plus,
   Search,
   ChevronRight,
   TrendingUp,
@@ -32,29 +32,29 @@ export default function AdminPage() {
         </div>
 
         <nav className="space-y-2 flex-grow">
-          <SidebarLink 
-            icon={<LayoutDashboard className="w-4 h-4" />} 
-            label="Dashboard" 
-            active={activeTab === 'dashboard'} 
-            onClick={() => setActiveTab('dashboard')} 
+          <SidebarLink
+            icon={<LayoutDashboard className="w-4 h-4" />}
+            label="Dashboard"
+            active={activeTab === 'dashboard'}
+            onClick={() => setActiveTab('dashboard')}
           />
-          <SidebarLink 
-            icon={<Package className="w-4 h-4" />} 
-            label="Products" 
-            active={activeTab === 'products'} 
-            onClick={() => setActiveTab('products')} 
+          <SidebarLink
+            icon={<Package className="w-4 h-4" />}
+            label="Products"
+            active={activeTab === 'products'}
+            onClick={() => setActiveTab('products')}
           />
-          <SidebarLink 
-            icon={<Users className="w-4 h-4" />} 
-            label="Inquiries" 
-            active={activeTab === 'inquiries'} 
-            onClick={() => setActiveTab('inquiries')} 
+          <SidebarLink
+            icon={<Users className="w-4 h-4" />}
+            label="Inquiries"
+            active={activeTab === 'inquiries'}
+            onClick={() => setActiveTab('inquiries')}
           />
-          <SidebarLink 
-            icon={<Globe className="w-4 h-4" />} 
-            label="Landing Page" 
-            active={activeTab === 'cms'} 
-            onClick={() => setActiveTab('cms')} 
+          <SidebarLink
+            icon={<Globe className="w-4 h-4" />}
+            label="Landing Page"
+            active={activeTab === 'cms'}
+            onClick={() => setActiveTab('cms')}
           />
         </nav>
 
@@ -72,7 +72,7 @@ export default function AdminPage() {
             </h1>
             <p className="text-white/40 text-sm">Welcome back to your AI Ecosystem control center.</p>
           </div>
-          
+
           <button className="flex items-center gap-2 bg-primary text-black px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform">
             <Plus className="w-5 h-5" />
             Add New Product
@@ -117,18 +117,18 @@ export default function AdminPage() {
         )}
 
         {activeTab === 'products' && (
-           <div className="glass p-10 rounded-3xl border-dashed border-2 border-white/10 flex flex-col items-center justify-center text-center">
-             <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6">
-               <Upload className="w-8 h-8 text-white/40" />
-             </div>
-             <h3 className="text-xl font-bold mb-2">Upload New Software</h3>
-             <p className="text-white/40 max-w-sm mb-8">
-               Drag and drop your executable files or SDK packages here to deploy them to the platform.
-             </p>
-             <button className="bg-white text-black px-8 py-3 rounded-xl font-bold">
-               Select Files
-             </button>
-           </div>
+          <div className="glass p-10 rounded-3xl border-dashed border-2 border-white/10 flex flex-col items-center justify-center text-center">
+            <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mb-6">
+              <Upload className="w-8 h-8 text-white/40" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Upload New Software</h3>
+            <p className="text-white/40 max-w-sm mb-8">
+              Drag and drop your executable files or SDK packages here to deploy them to the platform.
+            </p>
+            <button className="bg-white text-black px-8 py-3 rounded-xl font-bold">
+              Select Files
+            </button>
+          </div>
         )}
       </main>
     </div>
@@ -137,7 +137,7 @@ export default function AdminPage() {
 
 function SidebarLink({ icon, label, active, onClick }: { icon: React.ReactNode, label: string, active?: boolean, onClick?: () => void }) {
   return (
-    <button 
+    <button
       onClick={onClick}
       className={cn(
         "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
