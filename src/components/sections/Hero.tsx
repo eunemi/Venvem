@@ -19,7 +19,7 @@ export function Hero() {
       </div>
 
       <div className="relative z-20 max-w-[1200px] mx-auto px-8 text-center flex flex-col items-center gap-8 mt-12 pb-32 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-        <h1 className="font-display-xl text-[56px] md:text-[84px] lg:text-[112px] tracking-tight max-w-[1100px] mx-auto leading-[1.05] md:leading-[0.95] text-glow pb-4 font-medium flex flex-col gap-4">
+        <h1 className="font-display-xl text-[56px] md:text-[84px] lg:text-[112px] tracking-tight max-w-[1100px] mx-auto leading-[1.05] md:leading-[0.95] text-glow pb-4 font-medium flex flex-col items-center gap-4">
           <span className="text-white/95 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>Intelligence</span>
           <span className="text-white/95 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>Without Limits.</span>
         </h1>
