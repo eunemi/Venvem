@@ -19,14 +19,6 @@ export function Hero() {
       </div>
 
       <div className="relative z-20 max-w-[1200px] mx-auto px-8 text-center flex flex-col items-center gap-5 mt-8 pb-24 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full font-label-mono text-[10px] text-on-surface-variant mb-4 uppercase tracking-[0.3em] backdrop-blur-md relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <span className="relative z-10 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse-slow"></span>
-            Nova AI Systems
-          </span>
-        </div>
-
         <h1 className="font-display-xl text-[56px] md:text-[84px] lg:text-[112px] tracking-tighter max-w-[1000px] mx-auto leading-[1.0] md:leading-[0.9] text-glow pb-3 font-medium flex flex-col gap-2">
           <span className="text-white/95 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>Intelligence</span>
           <span className="text-white/95 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>Without Limits.</span>
