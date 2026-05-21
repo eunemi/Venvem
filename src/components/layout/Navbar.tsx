@@ -11,7 +11,7 @@ export function Navbar() {
     <nav className="bg-background/40 backdrop-blur-3xl text-primary fixed top-0 w-full z-50 border-b border-white/5 max-w-[1920px] mx-auto left-0 right-0 transition-all duration-500">
       <div className="flex justify-between items-center h-16 px-8">
         <Link href="/" className="font-headline-lg-mobile text-[28px] font-light tracking-tighter text-primary scale-95 active:scale-90 transition-transform">
-          AtomAI
+          EUNEMI
         </Link>
         <div className="hidden md:flex gap-8">
           <a className="text-on-surface-variant font-light hover:text-primary transition-colors duration-500 font-label-mono text-[10px] tracking-[0.2em] uppercase" href="#products">Products</a>

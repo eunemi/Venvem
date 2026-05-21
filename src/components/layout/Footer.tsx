@@ -9,14 +9,14 @@ export function Footer() {
         <div className="col-span-1 lg:col-span-2 flex flex-col justify-between h-full">
           <div>
             <div className="font-headline-lg-mobile text-[28px] font-light text-primary mb-6 tracking-tighter opacity-70 hover:opacity-100 transition-opacity duration-500">
-              AtomAI
+              EUNEMI
             </div>
             <p className="font-body-md text-[13px] text-on-surface-variant font-light max-w-sm leading-relaxed">
               Engineering the Future. Bespoke AI solutions for scale and speed.
             </p>
           </div>
           <div className="mt-10 font-label-mono text-[10px] text-on-surface-variant/50 uppercase tracking-widest">
-            © 2026 AtomAI. All Rights Reserved.
+            © 2026 EUNEMI. All Rights Reserved.
           </div>
         </div>
         
