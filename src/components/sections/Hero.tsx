@@ -18,7 +18,7 @@ export function Hero() {
         <div className="absolute left-[60%] top-[15%] w-14 h-14 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 backdrop-blur-xl border border-white/10 rounded-lg transform rotate-45 animate-float opacity-70" style={{ animationDelay: '2s', boxShadow: '0 15px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.2)' }}></div>
       </div>
 
-      <div className="relative z-20 max-w-[1200px] mx-auto px-8 text-center flex flex-col items-center gap-5 mt-8 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      <div className="relative z-20 max-w-[1200px] mx-auto px-8 text-center flex flex-col items-center gap-5 mt-8 pb-24 opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
         <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full font-label-mono text-[10px] text-on-surface-variant mb-4 uppercase tracking-[0.3em] backdrop-blur-md relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <span className="relative z-10 flex items-center gap-2">
