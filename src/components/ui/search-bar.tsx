@@ -5,17 +5,34 @@ import { useState, useRef, useEffect, useMemo } from "react"
 import { Search, CircleDot } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
-const SUGGESTIONS = [
-  "React",
-  "Vue",
-  "Angular",
-  "Next.js",
-  "Svelte",
-  "TailwindCSS",
-  "TypeScript",
-  "JavaScript",
-  "Node.js",
+type Suggestion = {
+  title: string
+  type: "Software" | "Service"
+  url: string
+}
+
+const SUGGESTIONS: Suggestion[] = [
+  { title: "Nexus Engine", type: "Software", url: "/software-library" },
+  { title: "Synapse Mesh", type: "Software", url: "/software-library" },
+  { title: "Prism Core", type: "Software", url: "/software-library" },
+  { title: "Aura Voice", type: "Software", url: "/software-library" },
+  { title: "Quantum DB", type: "Software", url: "/software-library" },
+  { title: "Aegis Guard", type: "Software", url: "/software-library" },
+  { title: "Nebula UI", type: "Software", url: "/software-library" },
+  { title: "Cortex API", type: "Software", url: "/software-library" },
+  { title: "Cipher Core", type: "Software", url: "/software-library" },
+  { title: "Snippet SDK", type: "Software", url: "/software-library" },
+  { title: "Flux Automator", type: "Software", url: "/software-library" },
+  { title: "Omni Translate", type: "Software", url: "/software-library" },
+  { title: "Turbo Cache", type: "Software", url: "/software-library" },
+  { title: "Magic Upscale", type: "Software", url: "/software-library" },
+  { title: "AI Integration Strategy", type: "Service", url: "/#services" },
+  { title: "Custom Model Training", type: "Service", url: "/#services" },
+  { title: "AI Workflow Automation", type: "Service", url: "/#services" },
+  { title: "Full-Stack AI Development", type: "Service", url: "/#services" },
+  { title: "Enterprise Data Processing", type: "Service", url: "/#services" },
 ]
 
 const GooeyFilter = () => (
@@ -40,8 +57,9 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
   const [isFocused, setIsFocused] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [isAnimating, setIsAnimating] = useState(false)
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [isClicked, setIsClicked] = useState(false)
+  const router = useRouter()
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   const isUnsupportedBrowser = useMemo(() => {
@@ -57,19 +75,35 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
     setSearchQuery(value)
 
     if (value.trim()) {
-      const filtered = SUGGESTIONS.filter((item) => item.toLowerCase().includes(value.toLowerCase()))
+      const filtered = SUGGESTIONS.filter(
+        (item) => 
+          item.title.toLowerCase().includes(value.toLowerCase()) || 
+          item.type.toLowerCase().includes(value.toLowerCase())
+      )
       setSuggestions(filtered)
     } else {
       setSuggestions([])
     }
   }
 
+  const handleSuggestionClick = (suggestion: Suggestion) => {
+    setSearchQuery(suggestion.title)
+    if (onSearch) onSearch(suggestion.title)
+    setIsFocused(false)
+    router.push(suggestion.url)
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (onSearch && searchQuery.trim()) {
-      onSearch(searchQuery)
-      setIsAnimating(true)
-      setTimeout(() => setIsAnimating(false), 1000)
+    if (searchQuery.trim()) {
+      if (onSearch) onSearch(searchQuery)
+      if (suggestions.length > 0) {
+        router.push(suggestions[0].url)
+        setIsFocused(false)
+      } else {
+        setIsAnimating(true)
+        setTimeout(() => setIsAnimating(false), 1000)
+      }
     }
   }
 
@@ -319,30 +353,36 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
             <div className="p-2">
               {suggestions.map((suggestion, index) => (
                 <motion.div
-                  key={suggestion}
+                  key={suggestion.title}
                   custom={index}
                   variants={suggestionVariants}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  onClick={() => {
-                    setSearchQuery(suggestion)
-                    if (onSearch) onSearch(suggestion)
-                    setIsFocused(false)
-                  }}
-                  className="flex items-center gap-2 px-4 py-2 cursor-pointer rounded-md hover:bg-purple-50 dark:hover:bg-purple-900/20 group"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className="flex items-center gap-3 px-4 py-3 cursor-pointer rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800/80 group transition-colors"
                 >
                   <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ delay: index * 0.06 }}>
-                    <CircleDot size={16} className="text-purple-400 group-hover:text-purple-600" />
+                    <CircleDot size={14} className="text-purple-400 group-hover:text-purple-500" />
                   </motion.div>
-                  <motion.span
-                    className="text-gray-700 dark:text-gray-100 group-hover:text-purple-700 dark:group-hover:text-purple-400"
-                    initial={{ x: -5, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.08 }}
-                  >
-                    {suggestion}
-                  </motion.span>
+                  <div className="flex flex-col flex-1">
+                    <motion.span
+                      className="text-sm font-medium text-gray-800 dark:text-gray-200 group-hover:text-purple-700 dark:group-hover:text-purple-400"
+                      initial={{ x: -5, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.08 }}
+                    >
+                      {suggestion.title}
+                    </motion.span>
+                    <motion.span
+                      className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 mt-0.5"
+                      initial={{ x: -5, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.09 }}
+                    >
+                      {suggestion.type}
+                    </motion.span>
+                  </div>
                 </motion.div>
               ))}
             </div>
