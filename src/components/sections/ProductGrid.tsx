@@ -14,6 +14,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const softwareProducts = [
   {
@@ -98,46 +99,82 @@ export function ProductGrid() {
     >
       {/* Premium Background Effects */}
       <div className="absolute inset-0 pointer-events-none transform-gpu">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full translate-z-0" />
-        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full translate-z-0" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] translate-z-0" />
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.02, 0.04, 0.02] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full translate-z-0" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.02, 0.05, 0.02] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full translate-z-0" 
+        />
+        <div className="absolute inset-0 bg-grain opacity-20" />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="mb-20 text-center md:text-left max-w-3xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20 text-center md:text-left max-w-3xl"
+        >
           <h2 className="font-display-lg text-4xl md:text-5xl tracking-tighter text-white mb-6 font-medium">
             AI Software <span className="text-zinc-500">Library</span>
           </h2>
           <p className="font-body-lg text-base md:text-lg text-zinc-400 font-light leading-relaxed">
             Advanced AI products engineered for creators, automation, and next-generation intelligence.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 4-Column Grid with higher negative space (gap) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+        {/* 4-Column Grid */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } },
+            hidden: {}
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10"
+        >
           {softwareProducts.map((product, idx) => (
-            <div key={idx} style={{ "--glow-color": product.glowColor } as React.CSSProperties}>
+            <motion.div 
+              key={idx} 
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
+              }}
+              style={{ "--glow-color": product.glowColor } as React.CSSProperties}
+            >
               <SoftwareCard {...product} />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom Action Area */}
-        <div className="mt-20 flex justify-center md:justify-end">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-20 flex justify-center md:justify-end"
+        >
           <Link
             href="/software-library"
-            className="group flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 backdrop-blur-md"
+            className="group flex items-center gap-4 px-6 py-4 rounded-full bg-white/[0.03] border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500 backdrop-blur-md shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.1)]"
           >
-            <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">
-              Explore Entire Ecosystem
+            <span className="text-[13px] font-medium text-zinc-300 group-hover:text-white transition-colors tracking-wide uppercase font-label-mono">
+              Explore Ecosystem
             </span>
-            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
-              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500">
+              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </div>
           </Link>
-        </div>
+        </motion.div>
 
       </div>
     </section>

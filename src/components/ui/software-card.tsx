@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Download, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -39,97 +39,138 @@ export function SoftwareCard({
   metrics,
   href = "#",
 }: SoftwareCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 40 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 40 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <motion.div
-      whileHover="hover"
-      initial="initial"
-      className="group relative flex flex-col justify-between p-5 rounded-2xl bg-zinc-950/50 border border-white/5 backdrop-blur-md overflow-hidden transition-colors duration-500 ease-out hover:bg-zinc-900/80 hover:border-white/10 transform-gpu translate-z-0"
-      style={{
-        boxShadow: "0 0 0 0 rgba(0,0,0,0)",
-      }}
-      variants={{
-        hover: {
-          y: -4,
-          scale: 1.01,
-          boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5), 0 0 30px -10px var(--glow-color, rgba(255,255,255,0.1))",
-        },
-      }}
-    >
-      {/* Background ambient glow effect on hover */}
+    <div style={{ perspective: "1000px" }} className="w-full h-full">
       <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform-gpu translate-z-0"
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        initial="initial"
         style={{
-          background: "radial-gradient(circle at 50% 0%, var(--glow-color, rgba(255,255,255,0.05)) 0%, transparent 70%)",
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
         }}
-      />
+        className="group relative flex flex-col justify-between p-5 h-full rounded-2xl bg-zinc-950/80 border border-white/5 backdrop-blur-xl overflow-hidden transition-colors duration-500 hover:bg-zinc-900/90 hover:border-white/10"
+      >
+        {/* Dynamic Glare */}
+        <motion.div 
+          className="absolute inset-0 pointer-events-none z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay"
+          style={{
+            background: "radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,0.4) 0%, transparent 60%)",
+            // @ts-ignore
+            "--gx": glareX,
+            "--gy": glareY
+          }}
+        />
 
-      {/* Top Header */}
-      <div className="flex items-start justify-between mb-4 relative z-10">
-        <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 text-white group-hover:scale-110 transition-transform duration-500 ease-out">
-          {icon}
+        {/* Background ambient glow effect */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none transform-gpu translate-z-0"
+          style={{
+            background: "radial-gradient(circle at 50% 0%, var(--glow-color, rgba(255,255,255,0.05)) 0%, transparent 70%)",
+          }}
+        />
+
+        {/* Top Header */}
+        <div className="flex items-start justify-between mb-4 relative z-10 transform-gpu" style={{ transform: "translateZ(30px)" }}>
+          <div className="p-2.5 bg-white/5 rounded-xl border border-white/10 text-white group-hover:scale-110 transition-transform duration-500 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+            {icon}
+          </div>
+          <span
+            className={cn(
+              "text-[9px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border backdrop-blur-md",
+              badgeStyles[badge.variant]
+            )}
+          >
+            {badge.text}
+          </span>
         </div>
-        <span
-          className={cn(
-            "text-[9px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border backdrop-blur-md",
-            badgeStyles[badge.variant]
-          )}
-        >
-          {badge.text}
-        </span>
-      </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex-grow">
-        <h3 className="text-base font-semibold text-white mb-1.5 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/70 transition-all duration-300">
-          {name}
-        </h3>
-        <p className="text-xs text-zinc-400 leading-relaxed mb-4 line-clamp-2">
-          {description}
-        </p>
+        {/* Content */}
+        <div className="relative z-10 flex-grow transform-gpu" style={{ transform: "translateZ(20px)" }}>
+          <h3 className="text-base font-semibold text-white mb-1.5 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all duration-300">
+            {name}
+          </h3>
+          <p className="text-xs text-zinc-400 leading-relaxed mb-4 line-clamp-2">
+            {description}
+          </p>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[9px] font-medium text-zinc-500 bg-white/[0.03] px-2 py-0.5 rounded-md border border-white/[0.05]"
-            >
-              {tag}
-            </span>
-          ))}
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[9px] font-medium text-zinc-500 bg-white/[0.03] px-2 py-0.5 rounded-md border border-white/[0.05]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Divider */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-4 relative z-10 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Divider */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-4 relative z-10 opacity-30 group-hover:opacity-60 transition-opacity duration-500 transform-gpu" style={{ transform: "translateZ(10px)" }} />
 
-      {/* Metrics */}
-      <div className="flex items-center justify-between text-xs text-zinc-500 mb-4 relative z-10 px-0.5">
-        <div className="flex flex-col gap-0.5">
-          <span className="text-xs font-medium text-zinc-400">{metrics.downloads}</span>
-          <span className="text-[8px] uppercase tracking-wider opacity-70">Downloads</span>
+        {/* Metrics */}
+        <div className="flex items-center justify-between text-xs text-zinc-500 mb-4 relative z-10 px-0.5 transform-gpu" style={{ transform: "translateZ(30px)" }}>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xs font-medium text-zinc-400">{metrics.downloads}</span>
+            <span className="text-[8px] uppercase tracking-wider opacity-70">Downloads</span>
+          </div>
+          <div className="flex flex-col gap-0.5 items-center">
+            <span className="text-xs font-medium text-zinc-400">{metrics.version}</span>
+            <span className="text-[8px] uppercase tracking-wider opacity-70">Version</span>
+          </div>
+          <div className="flex flex-col gap-0.5 items-end">
+            <span className="text-xs font-medium text-zinc-400">{metrics.users}</span>
+            <span className="text-[8px] uppercase tracking-wider opacity-70">Users</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-0.5 items-center">
-          <span className="text-xs font-medium text-zinc-400">{metrics.version}</span>
-          <span className="text-[8px] uppercase tracking-wider opacity-70">Version</span>
-        </div>
-        <div className="flex flex-col gap-0.5 items-end">
-          <span className="text-xs font-medium text-zinc-400">{metrics.users}</span>
-          <span className="text-[8px] uppercase tracking-wider opacity-70">Users</span>
-        </div>
-      </div>
 
-      {/* Action Buttons */}
-      <div className="grid grid-cols-2 gap-2 relative z-10 mt-auto">
-        <button className="flex items-center justify-center gap-1.5 bg-white text-black font-medium py-2.5 px-3 rounded-lg text-[11px] transition-all duration-300 hover:bg-zinc-200 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]">
-          <Download size={12} className="opacity-80" />
-          <span>Download</span>
-        </button>
-        <button className="flex items-center justify-center gap-1.5 bg-white/5 text-white font-medium py-2.5 px-3 rounded-lg text-[11px] border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98]">
-          <span>Live Demo</span>
-          <ArrowUpRight size={12} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </button>
-      </div>
-    </motion.div>
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-2 relative z-10 mt-auto transform-gpu" style={{ transform: "translateZ(40px)" }}>
+          <button className="flex items-center justify-center gap-1.5 bg-white text-black font-medium py-2.5 px-3 rounded-lg text-[11px] transition-all duration-300 hover:bg-zinc-200 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <Download size={12} className="opacity-80" />
+            <span>Download</span>
+          </button>
+          <button className="flex items-center justify-center gap-1.5 bg-white/5 text-white font-medium py-2.5 px-3 rounded-lg text-[11px] border border-white/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] active:scale-[0.98] group/demo shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+            <span>Live Demo</span>
+            <ArrowUpRight size={12} className="opacity-70 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 transition-transform" />
+          </button>
+        </div>
+      </motion.div>
+    </div>
   );
 }
