@@ -82,7 +82,7 @@ export function SoftwareCard({
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="group relative flex flex-col justify-between p-5 h-full rounded-2xl bg-zinc-950 border border-white/5 overflow-hidden transition-colors duration-500 hover:bg-zinc-900 hover:border-white/10"
+        className="group relative flex flex-col justify-between p-5 h-full rounded-2xl bg-zinc-950 border border-white/5 overflow-hidden transition-colors duration-500 hover:bg-zinc-900 hover:border-white/10 will-change-transform transform-gpu"
       >
         {/* Dynamic Glare */}
         <motion.div 
