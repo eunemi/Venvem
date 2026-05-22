@@ -4,6 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 import { AnimatedLetterText } from "@/components/ui/portfolio-text"
+import { GradientButton } from "@/components/ui/button-1"
 
 export function Hero() {
   const containerVariants = {
@@ -71,9 +72,7 @@ export function Hero() {
             Explore <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
 
-          <button className="bg-transparent border border-white/10 text-white/80 px-8 py-3.5 rounded-full font-medium text-[13px] hover:bg-white/5 hover:text-white transition-all duration-500 flex items-center justify-center gap-2 group hover:-translate-y-1">
-            Projects <span className="group-hover:translate-x-1 transition-transform opacity-0 group-hover:opacity-100">→</span>
-          </button>
+          <GradientButton href="#">Projects</GradientButton>
         </motion.div>
 
       </motion.div>
