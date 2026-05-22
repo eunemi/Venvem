@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SearchBar } from '@/components/ui/search-bar'
@@ -9,18 +9,34 @@ import { SearchBar } from '@/components/ui/search-bar'
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      setScrolled(currentScrollY > 50)
+      
+      // Hide on scroll down, show on scroll up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 20) {
+        setIsVisible(false)
+      } else {
+        setIsVisible(true)
+      }
+      
+      lastScrollY.current = currentScrollY
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <motion.nav 
       initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 w-full z-50 transition-all duration-700 ease-out border-b ${
         scrolled ? 'bg-background/80 backdrop-blur-3xl border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]' : 'bg-transparent border-transparent'
       }`}
