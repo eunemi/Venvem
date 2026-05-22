@@ -68,6 +68,7 @@
   --animate-float: float 10s ease-in-out infinite alternate;
   --animate-float-delayed: float 12s ease-in-out infinite alternate-reverse;
   --animate-pulse-slow: pulseSlow 4s ease-in-out infinite;
+  --animate-diamond-rotate: diamond-rotate 4s linear infinite;
 
   @keyframes fadeIn {
     0% {
@@ -114,6 +115,15 @@
 
     100% {
       transform: translateY(10px) scale(0.95);
+    }
+  }
+
+  @keyframes diamond-rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }

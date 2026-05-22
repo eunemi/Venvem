@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { CinematicFooter } from "@/components/ui/motion-footer";
 import { SoftwareCard } from "@/components/ui/software-card";
 import { 
   Cpu, 
@@ -173,8 +173,9 @@ const allSoftwareProducts = [
 
 export default function SoftwareLibraryPage() {
   return (
-    <main className="relative flex-grow z-10 bg-black min-h-screen">
-      <Navbar />
+    <div className="relative w-full bg-background min-h-screen font-sans selection:bg-white/20 overflow-x-hidden">
+      <main className="relative z-10 w-full min-h-screen bg-black flex flex-col text-white border-b border-white/10 shadow-2xl rounded-b-3xl">
+        <Navbar />
       
       {/* Premium Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -212,7 +213,8 @@ export default function SoftwareLibraryPage() {
 
       </div>
       
-      <Footer />
-    </main>
+      </main>
+      <CinematicFooter />
+    </div>
   );
 }

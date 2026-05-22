@@ -3,6 +3,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
+import { AnimatedLetterText } from "@/components/ui/portfolio-text"
+
 export function Hero() {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -53,13 +55,15 @@ export function Hero() {
         animate="visible"
         className="relative z-20 max-w-[1200px] mx-auto px-8 text-center flex flex-col items-center gap-6 mt-4 pb-16"
       >
-        <motion.h1 variants={itemVariants} className="font-display-xl text-[48px] md:text-[72px] lg:text-[96px] tracking-tight max-w-[1100px] mx-auto leading-[1.05] md:leading-[0.95] text-glow pb-2 font-medium flex flex-col items-center gap-2">
-          <span className="text-white/95">Intelligence</span>
-          <span className="text-white/95">Without Limits.</span>
+        <motion.h1 variants={itemVariants} className="font-display-xl text-[48px] md:text-[72px] lg:text-[96px] tracking-tight max-w-[1100px] mx-auto leading-[1.05] md:leading-[0.95] text-glow pb-2 font-bold flex flex-col items-center gap-2">
+          <span className="text-white/95 flex items-center gap-[0.3em]">
+            The <AnimatedLetterText text="Software" letterToReplace="o" className="text-white/95 font-bold tracking-tight" />
+          </span>
+          <span className="text-white/95">Ecosystem.</span>
         </motion.h1>
 
         <motion.p variants={itemVariants} className="font-body-lg text-white/60 max-w-xl mx-auto mt-4 font-normal leading-relaxed text-[16px] md:text-[18px]">
-          Designing advanced AI products, systems, and tools for the next era.
+          A premium platform to publish tools, download products, and request custom builds.
         </motion.p>
 
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 mt-8">
