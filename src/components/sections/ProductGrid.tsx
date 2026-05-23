@@ -99,15 +99,15 @@ export function ProductGrid() {
     >
       {/* Premium Background Effects */}
       <div className="absolute inset-0 pointer-events-none transform-gpu">
-        <motion.div 
+        <motion.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.02, 0.04, 0.02] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full translate-z-0" 
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full translate-z-0"
         />
-        <motion.div 
+        <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.02, 0.05, 0.02] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full translate-z-0" 
+          className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-blue-500/[0.02] blur-[150px] rounded-full translate-z-0"
         />
         <div className="absolute inset-0 bg-grain opacity-20" />
       </div>
@@ -120,18 +120,27 @@ export function ProductGrid() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-20 text-center md:text-left max-w-3xl"
+          className="mb-16 md:mb-24 text-left max-w-3xl"
         >
-          <h2 className="font-display-lg text-4xl md:text-5xl tracking-tighter text-white mb-6 font-medium">
-            AI Software <span className="text-zinc-500">Library</span>
+          {/* Elegant Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.1] mb-6 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+            <span className="text-[11px] font-medium text-zinc-300 tracking-widest uppercase">
+              The Ecosystem
+            </span>
+          </div>
+
+          <h2 className="font-display-lg text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-6 font-medium text-white">
+            AI Software <span className="text-zinc-500 font-light">Library</span>
           </h2>
-          <p className="font-body-lg text-base md:text-lg text-zinc-400 font-light leading-relaxed">
+          
+          <p className="font-body-lg text-lg md:text-xl text-zinc-400 font-light leading-relaxed max-w-2xl">
             Advanced AI products engineered for creators, automation, and next-generation intelligence.
           </p>
         </motion.div>
 
         {/* 4-Column Grid */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -142,8 +151,8 @@ export function ProductGrid() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10"
         >
           {softwareProducts.map((product, idx) => (
-            <motion.div 
-              key={idx} 
+            <motion.div
+              key={idx}
               variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } }
@@ -156,7 +165,7 @@ export function ProductGrid() {
         </motion.div>
 
         {/* Bottom Action Area */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
