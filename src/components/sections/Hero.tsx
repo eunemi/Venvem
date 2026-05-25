@@ -33,24 +33,24 @@ export function Hero() {
 
       {/* 3D Geometric Shapes (Simulated via CSS) */}
       <div className="absolute inset-0 pointer-events-none z-10 flex items-center justify-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.5 }}
           className="absolute left-[20%] top-[30%] w-20 h-20 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 backdrop-blur-xl border border-white/10 rounded-2xl transform rotate-12 animate-float" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.2)' }}></motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.7 }}
           className="absolute right-[25%] bottom-[35%] w-28 h-28 bg-gradient-to-br from-rose-500/20 to-amber-500/20 backdrop-blur-xl border border-white/10 rounded-full transform -rotate-12 animate-float-delayed" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.2)' }}></motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 0.7, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.9 }}
           className="absolute left-[60%] top-[15%] w-14 h-14 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 backdrop-blur-xl border border-white/10 rounded-lg transform rotate-45 animate-float" style={{ animationDelay: '2s', boxShadow: '0 15px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.2)' }}></motion.div>
       </div>
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -77,7 +77,7 @@ export function Hero() {
 
       </motion.div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 1 }}
@@ -100,9 +100,9 @@ export function Hero() {
 
         {/* Right Side Info */}
         <div className="hidden md:flex items-center gap-4 font-label-mono text-[10px] tracking-[0.2em] uppercase text-zinc-500">
-           <span>Built Independently</span>
-           <div className="w-px h-3 bg-white/10" />
-           <span className="text-white/40">V 2.0</span>
+          <span>Built Independently</span>
+          <div className="w-px h-3 bg-white/10" />
+          <span className="text-white/40">V 2.0</span>
         </div>
       </motion.div>
     </section>

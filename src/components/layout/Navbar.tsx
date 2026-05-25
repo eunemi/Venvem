@@ -1,126 +1,163 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import React, { useState, useEffect, useRef } from 'react'
-import { Menu, X } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { SearchBar } from '@/components/ui/search-bar'
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { SearchBar } from '@/components/ui/search-bar';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const AnimatedNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+  const defaultTextColor = 'text-gray-300';
+  const hoverTextColor = 'text-white';
+  const textSizeClass = 'text-sm';
+
+  return (
+    <a href={href} className={`group relative inline-block overflow-hidden h-5 flex items-center ${textSizeClass}`}>
+      <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-1/2">
+        <span className={defaultTextColor}>{children}</span>
+        <span className={hoverTextColor}>{children}</span>
+      </div>
+    </a>
+  );
+};
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
-  const lastScrollY = useRef(0)
+  const [isOpen, setIsOpen] = useState(false);
+  const [headerShapeClass, setHeaderShapeClass] = useState('rounded-full');
+  const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      
-      setScrolled(currentScrollY > 50)
+      const currentScrollY = window.scrollY;
       
       // Hide on scroll down, show on scroll up
       if (currentScrollY > lastScrollY.current && currentScrollY > 20) {
-        setIsVisible(false)
+        setIsVisible(false);
       } else {
-        setIsVisible(true)
+        setIsVisible(true);
       }
       
-      lastScrollY.current = currentScrollY
-    }
+      lastScrollY.current = currentScrollY;
+    };
     
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (shapeTimeoutRef.current) {
+      clearTimeout(shapeTimeoutRef.current);
+    }
+
+    if (isOpen) {
+      setHeaderShapeClass('rounded-xl');
+    } else {
+      shapeTimeoutRef.current = setTimeout(() => {
+        setHeaderShapeClass('rounded-full');
+      }, 300);
+    }
+
+    return () => {
+      if (shapeTimeoutRef.current) {
+        clearTimeout(shapeTimeoutRef.current);
+      }
+    };
+  }, [isOpen]);
+
+  const logoElement = (
+    <Link href="/" className="flex items-center gap-2">
+      <div className="relative w-5 h-5 flex items-center justify-center">
+        <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 top-0 left-1/2 transform -translate-x-1/2 opacity-80"></span>
+        <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 left-0 top-1/2 transform -translate-y-1/2 opacity-80"></span>
+        <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 right-0 top-1/2 transform -translate-y-1/2 opacity-80"></span>
+        <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 bottom-0 left-1/2 transform -translate-x-1/2 opacity-80"></span>
+      </div>
+      <span className="font-headline-lg-mobile text-[16px] font-medium tracking-wide text-white">
+        EUNEMI
+      </span>
+    </Link>
+  );
+
+  const navLinksData = [
+    { label: 'Products', href: '#products' },
+    { label: 'Services', href: '#services' },
+    { label: 'Project Request', href: '/project-request' },
+  ];
+
+  const signupButtonElement = (
+    <div className="relative group w-full sm:w-auto">
+       <div className="absolute inset-0 -m-2 rounded-full
+                     hidden sm:block
+                     bg-gray-100
+                     opacity-40 filter blur-lg pointer-events-none
+                     transition-all duration-300 ease-out
+                     group-hover:opacity-60 group-hover:blur-xl group-hover:-m-3"></div>
+       <button className="relative z-10 px-4 py-2 sm:px-4 text-xs sm:text-sm font-semibold text-black bg-gradient-to-br from-gray-100 to-gray-300 rounded-full hover:from-gray-200 hover:to-gray-400 transition-all duration-200 w-full sm:w-auto">
+         Contact
+       </button>
+    </div>
+  );
 
   return (
-    <motion.nav 
+    <motion.header 
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 w-full z-50 transition-all duration-700 ease-out border-b ${
-        scrolled ? 'bg-background/80 backdrop-blur-3xl border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]' : 'bg-transparent border-transparent'
-      }`}
+      className={`fixed top-0 left-0 w-full z-50
+                       flex flex-col items-center
+                       px-6 md:px-12 py-4 backdrop-blur-md
+                       border-b border-white/10 bg-[#1f1f1f]/80
+                       shadow-2xl`}
     >
-      <div className="max-w-[1920px] mx-auto left-0 right-0">
-        <div className="flex justify-between items-center h-20 px-8 md:px-12">
-          <Link href="/" className="font-headline-lg-mobile text-[28px] font-light tracking-tighter text-primary scale-95 hover:scale-100 transition-transform duration-500">
-            EUNEMI
-          </Link>
-          
-          <div className="hidden md:flex items-center gap-10">
-            {['Products', 'Services'].map((item) => (
-              <a 
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="relative group text-on-surface-variant font-light hover:text-primary transition-colors duration-500 font-label-mono text-[10px] tracking-[0.2em] uppercase overflow-hidden"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            ))}
-            <Link 
-              href="/project-request"
-              className="relative group text-on-surface-variant font-light hover:text-primary transition-colors duration-500 font-label-mono text-[10px] tracking-[0.2em] uppercase overflow-hidden"
-            >
-              Project Request
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-            </Link>
-          </div>
-          <div className="hidden md:flex items-center gap-4 z-50">
-            <SearchBar placeholder="Search ecosystem..." />
-            <a className="border-gradient-premium bg-white/5 backdrop-blur-md text-primary px-6 py-2.5 rounded-full font-label-mono text-[10px] hover:bg-white/10 transition-all duration-500 uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:-translate-y-0.5 whitespace-nowrap" href="#contact">
-              Contact
-            </a>
-          </div>
-          <button
-            type="button"
-            className="md:hidden text-primary z-50 relative"
-            onClick={() => setIsOpen((open) => !open)}
-            aria-label="Toggle navigation menu"
-          >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+      <div className="flex items-center justify-between w-full max-w-[1920px] mx-auto gap-x-10 lg:gap-x-24">
+        <div className="flex items-center">
+           {logoElement}
         </div>
+
+        <nav className="hidden md:flex items-center space-x-12 text-sm">
+          {navLinksData.map((link) => (
+            <AnimatedNavLink key={link.href} href={link.href}>
+              {link.label}
+            </AnimatedNavLink>
+          ))}
+        </nav>
+
+        <div className="hidden sm:flex items-center gap-4">
+          <SearchBar placeholder="Search ecosystem..." />
+          {signupButtonElement}
+        </div>
+
+        <button className="sm:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none" onClick={toggleMenu} aria-label={isOpen ? 'Close Menu' : 'Open Menu'}>
+          {isOpen ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          )}
+        </button>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-full left-0 w-full md:hidden border-t border-white/5 bg-background/95 backdrop-blur-3xl shadow-2xl"
-          >
-            <div className="flex flex-col p-8 gap-6">
-              {['Products', 'Services'].map((item) => (
-                <a
-                  key={item}
-                  className="text-on-surface-variant font-light hover:text-primary transition-colors duration-500 font-label-mono text-[12px] tracking-[0.2em] uppercase"
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item}
-                </a>
-              ))}
-              <Link
-                className="text-on-surface-variant font-light hover:text-primary transition-colors duration-500 font-label-mono text-[12px] tracking-[0.2em] uppercase"
-                href="/project-request"
-                onClick={() => setIsOpen(false)}
-              >
-                Project Request
-              </Link>
-              <a
-                className="inline-flex justify-center w-full border-gradient-premium bg-white/5 backdrop-blur-md text-primary px-5 py-3 rounded-full font-label-mono text-[12px] hover:bg-white/10 transition-all duration-500 uppercase tracking-widest mt-4"
-                href="#contact"
-                onClick={() => setIsOpen(false)}
-              >
-                Contact
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
-  )
+      <div className={`sm:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
+                       ${isOpen ? 'max-h-[1000px] opacity-100 pt-6' : 'max-h-0 opacity-0 pt-0 pointer-events-none'}`}>
+        <nav className="flex flex-col items-center space-y-4 text-base w-full mb-6">
+          {navLinksData.map((link) => (
+            <a key={link.href} href={link.href} className="text-gray-300 hover:text-white transition-colors w-full text-center">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <div className="flex flex-col items-center space-y-4 w-full">
+          <div className="w-full max-w-[200px]">
+            <SearchBar placeholder="Search ecosystem..." />
+          </div>
+          {signupButtonElement}
+        </div>
+      </div>
+    </motion.header>
+  );
 }
