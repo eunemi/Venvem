@@ -86,7 +86,7 @@ export function Navbar() {
         <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 bottom-0 left-1/2 transform -translate-x-1/2 opacity-80"></span>
       </div>
       <span className="font-headline-lg-mobile text-[16px] font-medium tracking-wide text-white">
-        EUNEMI
+        Venvem
       </span>
     </Link>
   );
@@ -99,13 +99,14 @@ export function Navbar() {
 
   const signupButtonElement = (
     <div className="relative group w-full sm:w-auto">
-       <div className="absolute inset-0 -m-2 rounded-full
+       {/* Highly sophisticated and subtle gradient glow behind the button */}
+       <div className="absolute -inset-[1px] rounded-full
                      hidden sm:block
-                     bg-gray-100
-                     opacity-40 filter blur-lg pointer-events-none
-                     transition-all duration-300 ease-out
-                     group-hover:opacity-60 group-hover:blur-xl group-hover:-m-3"></div>
-       <Link href="/login" className="relative z-10 px-4 py-2 sm:px-4 text-xs sm:text-sm font-semibold text-black bg-gradient-to-br from-gray-100 to-gray-300 rounded-full hover:from-gray-200 hover:to-gray-400 transition-all duration-200 w-full sm:w-auto inline-flex items-center justify-center">
+                     bg-gradient-to-r from-purple-500/50 via-cyan-400/50 to-purple-600/50
+                     opacity-0 blur-[3px] pointer-events-none
+                     transition-all duration-500 ease-out
+                     group-hover:opacity-100 group-hover:blur-[6px]"></div>
+       <Link href="/login" className="relative z-10 px-5 py-1.5 sm:px-6 text-xs sm:text-sm font-medium text-white bg-zinc-900/80 hover:bg-zinc-900 border border-white/10 hover:border-white/20 backdrop-blur-md rounded-full transition-all duration-300 w-full sm:w-auto inline-flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
          Login
        </Link>
     </div>

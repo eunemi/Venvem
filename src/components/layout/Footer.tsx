@@ -13,14 +13,14 @@ export function Footer() {
         <div className="col-span-1 lg:col-span-2 flex flex-col justify-between h-full">
           <div>
             <div className="font-headline-lg-mobile text-[32px] font-light text-primary mb-6 tracking-tighter hover:text-white transition-colors duration-500">
-              EUNEMI
+              Venvem
             </div>
             <p className="font-body-md text-[14px] text-zinc-400 font-light max-w-sm leading-relaxed">
               Engineering the Future. Bespoke AI solutions engineered for scale and unparalleled performance.
             </p>
           </div>
           <div className="mt-16 font-label-mono text-[10px] text-zinc-600 uppercase tracking-widest flex items-center gap-4">
-            <span>© 2026 EUNEMI.</span>
+            <span>© 2026 Venvem.</span>
             <span className="w-1 h-1 rounded-full bg-zinc-800"></span>
             <span>All Rights Reserved.</span>
           </div>

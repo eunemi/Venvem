@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
             <div className="size-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/10 shadow-lg">
               <Sparkles className="size-4 text-white" />
             </div>
-            EUNEMI
+            Venvem
           </Link>
           <Link href="/login" className="text-sm font-medium text-white/60 hover:text-white transition-colors">
             Back to Home

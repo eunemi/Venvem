@@ -16,7 +16,7 @@ export default function ContactPage() {
             <div className="size-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/10 shadow-lg">
               <Sparkles className="size-4 text-white" />
             </div>
-            EUNEMI
+            Venvem
           </Link>
           <Link href="/login" className="text-sm font-medium text-white/60 hover:text-white transition-colors">
             Back to Home
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-xs text-white/40 uppercase tracking-widest mb-1 font-semibold">Email us directly</p>
-                  <a href="mailto:hello@eunemi.com" className="text-lg font-medium hover:text-purple-400 transition-colors">hello@eunemi.com</a>
+                  <a href="mailto:hello@venvem.com" className="text-lg font-medium hover:text-purple-400 transition-colors">hello@venvem.com</a>
                 </div>
               </div>
               <div className="flex items-center gap-5 group cursor-pointer">

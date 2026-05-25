@@ -178,26 +178,33 @@ export default function SoftwareLibraryPage() {
         <Navbar />
       
       {/* Premium Background Effects */}
-      <div className="fixed inset-0 pointer-events-none z-0 transform-gpu translate-z-0">
-        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-white/[0.015] blur-[120px] rounded-full will-change-transform" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[800px] h-[600px] bg-purple-500/[0.02] blur-[150px] rounded-full will-change-transform" />
-        <div className="absolute top-[40%] right-[-10%] w-[600px] h-[800px] bg-blue-500/[0.015] blur-[150px] rounded-full will-change-transform" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] will-change-transform" />
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Ambient high-end breathing spotlights */}
+        <div className="absolute top-[-25%] left-1/2 -translate-x-1/2 w-[1200px] h-[700px] bg-gradient-to-b from-purple-500/10 via-cyan-400/5 to-transparent blur-[160px] rounded-full opacity-80 animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-[15%] left-1/4 w-[700px] h-[700px] bg-blue-600/[0.02] blur-[150px] rounded-full" />
+        <div className="absolute top-[25%] right-1/4 w-[600px] h-[600px] bg-purple-600/[0.02] blur-[150px] rounded-full" />
+        
+        {/* Exquisite cyber grid line pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4.5rem_4.5rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_80%,transparent_100%)] opacity-70" />
+        
+        {/* Ultra-subtle overlay film noise */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay" />
       </div>
 
-      <div className="pt-40 pb-32 max-w-[1400px] mx-auto px-6 md:px-8 relative z-10">
+      <div className="pt-44 pb-32 max-w-[1400px] mx-auto px-6 md:px-8 relative z-10">
         
         {/* Page Header */}
-        <div className="mb-20 text-center max-w-4xl mx-auto flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs font-medium text-zinc-300 mb-8 backdrop-blur-md">
-            <Sparkles size={14} className="text-zinc-400" />
-            <span>The Complete Ecosystem</span>
+        <div className="mb-24 text-center max-w-4xl mx-auto flex flex-col items-center">
+          <div className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-[11px] uppercase tracking-wider font-semibold text-zinc-300 mb-8 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.8)] overflow-hidden group">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
+            <span className="relative z-10 text-zinc-300/90 group-hover:text-white transition-colors duration-300">The Complete Ecosystem</span>
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent transition-transform duration-1000 ease-out" />
           </div>
           
-          <h1 className="font-display-lg text-5xl md:text-7xl tracking-tighter text-white mb-8 font-medium">
-            AI Software <span className="text-zinc-500">Vault</span>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight text-white mb-6 font-extrabold leading-[1.05] filter drop-shadow-[0_2px_15px_rgba(255,255,255,0.05)]">
+            AI Software <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-zinc-300 to-zinc-500 font-extrabold">Vault</span>
           </h1>
-          <p className="font-body-lg text-lg md:text-xl text-zinc-400 font-light leading-relaxed max-w-2xl">
+          <p className="font-body text-base md:text-lg text-zinc-400 font-light leading-relaxed max-w-2xl tracking-wide opacity-90">
             Explore our entire suite of premium AI products, automation tools, developer utilities, and autonomous agent systems.
           </p>
         </div>

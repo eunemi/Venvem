@@ -10,7 +10,7 @@ export default function TermsOfServicePage() {
             <div className="size-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/10 shadow-lg">
               <Sparkles className="size-4 text-white" />
             </div>
-            EUNEMI
+            Venvem
           </Link>
           <Link href="/login" className="text-sm font-medium text-white/60 hover:text-white transition-colors">
             Back to Home
@@ -30,7 +30,7 @@ export default function TermsOfServicePage() {
             Terms of Service
           </h1>
           <p className="text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed">
-            These terms set forth the legally binding terms and conditions for your use of the EUNEMI website and services.
+            These terms set forth the legally binding terms and conditions for your use of the Venvem website and services.
           </p>
           <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/60">
             <span className="size-2 rounded-full bg-orange-500 animate-pulse" />
@@ -48,7 +48,7 @@ export default function TermsOfServicePage() {
             </h2>
             <div className="text-white/60 text-lg leading-relaxed space-y-6 font-light">
               <p>
-                By accessing and using EUNEMI ("we", "us", "our"), you agree to comply with and be bound by these Terms of Service. If you disagree with any part of these terms, you may not access our service.
+                By accessing and using Venvem ("we", "us", "our"), you agree to comply with and be bound by these Terms of Service. If you disagree with any part of these terms, you may not access our service.
               </p>
               <p>
                 We reserve the right, in our sole discretion, to make changes or modifications to these Terms at any time and for any reason. We will alert you about any changes by updating the "Effective Date" of these Terms.
@@ -65,7 +65,7 @@ export default function TermsOfServicePage() {
             </h2>
             <div className="text-white/60 text-lg leading-relaxed space-y-6 font-light">
               <p>
-                Permission is granted to temporarily download one copy of the materials (information or software) on EUNEMI's website for personal, non-commercial transitory viewing only.
+                Permission is granted to temporarily download one copy of the materials (information or software) on Venvem's website for personal, non-commercial transitory viewing only.
               </p>
               <div className="p-8 rounded-3xl bg-[#0a0a0a] border border-white/5 mt-8 shadow-xl hover:border-white/10 transition-colors">
                 <p className="font-medium text-white/90 mb-4">Under this license you may not:</p>
@@ -80,7 +80,7 @@ export default function TermsOfServicePage() {
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="size-1.5 rounded-full bg-orange-500 mt-2.5 shrink-0 shadow-[0_0_10px_rgba(249,115,22,0.8)]" />
-                    Attempt to decompile or reverse engineer any software contained on EUNEMI's website.
+                    Attempt to decompile or reverse engineer any software contained on Venvem's website.
                   </li>
                 </ul>
               </div>
@@ -96,10 +96,10 @@ export default function TermsOfServicePage() {
             </h2>
             <div className="text-white/60 text-lg leading-relaxed space-y-6 font-light">
               <p>
-                The materials on EUNEMI's website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property.
+                The materials on Venvem's website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property.
               </p>
               <p>
-                In no event shall EUNEMI or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our website.
+                In no event shall Venvem or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our website.
               </p>
             </div>
           </section>

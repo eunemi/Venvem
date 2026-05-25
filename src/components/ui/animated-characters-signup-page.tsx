@@ -313,7 +313,7 @@ function SignupPage() {
 
     if (name.length > 2 && email.includes("@") && password.length >= 6) {
       console.log("✅ Signup successful!");
-      alert(`Signup successful! Welcome to EUNEMI, ${name}!`);
+      alert(`Signup successful! Welcome to Venvem, ${name}!`);
     } else {
       setError("Please ensure all fields are filled correctly. Password must be at least 6 characters.");
       console.log("❌ Signup failed");
@@ -331,7 +331,7 @@ function SignupPage() {
             <div className="size-8 rounded-lg bg-white/10 border border-white/10 backdrop-blur-sm flex items-center justify-center">
               <Sparkles className="size-4 text-white" />
             </div>
-            <span>EUNEMI</span>
+            <span>Venvem</span>
           </div>
         </div>
 
@@ -503,7 +503,7 @@ function SignupPage() {
             <div className="size-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/10">
               <Sparkles className="size-4 text-white" />
             </div>
-            <span>EUNEMI</span>
+            <span>Venvem</span>
           </div>
 
           {/* Header */}

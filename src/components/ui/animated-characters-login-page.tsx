@@ -338,7 +338,7 @@ function LoginPage() {
             <div className="size-8 rounded-lg bg-white/10 border border-white/10 backdrop-blur-sm flex items-center justify-center">
               <Sparkles className="size-4 text-white" />
             </div>
-            <span>EUNEMI</span>
+            <span>Venvem</span>
           </div>
         </div>
 
@@ -541,7 +541,7 @@ function LoginPage() {
             <div className="size-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/10">
               <Sparkles className="size-4 text-white" />
             </div>
-            <span>EUNEMI</span>
+            <span>Venvem</span>
           </div>
 
           {/* Header */}

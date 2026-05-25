@@ -303,7 +303,7 @@ export function CinematicFooter() {
             ref={giantTextRef}
             className="footer-giant-bg-text absolute -bottom-[4vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none"
           >
-            EUNEMI
+            Venvem
           </div>
 
           {/* 1. Sleek Minimal Marquee */}
@@ -366,7 +366,7 @@ export function CinematicFooter() {
                 E
               </div>
               <div className="text-white/40 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase">
-                © 2026 EUNEMI. All rights reserved.
+                © 2026 Venvem. All rights reserved.
               </div>
             </div>
 
