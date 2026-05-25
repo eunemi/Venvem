@@ -26,6 +26,7 @@ export function Navbar() {
   const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const [isVisible, setIsVisible] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
 
   const toggleMenu = () => {
@@ -43,6 +44,12 @@ export function Navbar() {
         setIsVisible(true);
       }
       
+      if (currentScrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+
       lastScrollY.current = currentScrollY;
     };
     
@@ -111,9 +118,8 @@ export function Navbar() {
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 w-full z-50
                        flex flex-col items-center
-                       px-6 md:px-12 py-4 backdrop-blur-md
-                       border-b border-white/10 bg-[#1f1f1f]/80
-                       shadow-2xl`}
+                       px-6 md:px-12 py-4 transition-colors duration-500 ease-in-out
+                       ${scrolled ? 'bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-2xl' : 'bg-transparent border-transparent'}`}
     >
       <div className="flex items-center justify-between w-full max-w-[1920px] mx-auto gap-x-10 lg:gap-x-24">
         <div className="flex items-center">
