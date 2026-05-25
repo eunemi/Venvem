@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Eye, EyeOff, Mail, Sparkles } from "lucide-react";
+import { Eye, EyeOff, Mail, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -179,8 +179,9 @@ const EyeBall = ({
 
 
 
-function LoginPage() {
+function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -209,7 +210,7 @@ function LoginPage() {
 
   // Blinking effect for purple character
   useEffect(() => {
-    const getRandomBlinkInterval = () => Math.random() * 4000 + 3000; // Random between 3-7 seconds
+    const getRandomBlinkInterval = () => Math.random() * 4000 + 3000;
 
     const scheduleBlink = () => {
       const blinkTimeout = setTimeout(() => {
@@ -217,7 +218,7 @@ function LoginPage() {
         setTimeout(() => {
           setIsPurpleBlinking(false);
           scheduleBlink();
-        }, 150); // Blink duration 150ms
+        }, 150);
       }, getRandomBlinkInterval());
 
       return blinkTimeout;
@@ -229,7 +230,7 @@ function LoginPage() {
 
   // Blinking effect for black character
   useEffect(() => {
-    const getRandomBlinkInterval = () => Math.random() * 4000 + 3000; // Random between 3-7 seconds
+    const getRandomBlinkInterval = () => Math.random() * 4000 + 3000;
 
     const scheduleBlink = () => {
       const blinkTimeout = setTimeout(() => {
@@ -237,7 +238,7 @@ function LoginPage() {
         setTimeout(() => {
           setIsBlackBlinking(false);
           scheduleBlink();
-        }, 150); // Blink duration 150ms
+        }, 150);
       }, getRandomBlinkInterval());
 
       return blinkTimeout;
@@ -253,7 +254,7 @@ function LoginPage() {
       setIsLookingAtEachOther(true);
       const timer = setTimeout(() => {
         setIsLookingAtEachOther(false);
-      }, 800); // Look at each other for 1.5 seconds, then back to tracking mouse
+      }, 800);
       return () => clearTimeout(timer);
     } else {
       setIsLookingAtEachOther(false);
@@ -268,8 +269,8 @@ function LoginPage() {
           setIsPurplePeeking(true);
           setTimeout(() => {
             setIsPurplePeeking(false);
-          }, 800); // Peek for 800ms
-        }, Math.random() * 3000 + 2000); // Random peek every 2-5 seconds
+          }, 800);
+        }, Math.random() * 3000 + 2000);
         return peekInterval;
       };
 
@@ -285,16 +286,14 @@ function LoginPage() {
 
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 3; // Focus on head area
+    const centerY = rect.top + rect.height / 3;
 
     const deltaX = mouseX - centerX;
     const deltaY = mouseY - centerY;
 
-    // Face movement (limited range)
     const faceX = Math.max(-15, Math.min(15, deltaX / 20));
     const faceY = Math.max(-10, Math.min(10, deltaY / 30));
 
-    // Body lean (skew for lean while keeping bottom straight) - negative to lean towards mouse
     const bodySkew = Math.max(-6, Math.min(6, -deltaX / 120));
 
     return { faceX, faceY, bodySkew };
@@ -310,20 +309,14 @@ function LoginPage() {
     setError("");
     setIsLoading(true);
 
-    // Simulate API delay (quick)
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-    // Mock authentication - validate against dummy credentials
-    if (email === "erik@gmail.com" && password === "1234") {
-      console.log("✅ Login successful!");
-      alert("Login successful! Welcome, Erik!");
-      // In a real app, you would:
-      // - Store auth token
-      // - Redirect to dashboard
-      // - Set user session
+    if (name.length > 2 && email.includes("@") && password.length >= 6) {
+      console.log("✅ Signup successful!");
+      alert(`Signup successful! Welcome to EUNEMI, ${name}!`);
     } else {
-      setError("Invalid email or password. Please try again.");
-      console.log("❌ Login failed");
+      setError("Please ensure all fields are filled correctly. Password must be at least 6 characters.");
+      console.log("❌ Signup failed");
     }
 
     setIsLoading(false);
@@ -364,7 +357,6 @@ function LoginPage() {
                 transformOrigin: 'bottom center',
               }}
             >
-              {/* Eyes */}
               <div 
                 className="absolute flex gap-8 transition-all duration-700 ease-in-out"
                 style={{
@@ -373,29 +365,19 @@ function LoginPage() {
                 }}
               >
                 <EyeBall 
-                  size={18} 
-                  pupilSize={7} 
-                  maxDistance={5} 
-                  eyeColor="white" 
-                  pupilColor="#2D2D2D" 
-                  isBlinking={isPurpleBlinking}
+                  size={18} pupilSize={7} maxDistance={5} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isPurpleBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
                 />
                 <EyeBall 
-                  size={18} 
-                  pupilSize={7} 
-                  maxDistance={5} 
-                  eyeColor="white" 
-                  pupilColor="#2D2D2D" 
-                  isBlinking={isPurpleBlinking}
+                  size={18} pupilSize={7} maxDistance={5} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isPurpleBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
                 />
               </div>
             </div>
 
-            {/* Black tall rectangle character - Middle layer */}
+            {/* Black tall rectangle character */}
             <div 
               ref={blackRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
@@ -416,7 +398,6 @@ function LoginPage() {
                 transformOrigin: 'bottom center',
               }}
             >
-              {/* Eyes */}
               <div 
                 className="absolute flex gap-6 transition-all duration-700 ease-in-out"
                 style={{
@@ -425,29 +406,19 @@ function LoginPage() {
                 }}
               >
                 <EyeBall 
-                  size={16} 
-                  pupilSize={6} 
-                  maxDistance={4} 
-                  eyeColor="white" 
-                  pupilColor="#2D2D2D" 
-                  isBlinking={isBlackBlinking}
+                  size={16} pupilSize={6} maxDistance={4} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isBlackBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
                 />
                 <EyeBall 
-                  size={16} 
-                  pupilSize={6} 
-                  maxDistance={4} 
-                  eyeColor="white" 
-                  pupilColor="#2D2D2D" 
-                  isBlinking={isBlackBlinking}
+                  size={16} pupilSize={6} maxDistance={4} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isBlackBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
                 />
               </div>
             </div>
 
-            {/* Orange semi-circle character - Front left */}
+            {/* Orange character */}
             <div 
               ref={orangeRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
@@ -462,7 +433,6 @@ function LoginPage() {
                 transformOrigin: 'bottom center',
               }}
             >
-              {/* Eyes - just pupils, no white */}
               <div 
                 className="absolute flex gap-8 transition-all duration-200 ease-out"
                 style={{
@@ -475,7 +445,7 @@ function LoginPage() {
               </div>
             </div>
 
-            {/* Yellow tall rectangle character - Front right */}
+            {/* Yellow character */}
             <div 
               ref={yellowRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
@@ -490,7 +460,6 @@ function LoginPage() {
                 transformOrigin: 'bottom center',
               }}
             >
-              {/* Eyes - just pupils, no white */}
               <div 
                 className="absolute flex gap-6 transition-all duration-200 ease-out"
                 style={{
@@ -501,7 +470,6 @@ function LoginPage() {
                 <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
                 <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
               </div>
-              {/* Horizontal line for mouth */}
               <div 
                 className="absolute w-20 h-[4px] bg-[#2D2D2D] rounded-full transition-all duration-200 ease-out"
                 style={{
@@ -514,15 +482,9 @@ function LoginPage() {
         </div>
 
         <div className="relative z-20 flex items-center gap-8 text-sm text-white/60">
-          <a href="#" className="hover:text-white transition-colors">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-white transition-colors">
-            Terms of Service
-          </a>
-          <a href="#" className="hover:text-white transition-colors">
-            Contact
-          </a>
+          <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+          <a href="#" className="hover:text-white transition-colors">Contact</a>
         </div>
 
         {/* Trending Grid Background */}
@@ -530,7 +492,7 @@ function LoginPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
       </div>
 
-      {/* Right Login Section */}
+      {/* Right Signup Section */}
       <div className="flex items-center justify-center p-8 bg-[#0a0a0a] relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[100px] pointer-events-none" />
@@ -546,26 +508,48 @@ function LoginPage() {
 
           {/* Header */}
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold tracking-tight mb-2 text-white">Welcome back!</h1>
-            <p className="text-white/60 text-sm">Please enter your details</p>
+            <h1 className="text-3xl font-bold tracking-tight mb-2 text-white">Create an account</h1>
+            <p className="text-white/60 text-sm">Join us and start your journey today</p>
           </div>
 
-          {/* Login Form */}
+          {/* Signup Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
+              <Label htmlFor="name" className="text-sm font-medium text-white/80">Full Name</Label>
+              <div className="relative">
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={name}
+                  autoComplete="name"
+                  onChange={(e) => setName(e.target.value)}
+                  onFocus={() => setIsTyping(true)}
+                  onBlur={() => setIsTyping(false)}
+                  required
+                  className="h-12 pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
+                />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium text-white/80">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="anna@gmail.com"
-                value={email}
-                autoComplete="off"
-                onChange={(e) => setEmail(e.target.value)}
-                onFocus={() => setIsTyping(true)}
-                onBlur={() => setIsTyping(false)}
-                required
-                className="h-12 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
-              />
+              <div className="relative">
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="john@gmail.com"
+                  value={email}
+                  autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setIsTyping(true)}
+                  onBlur={() => setIsTyping(false)}
+                  required
+                  className="h-12 pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
+                />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -578,38 +562,19 @@ function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12 pr-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
+                  className="h-12 pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
                 />
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
+                  <span className="font-bold tracking-widest text-lg ml-0.5">***</span>
+                </div>
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
                 >
-                  {showPassword ? (
-                    <EyeOff className="size-5" />
-                  ) : (
-                    <Eye className="size-5" />
-                  )}
+                  {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                 </button>
               </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="remember" className="border-white/20 data-[state=checked]:bg-white data-[state=checked]:text-black" />
-                <Label
-                  htmlFor="remember"
-                  className="text-sm font-normal cursor-pointer text-white/60 hover:text-white transition-colors"
-                >
-                  Remember for 30 days
-                </Label>
-              </div>
-              <a
-                href="#"
-                className="text-sm text-white/80 hover:text-white hover:underline font-medium transition-colors"
-              >
-                Forgot password?
-              </a>
             </div>
 
             {error && (
@@ -624,12 +589,21 @@ function LoginPage() {
               size="lg" 
               disabled={isLoading}
             >
-              {isLoading ? "Signing in..." : "Log in"}
+              {isLoading ? "Creating account..." : "Sign up"}
             </Button>
           </form>
 
-          {/* Social Login */}
+          {/* Social Signup */}
           <div className="mt-6">
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-white/10"></span>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-[#0a0a0a] px-2 text-white/40">Or continue with</span>
+              </div>
+            </div>
+
             <Button 
               variant="outline" 
               className="w-full h-12 bg-white/5 border-white/10 hover:bg-white/10 text-white hover:text-white transition-all duration-300 rounded-xl"
@@ -641,15 +615,15 @@ function LoginPage() {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              Log in with Google
+              Sign up with Google
             </Button>
           </div>
 
-          {/* Sign Up Link */}
+          {/* Login Link */}
           <div className="text-center text-sm text-white/60 mt-8">
-            Don't have an account?{" "}
-            <Link href="/signup" className="text-white font-medium hover:underline hover:text-white/90 transition-colors">
-              Sign Up
+            Already have an account?{" "}
+            <Link href="/login" className="text-white font-medium hover:underline hover:text-white/90 transition-colors">
+              Log in
             </Link>
           </div>
         </div>
@@ -658,4 +632,4 @@ function LoginPage() {
   );
 }
 
-export const Component = LoginPage;
+export const Component = SignupPage;
