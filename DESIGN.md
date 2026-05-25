@@ -1,4 +1,4 @@
-# AI Selling Platform: Design System
+# Venvem: Design System
 
 ## Palette
 - **Background**: `#000000` (Deep Space)

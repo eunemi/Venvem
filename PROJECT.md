@@ -1,4 +1,4 @@
-# Project: AI Selling Platform - Premium Futuristic Ecosystem
+# Project: Venvem - Premium Futuristic Ecosystem
 
 ## Vision
 A high-fidelity, luxury AI platform for showcasing AI products, managing software downloads, and booking specialized AI services. The platform should feel like a "world-class AI ecosystem" with cinematic animations and a premium dark-mode aesthetic.

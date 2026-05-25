@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Selling Platform | Premium AI Ecosystem",
+  title: "Venvem | Premium AI Ecosystem",
   description: "A luxury platform for AI products, software downloads, and service booking.",
 };
 
