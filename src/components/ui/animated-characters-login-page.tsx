@@ -371,7 +371,7 @@ function LoginPage() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left Content Section */}
-      <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] border-r border-white/5 p-12 text-white overflow-hidden">
+      <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] p-12 text-white overflow-hidden shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-10">
         <div className="relative z-20">
           <div className="flex items-center gap-2 text-lg font-semibold">
             <div className="size-8 rounded-lg bg-white/10 border border-white/10 backdrop-blur-sm flex items-center justify-center">
