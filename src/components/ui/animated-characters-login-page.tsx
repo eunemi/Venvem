@@ -185,6 +185,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [mouseX, setMouseX] = useState<number>(0);
   const [mouseY, setMouseY] = useState<number>(0);
   const [isPurpleBlinking, setIsPurpleBlinking] = useState(false);
@@ -584,7 +585,12 @@ function LoginPage() {
             </div>
 
             <div className="flex p-4 border border-white/10 bg-[#1c1c1c] rounded-xl items-start space-x-4 mb-2 shadow-sm">
-              <Checkbox id="terms" className="border-white/30 mt-0.5 data-[state=checked]:bg-white data-[state=checked]:text-black size-5 rounded" />
+              <Checkbox 
+                id="terms" 
+                checked={termsAccepted}
+                onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                className="border-white/30 mt-0.5 data-[state=checked]:bg-white data-[state=checked]:text-black size-5 rounded" 
+              />
               <Label
                 htmlFor="terms"
                 className="text-[15px] font-normal text-white/70 leading-snug cursor-pointer"
@@ -599,20 +605,27 @@ function LoginPage() {
               </div>
             )}
 
-            <Button 
+            <button 
               type="submit" 
-              className="w-full h-[52px] text-base font-semibold bg-white text-black border-b-4 border-b-gray-300 active:border-b-0 active:translate-y-1 hover:bg-gray-100 transition-all rounded-xl mt-4" 
-              disabled={isLoading}
+              disabled={isLoading || !termsAccepted}
+              className={cn(
+                "w-full h-[52px] text-base font-semibold bg-white text-black rounded-xl mt-4 mb-2 shadow-[0_4px_0_0_#a3a3a3] hover:bg-gray-50 active:shadow-none active:translate-y-[4px] transition-all outline-none",
+                (!termsAccepted || isLoading) && "opacity-50 pointer-events-none"
+              )}
             >
               {isLoading ? "Signing in..." : "Log in"}
-            </Button>
+            </button>
           </form>
 
           {/* Social Login */}
           <div className="mt-6 flex flex-col gap-4">
-            <Button 
+            <button 
               type="button"
-              className="w-full h-[52px] bg-[#222222] border-x border-t border-white/5 border-b-4 border-b-black/80 hover:bg-[#2a2a2a] active:border-b-0 active:translate-y-1 text-white/80 font-medium transition-all rounded-xl flex items-center justify-center gap-3 text-[15px]"
+              disabled={!termsAccepted}
+              className={cn(
+                "w-full h-[52px] bg-[#222222] border border-white/5 shadow-[0_4px_0_0_#050505] hover:bg-[#2a2a2a] active:shadow-none active:translate-y-[4px] text-white/90 font-medium transition-all rounded-xl flex items-center justify-center gap-3 text-[15px] outline-none",
+                !termsAccepted && "opacity-50 pointer-events-none"
+              )}
             >
               <svg className="size-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -621,17 +634,21 @@ function LoginPage() {
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
               Continue with Google
-            </Button>
+            </button>
 
-            <Button 
+            <button 
               type="button"
-              className="w-full h-[52px] bg-[#222222] border-x border-t border-white/5 border-b-4 border-b-black/80 hover:bg-[#2a2a2a] active:border-b-0 active:translate-y-1 text-white/80 font-medium transition-all rounded-xl flex items-center justify-center gap-3 text-[15px]"
+              disabled={!termsAccepted}
+              className={cn(
+                "w-full h-[52px] bg-[#222222] border border-white/5 shadow-[0_4px_0_0_#050505] hover:bg-[#2a2a2a] active:shadow-none active:translate-y-[4px] text-white/90 font-medium transition-all rounded-xl flex items-center justify-center gap-3 text-[15px] outline-none",
+                !termsAccepted && "opacity-50 pointer-events-none"
+              )}
             >
               <svg className="size-5 text-white/70" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
               Continue with LinkedIn
-            </Button>
+            </button>
           </div>
 
           {/* Sign Up Link */}
