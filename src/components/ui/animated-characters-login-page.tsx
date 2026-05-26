@@ -651,7 +651,12 @@ function LoginPage() {
               type="submit" 
               disabled={isLoading || !termsAccepted}
               className={cn(
-                "w-full h-[52px] text-base font-semibold bg-white text-black rounded-xl mt-4 mb-2 shadow-[0_4px_0_0_#a3a3a3] hover:bg-gray-50 active:shadow-none active:translate-y-[4px] transition-all outline-none",
+                "w-full h-[52px] text-[15px] font-bold text-black rounded-xl mt-4 mb-2 transition-all outline-none flex items-center justify-center",
+                "bg-gradient-to-b from-white to-[#e5e5e5]", 
+                "shadow-[0_4px_0_0_#a3a3a3,0_10px_30px_-10px_rgba(255,255,255,0.3)]", 
+                "border border-white/80",
+                "hover:to-[#f0f0f0] hover:shadow-[0_4px_0_0_#a3a3a3,0_15px_35px_-10px_rgba(255,255,255,0.4)]",
+                "active:shadow-[0_0px_0_0_#a3a3a3,0_0px_0px_rgba(255,255,255,0)] active:translate-y-[4px]",
                 (!termsAccepted || isLoading) && "opacity-50 pointer-events-none"
               )}
             >
