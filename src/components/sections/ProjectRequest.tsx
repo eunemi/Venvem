@@ -10,7 +10,7 @@ const budgetOptions = ['Low', 'Medium', 'High', 'Not sure']
 const timelineOptions = ['Urgent', '1-2 weeks', '1 month', 'Flexible']
 
 const inputClass =
-  'w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white outline-none transition duration-300 placeholder:text-white/30 focus:border-white/30 focus:bg-white/[0.07]'
+  'w-full rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-4 py-3 text-[14px] text-white outline-none transition duration-300 placeholder:text-white/30 focus:border-white/20 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
 
 const labelClass = 'font-body-md text-[13px] text-white/75 font-light'
 
@@ -31,14 +31,20 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
   return (
     <section
       id={isFormMode ? 'project-request' : 'services'}
-      className="py-40 border-t border-white/5 bg-surface-container-lowest/80 relative z-10 overflow-hidden"
+      className={`py-40 relative z-10 overflow-hidden ${
+        isFormMode
+          ? 'bg-transparent'
+          : 'border-t border-white/5 bg-surface-container-lowest/80'
+      }`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,255,255,0.03)_0%,_transparent_60%)] pointer-events-none"></div>
+      {!isFormMode && (
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,255,255,0.03)_0%,_transparent_60%)] pointer-events-none"></div>
+      )}
 
       <div className="max-w-[1200px] mx-auto px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <div className="lg:sticky lg:top-28">
-            <div className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-4 py-2 rounded-full mb-7">
+            <div className={`lg:sticky lg:top-28 ${isFormMode ? 'p-8 lg:p-10' : ''}`}>
+            <div className={`inline-flex items-center gap-2 border px-4 py-2 rounded-full mb-7 ${isFormMode ? 'border-white/[0.12] bg-transparent backdrop-blur-sm' : 'border-white/10 bg-white/[0.03]'}`}>
               <Sparkles className="h-3.5 w-3.5 text-secondary" />
               <span className="font-label-mono text-[10px] uppercase tracking-[0.22em] text-on-surface-variant">
                 Project Request
@@ -74,7 +80,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
             </ul>
 
             {isFormMode ? (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-[14px] font-light text-white/65 max-w-xl">
+              <div className="rounded-2xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-5 py-4 text-[14px] font-light text-white/65 max-w-xl">
                 A rough idea is enough. You do not need technical words to explain what you want.
               </div>
             ) : (
@@ -89,10 +95,12 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
           </div>
 
           <div className="relative lg:ml-auto w-full max-w-2xl">
-            <div className="absolute inset-0 bg-secondary/10 blur-[100px] rounded-full mix-blend-screen ambient-motion"></div>
+            {!isFormMode && (
+              <div className="absolute inset-0 bg-secondary/10 blur-[100px] rounded-full mix-blend-screen ambient-motion"></div>
+            )}
 
             {isFormMode ? (
-              <div className="relative bg-glass-heavy border-glass inner-glow rounded-2xl p-7 lg:p-8 premium-shadow">
+              <div className="relative bg-transparent backdrop-blur-md border border-white/[0.07] rounded-2xl p-7 lg:p-8 ring-1 ring-white/[0.03]">
                 <div className="flex items-center justify-between mb-7 border-b border-white/10 pb-6">
                   <div className="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-[0.2em]">
                     Build Your Idea
@@ -136,7 +144,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                       {featureOptions.map((feature) => (
                         <label
                           key={feature}
-                          className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/20 hover:bg-white/[0.07]"
+                          className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-3 py-2 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/15 has-[:checked]:border-white/20 has-[:checked]:bg-white/[0.06]"
                         >
                           <input type="checkbox" className="h-4 w-4 accent-white" />
                           <span>{feature}</span>
@@ -151,7 +159,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                       <input className={inputClass} placeholder="Paste website links" />
                     </label>
 
-                    <label className="flex cursor-pointer items-center justify-center gap-3 rounded-xl border border-dashed border-white/15 bg-white/[0.04] px-5 py-4 text-[13px] font-light text-white/70 transition duration-300 hover:border-white/30 hover:bg-white/[0.07] sm:mt-7">
+                    <label className="flex cursor-pointer items-center justify-center gap-3 rounded-xl border border-dashed border-white/[0.12] bg-transparent backdrop-blur-sm px-5 py-4 text-[13px] font-light text-white/70 transition duration-300 hover:border-white/25 sm:mt-7">
                       <Upload className="h-4 w-4" />
                       <span>Upload screenshot</span>
                       <input type="file" accept="image/*" className="sr-only" />
@@ -165,7 +173,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                         {budgetOptions.map((budget) => (
                           <label
                             key={budget}
-                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/20 hover:bg-white/[0.07]"
+                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-3 py-3 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/15 has-[:checked]:border-white/20 has-[:checked]:bg-white/[0.06]"
                           >
                             <input type="radio" name="budget" className="h-4 w-4 accent-white" />
                             <span>{budget}</span>
@@ -180,7 +188,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                         {timelineOptions.map((timeline) => (
                           <label
                             key={timeline}
-                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/20 hover:bg-white/[0.07]"
+                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-3 py-3 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/15 has-[:checked]:border-white/20 has-[:checked]:bg-white/[0.06]"
                           >
                             <input type="radio" name="timeline" className="h-4 w-4 accent-white" />
                             <span>{timeline}</span>
@@ -202,7 +210,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                     </label>
                   </div>
 
-                  <div className="flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-col gap-4 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-2 text-[12px] font-light text-white/45">
                       <Paperclip className="h-3.5 w-3.5" />
                       <span>Links and screenshots are optional.</span>
@@ -210,7 +218,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
 
                     <button
                       type="submit"
-                      className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-3.5 font-label-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_30px_rgba(255,255,255,0.16)] transition duration-500 hover:bg-white/90"
+                      className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-3.5 font-label-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_40px_rgba(255,255,255,0.2),0_0_80px_rgba(100,50,250,0.1)] transition duration-500 hover:bg-white/90 hover:shadow-[0_0_50px_rgba(255,255,255,0.25),0_0_100px_rgba(100,50,250,0.15)]"
                     >
                       Submit Request
                       <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -218,7 +226,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                   </div>
 
                   {submitted && (
-                    <p className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[13px] font-light text-white/75">
+                    <p className="rounded-xl border border-white/[0.1] bg-transparent backdrop-blur-sm px-4 py-3 text-[13px] font-light text-white/75">
                       Thanks. Your request is ready to be reviewed.
                     </p>
                   )}
