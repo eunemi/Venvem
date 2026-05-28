@@ -224,6 +224,7 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [mouseX, setMouseX] = useState<number>(0);
   const [mouseY, setMouseY] = useState<number>(0);
   const [isPurpleBlinking, setIsPurpleBlinking] = useState(false);
@@ -349,6 +350,12 @@ function SignupPage() {
 
     await new Promise(resolve => setTimeout(resolve, 500));
 
+    if (!termsAccepted) {
+      setError("Please accept the Terms of Service and Privacy Policy.");
+      setIsLoading(false);
+      return;
+    }
+
     if (name.length > 2 && email.includes("@") && password.length >= 6) {
       console.log("✅ Signup successful!");
       alert(`Signup successful! Welcome to Venvem, ${name}!`);
@@ -363,7 +370,7 @@ function SignupPage() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left Content Section */}
-      <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] border-r border-white/5 p-12 text-white overflow-hidden">
+      <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] p-12 text-white overflow-hidden shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-10">
         <div className="relative z-20">
           <div className="flex items-center gap-2 text-lg font-semibold">
             <div className="size-8 rounded-lg bg-white/10 border border-white/10 backdrop-blur-sm flex items-center justify-center">
@@ -551,42 +558,36 @@ function SignupPage() {
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium text-white/80">Full Name</Label>
               <AnimatedInputWrapper>
-                <div className="relative">
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="John Doe"
-                    value={name}
-                    autoComplete="name"
-                    onChange={(e) => setName(e.target.value)}
-                    onFocus={() => setIsTyping(true)}
-                    onBlur={() => setIsTyping(false)}
-                    required
-                    className="h-12 pl-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
-                  />
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
-                </div>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={name}
+                  autoComplete="name"
+                  onChange={(e) => setName(e.target.value)}
+                  onFocus={() => setIsTyping(true)}
+                  onBlur={() => setIsTyping(false)}
+                  required
+                  className="h-12 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
+                />
               </AnimatedInputWrapper>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium text-white/80">Email</Label>
               <AnimatedInputWrapper>
-                <div className="relative">
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john@gmail.com"
-                    value={email}
-                    autoComplete="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    onFocus={() => setIsTyping(true)}
-                    onBlur={() => setIsTyping(false)}
-                    required
-                    className="h-12 pl-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
-                  />
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
-                </div>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="john@gmail.com"
+                  value={email}
+                  autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setIsTyping(true)}
+                  onBlur={() => setIsTyping(false)}
+                  required
+                  className="h-12 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
+                />
               </AnimatedInputWrapper>
             </div>
 
@@ -601,11 +602,8 @@ function SignupPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="h-12 pl-10 pr-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
+                    className="h-12 pr-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
                   />
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-                    <span className="font-bold tracking-widest text-lg ml-0.5">***</span>
-                  </div>
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
@@ -617,46 +615,76 @@ function SignupPage() {
               </AnimatedInputWrapper>
             </div>
 
+            <div className="flex p-4 border border-white/10 bg-[#1c1c1c] rounded-xl items-start space-x-4 mb-2 shadow-sm">
+              <Checkbox 
+                id="terms" 
+                checked={termsAccepted}
+                onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                className="border-white/30 mt-0.5 data-[state=checked]:bg-white data-[state=checked]:text-black size-5 rounded" 
+              />
+              <Label
+                htmlFor="terms"
+                className="text-[15px] font-normal text-white/70 leading-snug cursor-pointer"
+              >
+                I agree to the <Link href="/terms-of-service" className="text-[#3b82f6] hover:underline">Terms of Service</Link>, <Link href="/privacy-policy" className="text-[#3b82f6] hover:underline">Privacy Policy</Link> <br/> and <Link href="/release-agreement" className="text-[#3b82f6] hover:underline">Release Agreement</Link>
+              </Label>
+            </div>
+
             {error && (
               <div className="p-3 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl backdrop-blur-md">
                 {error}
               </div>
             )}
 
-            <Button 
+            <button 
               type="submit" 
-              className="w-full h-12 text-base font-semibold bg-white text-black hover:bg-gray-200 hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300 rounded-xl mt-4" 
-              size="lg" 
-              disabled={isLoading}
+              disabled={isLoading || !termsAccepted}
+              className={cn(
+                "w-full h-[52px] text-[15px] font-bold text-black rounded-xl mt-4 mb-2 transition-all outline-none flex items-center justify-center",
+                "bg-gradient-to-b from-white to-[#e5e5e5]", 
+                "shadow-[0_4px_0_0_#a3a3a3,0_10px_30px_-10px_rgba(255,255,255,0.3)]", 
+                "border border-white/80",
+                "hover:to-[#f0f0f0] hover:shadow-[0_4px_0_0_#a3a3a3,0_15px_35px_-10px_rgba(255,255,255,0.4)]",
+                "active:shadow-[0_0px_0_0_#a3a3a3,0_0px_0px_rgba(255,255,255,0)] active:translate-y-[4px]",
+                (!termsAccepted || isLoading) && "opacity-50 pointer-events-none"
+              )}
             >
               {isLoading ? "Creating account..." : "Sign up"}
-            </Button>
+            </button>
           </form>
 
           {/* Social Signup */}
-          <div className="mt-6">
-            <div className="relative mb-6">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-white/10"></span>
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-[#0a0a0a] px-2 text-white/40">Or continue with</span>
-              </div>
-            </div>
-
-            <Button 
-              variant="outline" 
-              className="w-full h-12 bg-white/5 border-white/10 hover:bg-white/10 text-white hover:text-white transition-all duration-300 rounded-xl"
+          <div className="mt-6 flex flex-col gap-4">
+            <button 
               type="button"
+              disabled={!termsAccepted}
+              className={cn(
+                "w-full h-[52px] bg-[#222222] border border-white/5 shadow-[0_4px_0_0_#050505] hover:bg-[#2a2a2a] active:shadow-none active:translate-y-[4px] text-white/90 font-medium transition-all rounded-xl flex items-center justify-center gap-3 text-[15px] outline-none",
+                !termsAccepted && "opacity-50 pointer-events-none"
+              )}
             >
-              <svg className="mr-2 size-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="size-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
               Sign up with Google
-            </Button>
+            </button>
+
+            <button 
+              type="button"
+              disabled={!termsAccepted}
+              className={cn(
+                "w-full h-[52px] bg-[#222222] border border-white/5 shadow-[0_4px_0_0_#050505] hover:bg-[#2a2a2a] active:shadow-none active:translate-y-[4px] text-white/90 font-medium transition-all rounded-xl flex items-center justify-center gap-3 text-[15px] outline-none",
+                !termsAccepted && "opacity-50 pointer-events-none"
+              )}
+            >
+              <svg className="size-5 text-white/70" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              Sign up with LinkedIn
+            </button>
           </div>
 
           {/* Login Link */}
