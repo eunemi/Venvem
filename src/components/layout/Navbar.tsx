@@ -82,10 +82,10 @@ export function Navbar() {
   const logoElement = (
     <Link href="/" className="flex items-center group">
       <TextMarquee
-        prefix={<span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300 mr-1.5">Venvem/</span>}
+        prefix={<span className="font-matrixtype text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300 mr-1.5">Venvem/</span>}
         height={40}
         speed={1.5}
-        className="font-headline-lg-mobile text-xl font-bold tracking-tight drop-shadow-sm group-hover:opacity-80 transition-all duration-300"
+        className="font-matrixtype text-xl font-bold tracking-tight drop-shadow-sm group-hover:opacity-80 transition-all duration-300"
       >
         <span className="text-white">web apps</span>
         <span className="text-white">mobile apps</span>

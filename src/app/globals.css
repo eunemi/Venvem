@@ -56,6 +56,7 @@
   --font-display-lg: "Inter", sans-serif;
   --font-headline-lg-mobile: "Inter", sans-serif;
   --font-display-xl: "Inter", sans-serif;
+  --font-matrixtype: var(--font-matrixtype);
 
   --spacing-unit: 6px;
   --spacing-container-max: 1200px;
