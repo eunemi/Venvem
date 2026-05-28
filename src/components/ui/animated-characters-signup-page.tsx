@@ -372,11 +372,10 @@ function SignupPage() {
       {/* Left Content Section */}
       <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] p-12 text-white overflow-hidden shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-10">
         <div className="relative z-20">
-          <div className="flex items-center gap-2 text-lg font-semibold">
-            <div className="size-8 rounded-lg bg-white/10 border border-white/10 backdrop-blur-sm flex items-center justify-center">
-              <Sparkles className="size-4 text-white" />
-            </div>
-            <span>Venvem</span>
+          <div className="flex items-center group cursor-pointer">
+            <span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300">
+              Venvem
+            </span>
           </div>
         </div>
 
