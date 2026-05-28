@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { SearchBar } from '@/components/ui/search-bar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
-import { TextMarquee } from "@/components/ui/text-marquee";
 
 const AnimatedNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const defaultTextColor = 'text-gray-300';
@@ -81,19 +80,9 @@ export function Navbar() {
 
   const logoElement = (
     <Link href="/" className="flex items-center group">
-      <TextMarquee
-        prefix={<span className="font-matrixtype text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300 mr-1.5">Venvem/</span>}
-        height={40}
-        speed={1.5}
-        className="font-matrixtype text-xl font-bold tracking-tight drop-shadow-sm group-hover:opacity-80 transition-all duration-300"
-      >
-        <span className="text-white">web apps</span>
-        <span className="text-white">mobile apps</span>
-        <span className="text-white">AI models</span>
-        <span className="text-white">APIs</span>
-        <span className="text-white">UI/UX</span>
-        <span className="text-white">SaaS</span>
-      </TextMarquee>
+      <span className="font-matrixtype text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300">
+        Venvem
+      </span>
     </Link>
   );
 

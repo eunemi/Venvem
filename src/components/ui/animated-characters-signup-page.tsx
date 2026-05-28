@@ -8,7 +8,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Mail, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { TextMarquee } from "@/components/ui/text-marquee";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 function AnimatedInputWrapper({ children }: { children: React.ReactNode }) {
@@ -374,19 +373,9 @@ function SignupPage() {
       <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] p-12 text-white overflow-hidden shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-10">
         <div className="relative z-20">
           <Link href="/" className="flex items-center group cursor-pointer">
-            <TextMarquee
-              prefix={<span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300 mr-1.5">Venvem/</span>}
-              height={40}
-              speed={1.5}
-              className="font-headline-lg-mobile text-xl font-bold tracking-tight drop-shadow-sm group-hover:opacity-80 transition-all duration-300"
-            >
-              <span className="text-white">web apps</span>
-              <span className="text-white">mobile apps</span>
-              <span className="text-white">AI models</span>
-              <span className="text-white">APIs</span>
-              <span className="text-white">UI/UX</span>
-              <span className="text-white">SaaS</span>
-            </TextMarquee>
+            <span className="font-matrixtype text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300">
+              Venvem
+            </span>
           </Link>
         </div>
 
@@ -554,7 +543,7 @@ function SignupPage() {
             <div className="size-8 rounded-lg bg-white/10 flex items-center justify-center border border-white/10">
               <Sparkles className="size-4 text-white" />
             </div>
-            <span>Venvem</span>
+            <span className="font-matrixtype">Venvem</span>
           </div>
 
           {/* Header */}

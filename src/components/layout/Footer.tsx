@@ -12,7 +12,7 @@ export function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 px-8 max-w-[1400px] mx-auto relative z-10">
         <div className="col-span-1 lg:col-span-2 flex flex-col justify-between h-full">
           <div>
-            <div className="font-headline-lg-mobile text-[32px] font-light text-primary mb-6 tracking-tighter hover:text-white transition-colors duration-500">
+            <div className="font-matrixtype text-[32px] font-light text-primary mb-6 tracking-tighter hover:text-white transition-colors duration-500">
               Venvem
             </div>
             <p className="font-body-md text-[14px] text-zinc-400 font-light max-w-sm leading-relaxed">
