@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Mail, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { TextMarquee } from "@/components/ui/text-marquee";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 function AnimatedInputWrapper({ children }: { children: React.ReactNode }) {
@@ -56,8 +57,8 @@ interface PupilProps {
   forceLookY?: number;
 }
 
-const Pupil = ({ 
-  size = 12, 
+const Pupil = ({
+  size = 12,
   maxDistance = 5,
   pupilColor = "black",
   forceLookX,
@@ -134,9 +135,9 @@ interface EyeBallProps {
   forceLookY?: number;
 }
 
-const EyeBall = ({ 
-  size = 48, 
-  pupilSize = 16, 
+const EyeBall = ({
+  size = 48,
+  pupilSize = 16,
   maxDistance = 10,
   eyeColor = "white",
   pupilColor = "black",
@@ -372,18 +373,28 @@ function SignupPage() {
       {/* Left Content Section */}
       <div className="relative hidden lg:flex flex-col justify-between bg-[#050505] p-12 text-white overflow-hidden shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-10">
         <div className="relative z-20">
-          <div className="flex items-center group cursor-pointer">
-            <span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300">
-              Venvem
-            </span>
-          </div>
+          <Link href="/" className="flex items-center group cursor-pointer">
+            <TextMarquee
+              prefix={<span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300 mr-1.5">Venvem/</span>}
+              height={40}
+              speed={1.5}
+              className="font-headline-lg-mobile text-xl font-bold tracking-tight drop-shadow-sm group-hover:opacity-80 transition-all duration-300"
+            >
+              <span className="text-white">web apps</span>
+              <span className="text-white">mobile apps</span>
+              <span className="text-white">AI models</span>
+              <span className="text-white">APIs</span>
+              <span className="text-white">UI/UX</span>
+              <span className="text-white">SaaS</span>
+            </TextMarquee>
+          </Link>
         </div>
 
         <div className="relative z-20 flex items-end justify-center h-[500px]">
           {/* Cartoon Characters */}
           <div className="relative [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]" style={{ width: '550px', height: '400px' }}>
             {/* Purple tall rectangle character - Back layer */}
-            <div 
+            <div
               ref={purpleRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
               style={{
@@ -396,24 +407,24 @@ function SignupPage() {
                 transform: (password.length > 0 && showPassword)
                   ? `skewX(0deg)`
                   : (isTyping || (password.length > 0 && !showPassword))
-                    ? `skewX(${(purplePos.bodySkew || 0) - 12}deg) translateX(40px)` 
+                    ? `skewX(${(purplePos.bodySkew || 0) - 12}deg) translateX(40px)`
                     : `skewX(${purplePos.bodySkew || 0}deg)`,
                 transformOrigin: 'bottom center',
               }}
             >
-              <div 
+              <div
                 className="absolute flex gap-8 transition-all duration-700 ease-in-out"
                 style={{
                   left: (password.length > 0 && showPassword) ? `${20}px` : isLookingAtEachOther ? `${55}px` : `${45 + purplePos.faceX}px`,
                   top: (password.length > 0 && showPassword) ? `${35}px` : isLookingAtEachOther ? `${65}px` : `${40 + purplePos.faceY}px`,
                 }}
               >
-                <EyeBall 
+                <EyeBall
                   size={18} pupilSize={7} maxDistance={5} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isPurpleBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
                 />
-                <EyeBall 
+                <EyeBall
                   size={18} pupilSize={7} maxDistance={5} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isPurpleBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? (isPurplePeeking ? 4 : -4) : isLookingAtEachOther ? 3 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? (isPurplePeeking ? 5 : -4) : isLookingAtEachOther ? 4 : undefined}
@@ -422,7 +433,7 @@ function SignupPage() {
             </div>
 
             {/* Black tall rectangle character */}
-            <div 
+            <div
               ref={blackRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
               style={{
@@ -437,24 +448,24 @@ function SignupPage() {
                   : isLookingAtEachOther
                     ? `skewX(${(blackPos.bodySkew || 0) * 1.5 + 10}deg) translateX(20px)`
                     : (isTyping || (password.length > 0 && !showPassword))
-                      ? `skewX(${(blackPos.bodySkew || 0) * 1.5}deg)` 
+                      ? `skewX(${(blackPos.bodySkew || 0) * 1.5}deg)`
                       : `skewX(${blackPos.bodySkew || 0}deg)`,
                 transformOrigin: 'bottom center',
               }}
             >
-              <div 
+              <div
                 className="absolute flex gap-6 transition-all duration-700 ease-in-out"
                 style={{
                   left: (password.length > 0 && showPassword) ? `${10}px` : isLookingAtEachOther ? `${32}px` : `${26 + blackPos.faceX}px`,
                   top: (password.length > 0 && showPassword) ? `${28}px` : isLookingAtEachOther ? `${12}px` : `${32 + blackPos.faceY}px`,
                 }}
               >
-                <EyeBall 
+                <EyeBall
                   size={16} pupilSize={6} maxDistance={4} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isBlackBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
                 />
-                <EyeBall 
+                <EyeBall
                   size={16} pupilSize={6} maxDistance={4} eyeColor="white" pupilColor="#2D2D2D" isBlinking={isBlackBlinking}
                   forceLookX={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? 0 : undefined}
                   forceLookY={(password.length > 0 && showPassword) ? -4 : isLookingAtEachOther ? -4 : undefined}
@@ -463,7 +474,7 @@ function SignupPage() {
             </div>
 
             {/* Orange character */}
-            <div 
+            <div
               ref={orangeRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
               style={{
@@ -477,7 +488,7 @@ function SignupPage() {
                 transformOrigin: 'bottom center',
               }}
             >
-              <div 
+              <div
                 className="absolute flex gap-8 transition-all duration-200 ease-out"
                 style={{
                   left: (password.length > 0 && showPassword) ? `${50}px` : `${82 + (orangePos.faceX || 0)}px`,
@@ -490,7 +501,7 @@ function SignupPage() {
             </div>
 
             {/* Yellow character */}
-            <div 
+            <div
               ref={yellowRef}
               className="absolute bottom-0 transition-all duration-700 ease-in-out"
               style={{
@@ -504,7 +515,7 @@ function SignupPage() {
                 transformOrigin: 'bottom center',
               }}
             >
-              <div 
+              <div
                 className="absolute flex gap-6 transition-all duration-200 ease-out"
                 style={{
                   left: (password.length > 0 && showPassword) ? `${20}px` : `${52 + (yellowPos.faceX || 0)}px`,
@@ -514,7 +525,7 @@ function SignupPage() {
                 <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
                 <Pupil size={12} maxDistance={5} pupilColor="#2D2D2D" forceLookX={(password.length > 0 && showPassword) ? -5 : undefined} forceLookY={(password.length > 0 && showPassword) ? -4 : undefined} />
               </div>
-              <div 
+              <div
                 className="absolute w-20 h-[4px] bg-[#2D2D2D] rounded-full transition-all duration-200 ease-out"
                 style={{
                   left: (password.length > 0 && showPassword) ? `${10}px` : `${40 + (yellowPos.faceX || 0)}px`,
@@ -536,7 +547,7 @@ function SignupPage() {
       <div className="flex items-center justify-center p-8 bg-[#0a0a0a] relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[100px] pointer-events-none" />
-        
+
         <div className="w-full max-w-[420px] relative z-10">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-2 text-lg font-semibold mb-12 text-white">
@@ -615,17 +626,17 @@ function SignupPage() {
             </div>
 
             <div className="flex p-4 border border-white/10 bg-[#1c1c1c] rounded-xl items-start space-x-4 mb-2 shadow-sm">
-              <Checkbox 
-                id="terms" 
+              <Checkbox
+                id="terms"
                 checked={termsAccepted}
                 onCheckedChange={(checked) => setTermsAccepted(checked === true)}
-                className="border-white/30 mt-0.5 data-[state=checked]:bg-white data-[state=checked]:text-black size-5 rounded" 
+                className="border-white/30 mt-0.5 data-[state=checked]:bg-white data-[state=checked]:text-black size-5 rounded"
               />
               <Label
                 htmlFor="terms"
                 className="text-[15px] font-normal text-white/70 leading-snug cursor-pointer"
               >
-                I agree to the <Link href="/terms-of-service" className="text-[#3b82f6] hover:underline">Terms of Service</Link>, <Link href="/privacy-policy" className="text-[#3b82f6] hover:underline">Privacy Policy</Link> <br/> and <Link href="/release-agreement" className="text-[#3b82f6] hover:underline">Release Agreement</Link>
+                I agree to the <Link href="/terms-of-service" className="text-[#3b82f6] hover:underline">Terms of Service</Link>, <Link href="/privacy-policy" className="text-[#3b82f6] hover:underline">Privacy Policy</Link> <br /> and <Link href="/release-agreement" className="text-[#3b82f6] hover:underline">Release Agreement</Link>
               </Label>
             </div>
 
@@ -635,13 +646,13 @@ function SignupPage() {
               </div>
             )}
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isLoading || !termsAccepted}
               className={cn(
                 "w-full h-[52px] text-[15px] font-bold text-black rounded-xl mt-4 mb-2 transition-all outline-none flex items-center justify-center",
-                "bg-gradient-to-b from-white to-[#e5e5e5]", 
-                "shadow-[0_4px_0_0_#a3a3a3,0_10px_30px_-10px_rgba(255,255,255,0.3)]", 
+                "bg-gradient-to-b from-white to-[#e5e5e5]",
+                "shadow-[0_4px_0_0_#a3a3a3,0_10px_30px_-10px_rgba(255,255,255,0.3)]",
                 "border border-white/80",
                 "hover:to-[#f0f0f0] hover:shadow-[0_4px_0_0_#a3a3a3,0_15px_35px_-10px_rgba(255,255,255,0.4)]",
                 "active:shadow-[0_0px_0_0_#a3a3a3,0_0px_0px_rgba(255,255,255,0)] active:translate-y-[4px]",
@@ -654,7 +665,7 @@ function SignupPage() {
 
           {/* Social Signup */}
           <div className="mt-6 flex flex-col gap-4">
-            <button 
+            <button
               type="button"
               disabled={!termsAccepted}
               className={cn(
@@ -663,15 +674,15 @@ function SignupPage() {
               )}
             >
               <svg className="size-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
               </svg>
               Sign up with Google
             </button>
 
-            <button 
+            <button
               type="button"
               disabled={!termsAccepted}
               className={cn(
@@ -680,7 +691,7 @@ function SignupPage() {
               )}
             >
               <svg className="size-5 text-white/70" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
               Sign up with LinkedIn
             </button>

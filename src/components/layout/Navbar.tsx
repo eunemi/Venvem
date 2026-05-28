@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { SearchBar } from '@/components/ui/search-bar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
+import { TextMarquee } from "@/components/ui/text-marquee";
 
 const AnimatedNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
   const defaultTextColor = 'text-gray-300';
@@ -25,7 +26,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [headerShapeClass, setHeaderShapeClass] = useState('rounded-full');
   const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const [isVisible, setIsVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
@@ -37,14 +38,14 @@ export function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Hide on scroll down, show on scroll up
       if (currentScrollY > lastScrollY.current && currentScrollY > 20) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
+
       if (currentScrollY > 20) {
         setScrolled(true);
       } else {
@@ -53,7 +54,7 @@ export function Navbar() {
 
       lastScrollY.current = currentScrollY;
     };
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -80,9 +81,19 @@ export function Navbar() {
 
   const logoElement = (
     <Link href="/" className="flex items-center group">
-      <span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300">
-        Venvem
-      </span>
+      <TextMarquee
+        prefix={<span className="font-headline-lg-mobile text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/50 drop-shadow-sm group-hover:to-white/80 transition-all duration-300 mr-1.5">Venvem/</span>}
+        height={40}
+        speed={1.5}
+        className="font-headline-lg-mobile text-xl font-bold tracking-tight drop-shadow-sm group-hover:opacity-80 transition-all duration-300"
+      >
+        <span className="text-white">web apps</span>
+        <span className="text-white">mobile apps</span>
+        <span className="text-white">AI models</span>
+        <span className="text-white">APIs</span>
+        <span className="text-white">UI/UX</span>
+        <span className="text-white">SaaS</span>
+      </TextMarquee>
     </Link>
   );
 
@@ -95,21 +106,21 @@ export function Navbar() {
 
   const signupButtonElement = (
     <div className="relative group w-full sm:w-auto">
-       {/* Highly sophisticated and subtle gradient glow behind the button */}
-       <div className="absolute -inset-[1px] rounded-full
+      {/* Highly sophisticated and subtle gradient glow behind the button */}
+      <div className="absolute -inset-[1px] rounded-full
                      hidden sm:block
                      bg-gradient-to-r from-purple-500/50 via-cyan-400/50 to-purple-600/50
                      opacity-0 blur-[3px] pointer-events-none
                      transition-all duration-500 ease-out
                      group-hover:opacity-100 group-hover:blur-[6px]"></div>
-       <Link href="/login" className="relative z-10 px-5 py-1.5 sm:px-6 text-xs sm:text-sm font-medium text-white bg-zinc-900/80 hover:bg-zinc-900 border border-white/10 hover:border-white/20 backdrop-blur-md rounded-full transition-all duration-300 w-full sm:w-auto inline-flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-         Login
-       </Link>
+      <Link href="/login" className="relative z-10 px-5 py-1.5 sm:px-6 text-xs sm:text-sm font-medium text-white bg-zinc-900/80 hover:bg-zinc-900 border border-white/10 hover:border-white/20 backdrop-blur-md rounded-full transition-all duration-300 w-full sm:w-auto inline-flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+        Login
+      </Link>
     </div>
   );
 
   return (
-    <motion.header 
+    <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -120,7 +131,7 @@ export function Navbar() {
     >
       <div className="flex items-center justify-between w-full max-w-[1920px] mx-auto gap-x-10 lg:gap-x-24">
         <div className="flex items-center">
-           {logoElement}
+          {logoElement}
         </div>
 
         <nav className="hidden md:flex items-center space-x-12 text-sm">
@@ -138,9 +149,9 @@ export function Navbar() {
 
         <button className="sm:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none" onClick={toggleMenu} aria-label={isOpen ? 'Close Menu' : 'Open Menu'}>
           {isOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
           )}
         </button>
       </div>
