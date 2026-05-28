@@ -481,11 +481,7 @@ function SignupPage() {
           </div>
         </div>
 
-        <div className="relative z-20 flex items-center gap-8 text-sm text-white/60">
-          <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-          <Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
-          <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-        </div>
+
 
         {/* Trending Grid Background */}
         <div className="absolute inset-0 z-0 h-full w-full bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)]" />
