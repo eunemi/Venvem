@@ -8,6 +8,44 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Mail, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+
+function AnimatedInputWrapper({ children }: { children: React.ReactNode }) {
+  const radius = 100;
+  const [visible, setVisible] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: React.MouseEvent<HTMLDivElement>) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      style={{
+        background: useMotionTemplate`
+      radial-gradient(
+        ${visible ? radius + "px" : "0px"} circle at ${mouseX}px ${mouseY}px,
+        #3b82f6,
+        transparent 80%
+      )
+    `,
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      className="group/input rounded-xl p-[2px] transition duration-300"
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 
 interface PupilProps {
@@ -512,65 +550,71 @@ function SignupPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium text-white/80">Full Name</Label>
-              <div className="relative">
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="John Doe"
-                  value={name}
-                  autoComplete="name"
-                  onChange={(e) => setName(e.target.value)}
-                  onFocus={() => setIsTyping(true)}
-                  onBlur={() => setIsTyping(false)}
-                  required
-                  className="h-12 pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
-                />
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
-              </div>
+              <AnimatedInputWrapper>
+                <div className="relative">
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    value={name}
+                    autoComplete="name"
+                    onChange={(e) => setName(e.target.value)}
+                    onFocus={() => setIsTyping(true)}
+                    onBlur={() => setIsTyping(false)}
+                    required
+                    className="h-12 pl-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
+                  />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
+                </div>
+              </AnimatedInputWrapper>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium text-white/80">Email</Label>
-              <div className="relative">
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john@gmail.com"
-                  value={email}
-                  autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  onFocus={() => setIsTyping(true)}
-                  onBlur={() => setIsTyping(false)}
-                  required
-                  className="h-12 pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
-                />
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
-              </div>
+              <AnimatedInputWrapper>
+                <div className="relative">
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@gmail.com"
+                    value={email}
+                    autoComplete="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setIsTyping(true)}
+                    onBlur={() => setIsTyping(false)}
+                    required
+                    className="h-12 pl-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
+                  />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-white/40" />
+                </div>
+              </AnimatedInputWrapper>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium text-white/80">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="h-12 pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all rounded-xl"
-                />
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
-                  <span className="font-bold tracking-widest text-lg ml-0.5">***</span>
+              <AnimatedInputWrapper>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="h-12 pl-10 pr-10 bg-[#121212] border-white/5 text-white placeholder:text-white/30 focus:border-transparent focus:ring-0 transition-all rounded-xl"
+                  />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">
+                    <span className="font-bold tracking-widest text-lg ml-0.5">***</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
-                >
-                  {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
-                </button>
-              </div>
+              </AnimatedInputWrapper>
             </div>
 
             {error && (
