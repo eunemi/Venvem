@@ -16,6 +16,7 @@ export function LiquidMetalButton({
 }: LiquidMetalButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [ripples, setRipples] = useState<
     Array<{ x: number; y: number; id: number }>
   >([]);
@@ -128,7 +129,16 @@ export function LiquidMetalButton({
   const handleMouseLeave = () => {
     setIsHovered(false);
     setIsPressed(false);
+    setMousePos({ x: 0, y: 0 });
     shaderMount.current?.setSpeed?.(0.6);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setMousePos({ x, y });
   };
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -173,8 +183,10 @@ export function LiquidMetalButton({
             height: `${dimensions.height}px`,
             transformStyle: "preserve-3d",
             transition:
-              "all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.4s ease, height 0.4s ease",
-            transform: "none",
+              "transform 0.1s ease-out, width 0.4s ease, height 0.4s ease",
+            transform: isHovered
+              ? `scale(1.05) rotateX(${mousePos.y * -20}deg) rotateY(${mousePos.x * 20}deg)`
+              : "scale(1) rotateX(0deg) rotateY(0deg)",
           }}
         >
           <div
@@ -304,6 +316,7 @@ export function LiquidMetalButton({
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
             style={{
