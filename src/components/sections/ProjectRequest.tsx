@@ -2,267 +2,871 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { ArrowRight, Check, Paperclip, Sparkles, Upload } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import {
+  ArrowRight,
+  BadgeCheck,
+  BrainCircuit,
+  CalendarDays,
+  Check,
+  CheckCircle2,
+  ChevronLeft,
+  CircleDollarSign,
+  Clock3,
+  CreditCard,
+  DownloadCloud,
+  Gem,
+  KeyRound,
+  LayoutDashboard,
+  Lightbulb,
+  Mail,
+  MessagesSquare,
+  Monitor,
+  Paperclip,
+  PenLine,
+  RefreshCw,
+  Rocket,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Timer,
+  Upload,
+  UploadCloud,
+  WandSparkles,
+  Workflow,
+  type LucideIcon,
+} from 'lucide-react'
 
-const projectTypes = ['Website', 'App', 'AI Tool', 'Automation', 'Custom Software', 'Other']
-const featureOptions = ['Login system', 'Payment', 'Chat', 'File upload', 'Dashboard', 'Download option', 'AI feature', 'Other']
-const budgetOptions = ['Low', 'Medium', 'High', 'Not sure']
-const timelineOptions = ['Urgent', '1-2 weeks', '1 month', 'Flexible']
-
-const inputClass =
-  'w-full rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-4 py-3 text-[14px] text-white outline-none transition duration-300 placeholder:text-white/30 focus:border-white/20 focus:shadow-[0_0_0_1px_rgba(255,255,255,0.06)]'
-
-const labelClass = 'font-body-md text-[13px] text-white/75 font-light'
+import { cn } from '@/lib/utils'
 
 type ProjectRequestProps = {
   mode?: 'preview' | 'form'
 }
 
+type IntakeState = {
+  projectType: string
+  projectName: string
+  description: string
+  features: string[]
+  inspiration: string
+  fileName: string
+  budget: string
+  timeline: string
+  name: string
+  contact: string
+}
+
+type Choice = {
+  label: string
+  description: string
+  icon: LucideIcon
+}
+
+const initialState: IntakeState = {
+  projectType: '',
+  projectName: '',
+  description: '',
+  features: [],
+  inspiration: '',
+  fileName: '',
+  budget: '',
+  timeline: '',
+  name: '',
+  contact: '',
+}
+
+const steps = [
+  {
+    eyebrow: 'Step 01',
+    title: 'Define the build',
+    description: 'Pick the closest product shape. A rough category is enough to start.',
+  },
+  {
+    eyebrow: 'Step 02',
+    title: 'Shape the vision',
+    description: 'Drop the idea, features, and references that should guide the build.',
+  },
+  {
+    eyebrow: 'Step 03',
+    title: 'Lock the next move',
+    description: 'Share timing, budget comfort, and the best way to reach you.',
+  },
+]
+
+const projectTypes: Choice[] = [
+  { label: 'Website', description: 'Premium site, landing page, portfolio, or web presence.', icon: Monitor },
+  { label: 'App', description: 'Mobile-first product, client portal, or interactive platform.', icon: Smartphone },
+  { label: 'AI Tool', description: 'Chat, automation, assistants, document intelligence, or agents.', icon: BrainCircuit },
+  { label: 'Automation', description: 'Internal workflows, operations, dashboards, and integrations.', icon: Workflow },
+  { label: 'Custom Software', description: 'A bespoke system with product-grade architecture.', icon: Gem },
+  { label: 'Other', description: 'Something unusual that needs a custom conversation.', icon: Sparkles },
+]
+
+const featureOptions: Choice[] = [
+  { label: 'Login system', description: 'Secure accounts and roles.', icon: KeyRound },
+  { label: 'Payment', description: 'Checkout or subscriptions.', icon: CreditCard },
+  { label: 'Chat', description: 'Messaging or AI chat.', icon: MessagesSquare },
+  { label: 'File upload', description: 'Images, PDFs, or assets.', icon: UploadCloud },
+  { label: 'Dashboard', description: 'Analytics and admin views.', icon: LayoutDashboard },
+  { label: 'Download option', description: 'Exports and file delivery.', icon: DownloadCloud },
+  { label: 'AI feature', description: 'Smart generation or analysis.', icon: WandSparkles },
+  { label: 'Other', description: 'A custom capability.', icon: Sparkles },
+]
+
+const budgetOptions: Choice[] = [
+  { label: 'Low', description: 'Lean v1 with the essentials.', icon: CircleDollarSign },
+  { label: 'Medium', description: 'Balanced scope and polish.', icon: BadgeCheck },
+  { label: 'High', description: 'Premium execution and speed.', icon: Gem },
+  { label: 'Not sure', description: 'Help me shape the range.', icon: Lightbulb },
+]
+
+const timelineOptions: Choice[] = [
+  { label: 'Urgent', description: 'Move fast with sharp priorities.', icon: Timer },
+  { label: '1-2 weeks', description: 'A tight launch window.', icon: Clock3 },
+  { label: '1 month', description: 'Room for polish and iteration.', icon: CalendarDays },
+  { label: 'Flexible', description: 'Quality-first timeline.', icon: Sparkles },
+]
+
+const inputClass =
+  'w-full rounded-xl border border-white/[0.08] bg-black/35 px-4 py-3.5 text-[14px] text-white outline-none backdrop-blur-xl transition duration-300 placeholder:text-white/30 focus:border-white/25 focus:bg-white/[0.04] focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_30px_rgba(255,255,255,0.06)]'
+
+const labelClass = 'font-body-md text-[13px] text-white/72 font-light'
+
+const stepAnimation = {
+  initial: { opacity: 0, y: 18, filter: 'blur(8px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  exit: { opacity: 0, y: -14, filter: 'blur(8px)' },
+}
+
 export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
+  const [activeStep, setActiveStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const [form, setForm] = useState<IntakeState>(initialState)
+
+  const isFormMode = mode === 'form'
+  const progress = ((activeStep + 1) / steps.length) * 100
+  const primaryLabel =
+    activeStep === 0 ? 'Continue' : activeStep === 1 ? 'Review Request' : 'Submit Request'
+
+  const updateField = (field: keyof IntakeState, value: string) => {
+    setForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const toggleFeature = (feature: string) => {
+    setForm((current) => ({
+      ...current,
+      features: current.features.includes(feature)
+        ? current.features.filter((item) => item !== feature)
+        : [...current.features, feature],
+    }))
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (activeStep < steps.length - 1) {
+      setActiveStep((step) => step + 1)
+      return
+    }
+
     setSubmitted(true)
   }
 
-  const isFormMode = mode === 'form'
+  const resetRequest = () => {
+    setForm(initialState)
+    setActiveStep(0)
+    setSubmitted(false)
+  }
+
+  if (!isFormMode) {
+    return <ProjectRequestPreview />
+  }
 
   return (
-    <section
-      id={isFormMode ? 'project-request' : 'services'}
-      className={`py-40 relative z-10 overflow-hidden ${
-        isFormMode
-          ? 'bg-transparent'
-          : 'border-t border-white/5 bg-surface-container-lowest/80'
-      }`}
-    >
-      {!isFormMode && (
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,255,255,0.03)_0%,_transparent_60%)] pointer-events-none"></div>
-      )}
+    <section id="project-request" className="relative z-10 overflow-hidden py-24 sm:py-28 lg:py-32">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.035),transparent_24%,rgba(255,255,255,0.025)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
-      <div className="max-w-[1200px] mx-auto px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <div className={`lg:sticky lg:top-28 ${isFormMode ? 'p-8 lg:p-10' : ''}`}>
-            <div className={`inline-flex items-center gap-2 border px-4 py-2 rounded-full mb-7 ${isFormMode ? 'border-white/[0.12] bg-transparent backdrop-blur-sm' : 'border-white/10 bg-white/[0.03]'}`}>
+      <div className="relative mx-auto max-w-[1240px] px-5 sm:px-8">
+        <div className="grid min-w-0 grid-cols-1 gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10 xl:gap-14">
+          <RequestStudioPanel activeStep={activeStep} submitted={submitted} />
+
+          <div className="relative min-w-0">
+            <div className="pointer-events-none absolute -inset-px rounded-[28px] bg-[linear-gradient(135deg,rgba(255,255,255,0.26),rgba(255,255,255,0.04)_34%,rgba(163,184,255,0.22)_62%,rgba(255,255,255,0.08))] opacity-80" />
+            <div className="relative min-w-0 overflow-hidden rounded-[28px] border border-white/[0.08] bg-black/58 p-4 shadow-[0_40px_120px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl sm:p-6 lg:p-7">
+              <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.08),transparent_32%,rgba(163,184,255,0.04)_72%,transparent)]" />
+
+              {submitted ? (
+                <SuccessPanel onReset={resetRequest} />
+              ) : (
+                <form onSubmit={handleSubmit} className="relative">
+                  <div className="mb-7 flex flex-col gap-5 border-b border-white/[0.08] pb-6 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-3 py-1.5">
+                        <Sparkles className="h-3.5 w-3.5 text-secondary" />
+                        <span className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+                          {steps[activeStep].eyebrow}
+                        </span>
+                      </div>
+                      <h2 className="font-display-lg text-[30px] leading-tight tracking-tight text-white sm:text-[38px]">
+                        {steps[activeStep].title}
+                      </h2>
+                      <p className="mt-3 max-w-xl font-body-md text-[14px] leading-relaxed text-white/52">
+                        {steps[activeStep].description}
+                      </p>
+                    </div>
+
+                    <div className="min-w-[168px]">
+                      <div className="mb-2 flex items-center justify-between font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/38">
+                        <span>Brief</span>
+                        <span>{activeStep + 1}/3</span>
+                      </div>
+                      <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.07]">
+                        <motion.div
+                          className="h-full rounded-full bg-gradient-to-r from-white via-secondary to-white shadow-[0_0_28px_rgba(163,184,255,0.45)]"
+                          animate={{ width: `${progress}%` }}
+                          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeStep}
+                      variants={stepAnimation}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      className="min-h-[520px] min-w-0"
+                    >
+                      {activeStep === 0 && (
+                        <StepOne form={form} updateField={updateField} />
+                      )}
+                      {activeStep === 1 && (
+                        <StepTwo
+                          form={form}
+                          updateField={updateField}
+                          toggleFeature={toggleFeature}
+                        />
+                      )}
+                      {activeStep === 2 && (
+                        <StepThree form={form} updateField={updateField} />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+
+                  <div className="mt-7 flex flex-col gap-4 border-t border-white/[0.08] pt-6 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-2 text-[12px] font-light text-white/42">
+                      <Paperclip className="h-3.5 w-3.5" />
+                      <span>Links, screenshots, and rough notes are all welcome.</span>
+                    </div>
+
+                    <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center">
+                      {activeStep > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveStep((step) => Math.max(step - 1, 0))}
+                          className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-5 font-label-mono text-[10px] uppercase tracking-[0.16em] text-white/68 transition duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+                        >
+                          <ChevronLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+                          Back
+                        </button>
+                      )}
+
+                      <button
+                        type="submit"
+                        className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 font-label-mono text-[10px] uppercase tracking-[0.18em] text-black shadow-[0_0_42px_rgba(255,255,255,0.22),0_24px_70px_rgba(0,0,0,0.55)] transition duration-500 hover:bg-zinc-100 hover:shadow-[0_0_56px_rgba(255,255,255,0.28),0_28px_90px_rgba(0,0,0,0.7)]"
+                      >
+                        {primaryLabel}
+                        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function RequestStudioPanel({
+  activeStep,
+  submitted,
+}: {
+  activeStep: number
+  submitted: boolean
+}) {
+  return (
+    <aside className="relative min-w-0 lg:sticky lg:top-28">
+      <div className="relative min-w-0 overflow-hidden rounded-[28px] border border-white/[0.08] bg-black/45 p-5 shadow-[0_32px_100px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl sm:p-8 lg:p-9">
+        <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(150deg,rgba(255,255,255,0.08),transparent_36%,rgba(163,184,255,0.05)_76%,transparent)]" />
+
+        <div className="relative">
+          <div className="mb-7 inline-flex max-w-full items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-2">
+            <ShieldCheck className="h-3.5 w-3.5 text-secondary" />
+            <span className="truncate font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/58 sm:tracking-[0.22em]">
+              Private Request Studio
+            </span>
+          </div>
+
+          <h1 className="break-words font-display-lg text-[38px] leading-[1.02] tracking-tight text-gradient sm:text-[56px] sm:leading-[0.98] lg:text-[64px]">
+            Build a brief that feels investable.
+          </h1>
+
+          <p className="mt-6 max-w-xl font-body-lg text-[15px] font-light leading-relaxed text-white/56 sm:text-[16px]">
+            A focused intake for turning a raw idea into a clear product direction,
+            scope, and next step without forcing you to speak technical language.
+          </p>
+
+          <div className="mt-8 grid min-w-0 grid-cols-3 gap-2 sm:gap-3">
+            {[
+              ['48h', 'Reply'],
+              ['01', 'Founder led'],
+              ['Zero', 'Tech brief'],
+            ].map(([value, label]) => (
+              <div
+                key={label}
+                className="min-w-0 rounded-2xl border border-white/[0.08] bg-white/[0.035] px-2 py-4 text-center backdrop-blur-xl sm:px-3"
+              >
+                <div className="font-display-lg text-[20px] leading-none text-white">{value}</div>
+                <div className="mt-2 truncate font-label-mono text-[8px] uppercase tracking-[0.12em] text-white/38 sm:text-[9px] sm:tracking-[0.16em]">
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-white/[0.08] bg-black/32 p-5">
+            <div className="mb-5 flex items-center justify-between">
+              <span className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+                Intake Status
+              </span>
+              <span className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1 font-label-mono text-[9px] uppercase tracking-[0.16em] text-emerald-100/75">
+                {submitted ? 'Sealed' : 'Live'}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {steps.map((step, index) => {
+                const isDone = submitted || index < activeStep
+                const isActive = !submitted && index === activeStep
+
+                return (
+                  <div key={step.title} className="flex items-center gap-3">
+                    <span
+                      className={cn(
+                        'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[11px] transition duration-300',
+                        isDone
+                          ? 'border-white/30 bg-white text-black'
+                          : isActive
+                            ? 'border-secondary/45 bg-secondary/12 text-secondary shadow-[0_0_24px_rgba(163,184,255,0.16)]'
+                            : 'border-white/[0.08] bg-white/[0.03] text-white/32',
+                      )}
+                    >
+                      {isDone ? <Check className="h-3.5 w-3.5" /> : index + 1}
+                    </span>
+                    <div>
+                      <div className={cn('text-[13px]', isActive ? 'text-white' : 'text-white/62')}>
+                        {step.title}
+                      </div>
+                      <div className="font-label-mono text-[9px] uppercase tracking-[0.15em] text-white/30">
+                        {step.eyebrow}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-5 text-[13px] leading-relaxed text-white/50">
+            <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />
+            <p>
+              After submit, the next deliverable is a crisp scope, suggested stack,
+              estimated build path, and the best first milestone.
+            </p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  )
+}
+
+function StepOne({
+  form,
+  updateField,
+}: {
+  form: IntakeState
+  updateField: (field: keyof IntakeState, value: string) => void
+}) {
+  return (
+    <div className="min-w-0 space-y-7">
+      <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+        {projectTypes.map((type) => (
+          <ChoiceTile
+            key={type.label}
+            choice={type}
+            selected={form.projectType === type.label}
+            onClick={() => updateField('projectType', type.label)}
+          />
+        ))}
+      </div>
+
+      <label className="block space-y-2">
+        <span className={labelClass}>
+          Project Name <span className="text-white/35">(optional)</span>
+        </span>
+        <div className="relative">
+          <PenLine className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+          <input
+            value={form.projectName}
+            onChange={(event) => updateField('projectName', event.target.value)}
+            className={cn(inputClass, 'pl-11')}
+            placeholder="Example: Venvem AI client portal"
+          />
+        </div>
+      </label>
+    </div>
+  )
+}
+
+function StepTwo({
+  form,
+  updateField,
+  toggleFeature,
+}: {
+  form: IntakeState
+  updateField: (field: keyof IntakeState, value: string) => void
+  toggleFeature: (feature: string) => void
+}) {
+  return (
+    <div className="min-w-0 space-y-7">
+      <label className="block space-y-2">
+        <span className={labelClass}>Describe your idea</span>
+        <textarea
+          value={form.description}
+          onChange={(event) => updateField('description', event.target.value)}
+          className={cn(inputClass, 'min-h-40 resize-none leading-relaxed')}
+          placeholder='Example: "I want an AI website where users can upload files, ask questions, and download reports."'
+        />
+      </label>
+
+      <div className="space-y-3">
+        <div className="flex items-center justify-between gap-4">
+          <p className={labelClass}>Features you may need</p>
+          <span className="font-label-mono text-[9px] uppercase tracking-[0.16em] text-white/32">
+            Select all
+          </span>
+        </div>
+        <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {featureOptions.map((feature) => (
+            <FeatureTile
+              key={feature.label}
+              choice={feature}
+              selected={form.features.includes(feature.label)}
+              onClick={() => toggleFeature(feature.label)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <label className="block space-y-2">
+          <span className={labelClass}>Inspiration links</span>
+          <input
+            value={form.inspiration}
+            onChange={(event) => updateField('inspiration', event.target.value)}
+            className={inputClass}
+            placeholder="Paste websites, products, or references"
+          />
+        </label>
+
+        <label className="flex min-h-[78px] cursor-pointer items-center justify-center gap-3 rounded-xl border border-dashed border-white/[0.14] bg-white/[0.03] px-4 py-4 text-center text-[13px] font-light text-white/64 transition duration-300 hover:border-white/25 hover:bg-white/[0.06] lg:mt-7">
+          <Upload className="h-4 w-4 shrink-0 text-white/45" />
+          <span className="line-clamp-2">
+            {form.fileName || 'Upload screenshot'}
+          </span>
+          <input
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            onChange={(event) => updateField('fileName', event.target.files?.[0]?.name || '')}
+          />
+        </label>
+      </div>
+    </div>
+  )
+}
+
+function StepThree({
+  form,
+  updateField,
+}: {
+  form: IntakeState
+  updateField: (field: keyof IntakeState, value: string) => void
+}) {
+  return (
+    <div className="min-w-0 space-y-7">
+      <div className="grid min-w-0 grid-cols-1 gap-6 xl:grid-cols-2">
+        <div className="space-y-3">
+          <p className={labelClass}>
+            Budget comfort <span className="text-white/35">(optional)</span>
+          </p>
+          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            {budgetOptions.map((budget) => (
+              <CompactChoiceTile
+                key={budget.label}
+                choice={budget}
+                selected={form.budget === budget.label}
+                onClick={() => updateField('budget', budget.label)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <p className={labelClass}>When do you need it?</p>
+          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-1">
+            {timelineOptions.map((timeline) => (
+              <CompactChoiceTile
+                key={timeline.label}
+                choice={timeline}
+                selected={form.timeline === timeline.label}
+                onClick={() => updateField('timeline', timeline.label)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+        <label className="block space-y-2">
+          <span className={labelClass}>Your Name</span>
+          <input
+            value={form.name}
+            onChange={(event) => updateField('name', event.target.value)}
+            className={inputClass}
+            placeholder="Your name"
+          />
+        </label>
+
+        <label className="block space-y-2">
+          <span className={labelClass}>Email / WhatsApp</span>
+          <div className="relative">
+            <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+            <input
+              value={form.contact}
+              onChange={(event) => updateField('contact', event.target.value)}
+              className={cn(inputClass, 'pl-11')}
+              placeholder="Where should I reply?"
+            />
+          </div>
+        </label>
+      </div>
+
+      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-5">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <span className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-white/42">
+            Request Snapshot
+          </span>
+          <Sparkles className="h-4 w-4 text-secondary/80" />
+        </div>
+        <div className="grid min-w-0 grid-cols-1 gap-3 text-[13px] text-white/58 sm:grid-cols-2">
+          <SnapshotItem label="Product" value={form.projectType || 'Not selected yet'} />
+          <SnapshotItem label="Features" value={form.features.length ? `${form.features.length} selected` : 'Open to advise'} />
+          <SnapshotItem label="Budget" value={form.budget || 'Not sure'} />
+          <SnapshotItem label="Timeline" value={form.timeline || 'Flexible'} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ChoiceTile({
+  choice,
+  selected,
+  onClick,
+}: {
+  choice: Choice
+  selected: boolean
+  onClick: () => void
+}) {
+  const Icon = choice.icon
+
+  return (
+    <button
+      type="button"
+      aria-pressed={selected}
+      onClick={onClick}
+      className={cn(
+        'group relative flex min-h-[132px] min-w-0 w-full flex-col items-start overflow-hidden rounded-2xl border p-4 text-left transition duration-300',
+        selected
+          ? 'border-white/28 bg-white/[0.08] shadow-[0_0_36px_rgba(163,184,255,0.14),inset_0_1px_0_rgba(255,255,255,0.12)]'
+          : 'border-white/[0.08] bg-white/[0.025] hover:border-white/18 hover:bg-white/[0.05]',
+      )}
+    >
+      <span className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+      <span
+        className={cn(
+          'mb-4 flex h-10 w-10 items-center justify-center rounded-xl border transition duration-300',
+          selected
+            ? 'border-white/25 bg-white text-black'
+            : 'border-white/[0.08] bg-black/25 text-white/58 group-hover:text-white',
+        )}
+      >
+        <Icon className="h-4.5 w-4.5" />
+      </span>
+      <span className="text-[15px] font-medium text-white">{choice.label}</span>
+      <span className="mt-2 text-[12px] font-light leading-relaxed text-white/45">
+        {choice.description}
+      </span>
+    </button>
+  )
+}
+
+function FeatureTile({
+  choice,
+  selected,
+  onClick,
+}: {
+  choice: Choice
+  selected: boolean
+  onClick: () => void
+}) {
+  const Icon = choice.icon
+
+  return (
+    <button
+      type="button"
+      aria-pressed={selected}
+      onClick={onClick}
+      className={cn(
+        'group flex min-h-[112px] min-w-0 flex-col justify-between rounded-2xl border p-3.5 text-left transition duration-300',
+        selected
+          ? 'border-white/25 bg-white/[0.08] shadow-[0_0_26px_rgba(255,255,255,0.08)]'
+          : 'border-white/[0.08] bg-white/[0.025] hover:border-white/18 hover:bg-white/[0.05]',
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <span
+          className={cn(
+            'flex h-8 w-8 items-center justify-center rounded-lg border transition duration-300',
+            selected
+              ? 'border-white/25 bg-white text-black'
+              : 'border-white/[0.08] bg-black/25 text-white/52 group-hover:text-white',
+          )}
+        >
+          <Icon className="h-4 w-4" />
+        </span>
+        <span
+          className={cn(
+            'flex h-5 w-5 items-center justify-center rounded-full border transition duration-300',
+            selected ? 'border-white bg-white text-black' : 'border-white/[0.1] text-transparent',
+          )}
+        >
+          <Check className="h-3 w-3" />
+        </span>
+      </div>
+      <div>
+        <div className="text-[13px] font-medium text-white">{choice.label}</div>
+        <div className="mt-1 text-[11px] font-light leading-snug text-white/40">
+          {choice.description}
+        </div>
+      </div>
+    </button>
+  )
+}
+
+function CompactChoiceTile({
+  choice,
+  selected,
+  onClick,
+}: {
+  choice: Choice
+  selected: boolean
+  onClick: () => void
+}) {
+  const Icon = choice.icon
+
+  return (
+    <button
+      type="button"
+      aria-pressed={selected}
+      onClick={onClick}
+      className={cn(
+        'group flex min-h-[72px] min-w-0 items-center gap-3 rounded-2xl border px-4 py-3 text-left transition duration-300',
+        selected
+          ? 'border-white/25 bg-white/[0.08] shadow-[0_0_26px_rgba(163,184,255,0.1)]'
+          : 'border-white/[0.08] bg-white/[0.025] hover:border-white/18 hover:bg-white/[0.05]',
+      )}
+    >
+      <span
+        className={cn(
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition duration-300',
+          selected
+            ? 'border-white/25 bg-white text-black'
+            : 'border-white/[0.08] bg-black/25 text-white/52 group-hover:text-white',
+        )}
+      >
+        <Icon className="h-4 w-4" />
+      </span>
+      <span className="min-w-0">
+        <span className="block text-[13px] font-medium text-white">{choice.label}</span>
+        <span className="mt-1 block text-[11px] font-light leading-snug text-white/42">
+          {choice.description}
+        </span>
+      </span>
+    </button>
+  )
+}
+
+function SnapshotItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-black/22 px-4 py-3">
+      <div className="font-label-mono text-[9px] uppercase tracking-[0.15em] text-white/30">
+        {label}
+      </div>
+      <div className="mt-1 text-white/70">{value}</div>
+    </div>
+  )
+}
+
+function SuccessPanel({ onReset }: { onReset: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
+      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      className="relative overflow-hidden rounded-[22px] border border-white/[0.08] bg-white/[0.035] p-7 text-center sm:p-10"
+    >
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+
+      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white text-black shadow-[0_0_52px_rgba(255,255,255,0.22)]">
+        <CheckCircle2 className="h-7 w-7" />
+      </div>
+
+      <div className="mx-auto mt-7 max-w-xl">
+        <div className="font-label-mono text-[10px] uppercase tracking-[0.24em] text-secondary">
+          Request Sealed
+        </div>
+        <h2 className="mt-3 font-display-lg text-[36px] leading-tight tracking-tight text-white sm:text-[48px]">
+          Your project brief is ready for review.
+        </h2>
+        <p className="mt-4 text-[15px] font-light leading-relaxed text-white/55">
+          The next step is a clean scope, suggested build path, estimated milestone,
+          and the questions needed to turn this into a real product.
+        </p>
+      </div>
+
+      <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-3 text-left sm:grid-cols-3">
+        {[
+          ['Scope Review', 'Idea and core flow'],
+          ['Build Path', 'Stack and phases'],
+          ['Next Step', 'Clear milestone'],
+        ].map(([title, body]) => (
+          <div key={title} className="rounded-2xl border border-white/[0.08] bg-black/24 p-4">
+            <div className="text-[13px] font-medium text-white">{title}</div>
+            <div className="mt-1 text-[11px] font-light text-white/40">{body}</div>
+          </div>
+        ))}
+      </div>
+
+      <button
+        type="button"
+        onClick={onReset}
+        className="group mx-auto mt-8 inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/[0.12] bg-white/[0.04] px-6 font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/75 transition duration-300 hover:border-white/22 hover:bg-white/[0.08] hover:text-white"
+      >
+        <RefreshCw className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180" />
+        Start another request
+      </button>
+    </motion.div>
+  )
+}
+
+function ProjectRequestPreview() {
+  return (
+    <section
+      id="services"
+      className="relative z-10 overflow-hidden border-t border-white/5 bg-surface-container-lowest/80 py-40"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,255,255,0.03)_0%,_transparent_60%)]" />
+
+      <div className="mx-auto max-w-[1200px] px-8">
+        <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
+          <div className="lg:sticky lg:top-28">
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2">
               <Sparkles className="h-3.5 w-3.5 text-secondary" />
               <span className="font-label-mono text-[10px] uppercase tracking-[0.22em] text-on-surface-variant">
                 Project Request
               </span>
             </div>
 
-            <h2 className="font-display-lg text-[48px] md:text-[60px] tracking-tighter text-gradient mb-7 leading-[1.05]">
+            <h2 className="mb-7 font-display-lg text-[48px] leading-[1.05] tracking-tighter text-gradient md:text-[60px]">
               Tell Me What You Want to Build
             </h2>
-            <p className="font-body-lg text-[16px] text-on-surface-variant mb-8 font-light leading-relaxed max-w-xl">
+            <p className="mb-8 max-w-xl font-body-lg text-[16px] font-light leading-relaxed text-on-surface-variant">
               Describe your idea in simple words. I&apos;ll help turn it into a real product without asking you to know the technical details.
             </p>
 
-            <ul className="space-y-5 mb-10">
-              <li className="flex items-center gap-4 text-on-surface-variant font-body-md text-[15px] font-light">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-secondary/40 bg-secondary/10">
-                  <Check className="h-3.5 w-3.5 text-secondary" />
-                </span>
-                Share your idea in 2 minutes
-              </li>
-              <li className="flex items-center gap-4 text-on-surface-variant font-body-md text-[15px] font-light">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-secondary/40 bg-secondary/10">
-                  <Check className="h-3.5 w-3.5 text-secondary" />
-                </span>
-                Pick only what you already know
-              </li>
-              <li className="flex items-center gap-4 text-on-surface-variant font-body-md text-[15px] font-light">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-secondary/40 bg-secondary/10">
-                  <Check className="h-3.5 w-3.5 text-secondary" />
-                </span>
-                Get a clear next step after you submit
-              </li>
+            <ul className="mb-10 space-y-5">
+              {[
+                'Share your idea in 2 minutes',
+                'Pick only what you already know',
+                'Get a clear next step after you submit',
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center gap-4 font-body-md text-[15px] font-light text-on-surface-variant"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full border border-secondary/40 bg-secondary/10">
+                    <Check className="h-3.5 w-3.5 text-secondary" />
+                  </span>
+                  {item}
+                </li>
+              ))}
             </ul>
 
-            {isFormMode ? (
-              <div className="rounded-2xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-5 py-4 text-[14px] font-light text-white/65 max-w-xl">
-                A rough idea is enough. You do not need technical words to explain what you want.
-              </div>
-            ) : (
-              <Link
-                href="/project-request"
-                className="group inline-flex items-center justify-center gap-3 bg-white text-black px-7 py-3.5 rounded-full font-label-mono text-[10px] hover:bg-white/90 transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.15)] uppercase tracking-widest hover-float"
-              >
-                Start Your Request
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            )}
+            <Link
+              href="/project-request"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-3.5 font-label-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-500 hover:bg-white/90 hover-float"
+            >
+              Start Your Request
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </div>
 
-          <div className="relative lg:ml-auto w-full max-w-2xl">
-            {!isFormMode && (
-              <div className="absolute inset-0 bg-secondary/10 blur-[100px] rounded-full mix-blend-screen ambient-motion"></div>
-            )}
-
-            {isFormMode ? (
-              <div className="relative bg-transparent backdrop-blur-md border border-white/[0.07] rounded-2xl p-7 lg:p-8 ring-1 ring-white/[0.03]">
-                <div className="flex items-center justify-between mb-7 border-b border-white/10 pb-6">
-                  <div className="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-[0.2em]">
-                    Build Your Idea
-                  </div>
-                  <Sparkles className="h-4 w-4 text-on-surface-variant" />
+          <div className="relative w-full max-w-2xl lg:ml-auto">
+            <div className="absolute inset-0 rounded-full bg-secondary/10 blur-[100px] mix-blend-screen ambient-motion" />
+            <div className="relative rounded-2xl bg-glass-heavy p-7 premium-shadow hover-float border-glass inner-glow lg:p-8">
+              <div className="mb-7 flex items-center justify-between border-b border-white/10 pb-6">
+                <div className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
+                  Simple Start
                 </div>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <label className="space-y-2">
-                      <span className={labelClass}>What do you want?</span>
-                      <select className={`${inputClass} appearance-none`} defaultValue="">
-                        <option value="" disabled className="bg-black">
-                          Choose one
-                        </option>
-                        {projectTypes.map((type) => (
-                          <option key={type} value={type} className="bg-black">
-                            {type}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-
-                    <label className="space-y-2">
-                      <span className={labelClass}>Project Name <span className="text-white/35">(optional)</span></span>
-                      <input className={inputClass} placeholder="My project idea" />
-                    </label>
-                  </div>
-
-                  <label className="block space-y-2">
-                    <span className={labelClass}>Describe your idea</span>
-                    <textarea
-                      className={`${inputClass} min-h-36 resize-none leading-relaxed`}
-                      placeholder='Explain what you want in simple words. Example: "I want an AI website where users can upload files."'
-                    />
-                  </label>
-
-                  <div className="space-y-3">
-                    <p className={labelClass}>What features do you need?</p>
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                      {featureOptions.map((feature) => (
-                        <label
-                          key={feature}
-                          className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-3 py-2 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/15 has-[:checked]:border-white/20 has-[:checked]:bg-white/[0.06]"
-                        >
-                          <input type="checkbox" className="h-4 w-4 accent-white" />
-                          <span>{feature}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-[1fr_auto]">
-                    <label className="space-y-2">
-                      <span className={labelClass}>Do you have examples?</span>
-                      <input className={inputClass} placeholder="Paste website links" />
-                    </label>
-
-                    <label className="flex cursor-pointer items-center justify-center gap-3 rounded-xl border border-dashed border-white/[0.12] bg-transparent backdrop-blur-sm px-5 py-4 text-[13px] font-light text-white/70 transition duration-300 hover:border-white/25 sm:mt-7">
-                      <Upload className="h-4 w-4" />
-                      <span>Upload screenshot</span>
-                      <input type="file" accept="image/*" className="sr-only" />
-                    </label>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <div className="space-y-3">
-                      <p className={labelClass}>Budget <span className="text-white/35">(optional)</span></p>
-                      <div className="grid grid-cols-2 gap-3">
-                        {budgetOptions.map((budget) => (
-                          <label
-                            key={budget}
-                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-3 py-3 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/15 has-[:checked]:border-white/20 has-[:checked]:bg-white/[0.06]"
-                          >
-                            <input type="radio" name="budget" className="h-4 w-4 accent-white" />
-                            <span>{budget}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <p className={labelClass}>When do you need it?</p>
-                      <div className="grid grid-cols-2 gap-3">
-                        {timelineOptions.map((timeline) => (
-                          <label
-                            key={timeline}
-                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-white/[0.08] bg-transparent backdrop-blur-sm px-3 py-3 text-[13px] font-light text-white/75 transition duration-300 hover:border-white/15 has-[:checked]:border-white/20 has-[:checked]:bg-white/[0.06]"
-                          >
-                            <input type="radio" name="timeline" className="h-4 w-4 accent-white" />
-                            <span>{timeline}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <label className="space-y-2">
-                      <span className={labelClass}>Your Name</span>
-                      <input className={inputClass} placeholder="Your name" />
-                    </label>
-
-                    <label className="space-y-2">
-                      <span className={labelClass}>Email / WhatsApp</span>
-                      <input className={inputClass} placeholder="Where should I reply?" />
-                    </label>
-                  </div>
-
-                  <div className="flex flex-col gap-4 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-2 text-[12px] font-light text-white/45">
-                      <Paperclip className="h-3.5 w-3.5" />
-                      <span>Links and screenshots are optional.</span>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-3.5 font-label-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_40px_rgba(255,255,255,0.2),0_0_80px_rgba(100,50,250,0.1)] transition duration-500 hover:bg-white/90 hover:shadow-[0_0_50px_rgba(255,255,255,0.25),0_0_100px_rgba(100,50,250,0.15)]"
-                    >
-                      Submit Request
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </button>
-                  </div>
-
-                  {submitted && (
-                    <p className="rounded-xl border border-white/[0.1] bg-transparent backdrop-blur-sm px-4 py-3 text-[13px] font-light text-white/75">
-                      Thanks. Your request is ready to be reviewed.
-                    </p>
-                  )}
-                </form>
+                <Sparkles className="h-4 w-4 text-on-surface-variant" />
               </div>
-            ) : (
-              <div className="relative bg-glass-heavy border-glass inner-glow rounded-2xl p-7 lg:p-8 premium-shadow hover-float">
-                <div className="flex items-center justify-between mb-7 border-b border-white/10 pb-6">
-                  <div className="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-[0.2em]">
-                    Simple Start
-                  </div>
-                  <Sparkles className="h-4 w-4 text-on-surface-variant" />
-                </div>
 
-                <div className="space-y-4">
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                    <p className="font-body-md text-[14px] text-primary font-light mb-2">What do you want to build?</p>
-                    <p className="font-body-md text-[13px] text-on-surface-variant font-light leading-relaxed">
-                      Website, app, AI tool, automation, or something custom.
+              <div className="space-y-4">
+                {[
+                  ['What do you want to build?', 'Website, app, AI tool, automation, or something custom.'],
+                  ['Tell it in your words', 'No technical language needed. A rough idea is enough.'],
+                  ['Add examples if you have them', 'Links or screenshots help, but they are optional.'],
+                ].map(([title, body]) => (
+                  <div key={title} className="rounded-xl border border-white/5 bg-white/5 p-4">
+                    <p className="mb-2 font-body-md text-[14px] font-light text-primary">{title}</p>
+                    <p className="font-body-md text-[13px] font-light leading-relaxed text-on-surface-variant">
+                      {body}
                     </p>
                   </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                    <p className="font-body-md text-[14px] text-primary font-light mb-2">Tell it in your words</p>
-                    <p className="font-body-md text-[13px] text-on-surface-variant font-light leading-relaxed">
-                      No technical language needed. A rough idea is enough.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                    <p className="font-body-md text-[14px] text-primary font-light mb-2">Add examples if you have them</p>
-                    <p className="font-body-md text-[13px] text-on-surface-variant font-light leading-relaxed">
-                      Links or screenshots help, but they are optional.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
