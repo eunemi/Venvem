@@ -128,7 +128,7 @@ export function Navbar() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className={`fixed top-0 left-0 w-full z-50 overflow-hidden
+      className={`fixed top-0 left-0 w-full z-50
                        flex flex-col items-center
                        px-6 md:px-12 py-4 transition-colors duration-500 ease-in-out
                        ${scrolled ? 'bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-2xl' : 'bg-transparent border-transparent'}`}
