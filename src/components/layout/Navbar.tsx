@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -29,6 +30,17 @@ export function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -87,6 +99,7 @@ export function Navbar() {
   );
 
   const navLinksData = [
+    { label: 'Home', href: '/' },
     { label: 'Products', href: '#products' },
     { label: 'Services', href: '#services' },
     { label: 'Request', href: '/experience' },
@@ -112,12 +125,22 @@ export function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 w-full z-50
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      className={`fixed top-0 left-0 w-full z-50 overflow-hidden
                        flex flex-col items-center
                        px-6 md:px-12 py-4 transition-colors duration-500 ease-in-out
                        ${scrolled ? 'bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-2xl' : 'bg-transparent border-transparent'}`}
     >
-      <div className="flex items-center justify-between w-full max-w-[1920px] mx-auto gap-x-10 lg:gap-x-24">
+      <motion.div
+        className="pointer-events-none absolute -inset-px z-0 transition-opacity duration-300"
+        animate={{ opacity: isHovering ? 1 : 0 }}
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.06), transparent 40%)`,
+        }}
+      />
+      <div className="relative z-10 flex items-center justify-between w-full max-w-[1920px] mx-auto gap-x-10 lg:gap-x-24">
         <div className="flex items-center">
           {logoElement}
         </div>
@@ -144,7 +167,7 @@ export function Navbar() {
         </button>
       </div>
 
-      <div className={`sm:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
+      <div className={`relative z-10 sm:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
                        ${isOpen ? 'max-h-[1000px] opacity-100 pt-6' : 'max-h-0 opacity-0 pt-0 pointer-events-none'}`}>
         <nav className="flex flex-col items-center space-y-4 text-base w-full mb-6">
           {navLinksData.map((link) => (

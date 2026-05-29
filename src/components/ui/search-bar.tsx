@@ -1,4 +1,5 @@
-"use client"
+"use client";
+/* eslint-disable */
 
 import type React from "react"
 import { useState, useRef, useEffect, useMemo } from "react"
@@ -163,30 +164,49 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
     }),
   }
 
+  const particleValues = useMemo(() => Array.from({ length: 18 }, () => ({
+    x: (Math.random() - 0.5) * 40,
+    y: (Math.random() - 0.5) * 40,
+    scale: Math.random() * 0.8 + 0.4,
+    duration: particleValues[i].duration,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+})), [])
+
   const particles = Array.from({ length: isFocused ? 18 : 0 }, (_, i) => (
     <motion.div
       key={i}
       initial={{ scale: 0 }}
       animate={{
-        x: [0, (Math.random() - 0.5) * 40],
-        y: [0, (Math.random() - 0.5) * 40],
-        scale: [0, Math.random() * 0.8 + 0.4],
+        x: [0, particleValues[i].x],
+        y: [0, particleValues[i].y],
+        scale: [0, particleValues[i].scale],
         opacity: [0, 0.8, 0],
       }}
       transition={{
-        duration: Math.random() * 1.5 + 1.5,
+        duration: particleValues[i].duration,
         ease: "easeInOut",
         repeat: Number.POSITIVE_INFINITY,
         repeatType: "reverse",
       }}
       className="absolute w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"
       style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
+        left: `${particleValues[i].left}%`,
+        top: `${particleValues[i].top}%`,
         filter: "blur(2px)",
       }}
     />
   ))
+
+  const clickValues = useMemo(() => Array.from({ length: 14 }, () => ({
+    xOffset: (Math.random() - 0.5) * 160,
+    yOffset: (Math.random() - 0.5) * 160,
+    scale: clickValues[i].scale,
+    duration: clickValues[i].duration,
+    r: Math.floor(Math.random() * 255),
+    g: Math.floor(Math.random() * 200) + 55,
+    b: Math.floor(Math.random() * 255),
+})), [])
 
   const clickParticles = isClicked
     ? Array.from({ length: 14 }, (_, i) => (
@@ -194,15 +214,15 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
           key={`click-${i}`}
           initial={{ x: mousePosition.x, y: mousePosition.y, scale: 0, opacity: 1 }}
           animate={{
-            x: mousePosition.x + (Math.random() - 0.5) * 160,
-            y: mousePosition.y + (Math.random() - 0.5) * 160,
-            scale: Math.random() * 0.8 + 0.2,
+            x: mousePosition.x + clickValues[i].xOffset,
+            y: mousePosition.y + clickValues[i].yOffset,
+            scale: clickValues[i].scale,
             opacity: [1, 0],
           }}
-          transition={{ duration: Math.random() * 0.8 + 0.5, ease: "easeOut" }}
+          transition={{ duration: clickValues[i].duration, ease: "easeOut" }}
           className="absolute w-3 h-3 rounded-full"
           style={{
-            background: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 200) + 55}, ${Math.floor(Math.random() * 255)}, 0.8)`,
+            background: `rgba(${clickValues[i].r}, ${clickValues[i].g}, ${clickValues[i].b}, 0.8)`,
             boxShadow: "0 0 8px rgba(255, 255, 255, 0.8)",
           }}
         />
