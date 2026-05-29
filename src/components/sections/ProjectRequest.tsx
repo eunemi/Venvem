@@ -103,20 +103,20 @@ const projectTypes: Choice[] = [
 ]
 
 const featureOptions: Choice[] = [
-  { label: 'Login system', description: 'Secure accounts and roles.', icon: KeyRound },
-  { label: 'Payment', description: 'Checkout or subscriptions.', icon: CreditCard },
+  { label: 'Accounts', description: 'Secure login and roles.', icon: KeyRound },
+  { label: 'Payments', description: 'Checkout or subscriptions.', icon: CreditCard },
   { label: 'Chat', description: 'Messaging or AI chat.', icon: MessagesSquare },
-  { label: 'File upload', description: 'Images, PDFs, or assets.', icon: UploadCloud },
+  { label: 'Uploads', description: 'Images, PDFs, or assets.', icon: UploadCloud },
   { label: 'Dashboard', description: 'Analytics and admin views.', icon: LayoutDashboard },
-  { label: 'Download option', description: 'Exports and file delivery.', icon: DownloadCloud },
-  { label: 'AI feature', description: 'Smart generation or analysis.', icon: WandSparkles },
+  { label: 'Downloads', description: 'Exports and file delivery.', icon: DownloadCloud },
+  { label: 'AI layer', description: 'Smart generation or analysis.', icon: WandSparkles },
   { label: 'Other', description: 'A custom capability.', icon: Sparkles },
 ]
 
 const budgetOptions: Choice[] = [
-  { label: 'Low', description: 'Lean v1 with the essentials.', icon: CircleDollarSign },
-  { label: 'Medium', description: 'Balanced scope and polish.', icon: BadgeCheck },
-  { label: 'High', description: 'Premium execution and speed.', icon: Gem },
+  { label: 'Lean', description: 'A sharp v1 with essentials.', icon: CircleDollarSign },
+  { label: 'Balanced', description: 'Scope and polish in sync.', icon: BadgeCheck },
+  { label: 'Premium', description: 'Deep polish and speed.', icon: Gem },
   { label: 'Not sure', description: 'Help me shape the range.', icon: Lightbulb },
 ]
 
@@ -128,9 +128,9 @@ const timelineOptions: Choice[] = [
 ]
 
 const inputClass =
-  'w-full rounded-xl border border-white/[0.08] bg-black/35 px-4 py-3.5 text-[14px] text-white outline-none backdrop-blur-xl transition duration-300 placeholder:text-white/30 focus:border-white/25 focus:bg-white/[0.04] focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_30px_rgba(255,255,255,0.06)]'
+  'w-full rounded-xl border border-white/[0.08] bg-black/35 px-4 py-3 text-[13px] text-white outline-none backdrop-blur-xl transition duration-300 placeholder:text-white/30 focus:border-white/25 focus:bg-white/[0.04] focus:shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_30px_rgba(255,255,255,0.06)]'
 
-const labelClass = 'font-body-md text-[13px] text-white/72 font-light'
+const labelClass = 'font-body-md text-[12px] text-white/72 font-light'
 
 const stepAnimation = {
   initial: { opacity: 0, y: 18, filter: 'blur(8px)' },
@@ -183,17 +183,17 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
   }
 
   return (
-    <section id="project-request" className="relative z-10 overflow-hidden py-24 sm:py-28 lg:py-32">
+    <section id="project-request" className="relative z-10 overflow-hidden py-[72px] sm:py-[88px] lg:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.035),transparent_24%,rgba(255,255,255,0.025)_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
-      <div className="relative mx-auto max-w-[1240px] px-5 sm:px-8">
-        <div className="grid min-w-0 grid-cols-1 gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10 xl:gap-14">
+      <div className="relative mx-auto max-w-[1120px] px-5 sm:px-8">
+        <div className="grid min-w-0 grid-cols-1 items-start gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:gap-8 xl:gap-10">
           <RequestStudioPanel activeStep={activeStep} submitted={submitted} />
 
           <div className="relative min-w-0">
             <div className="pointer-events-none absolute -inset-px rounded-[28px] bg-[linear-gradient(135deg,rgba(255,255,255,0.26),rgba(255,255,255,0.04)_34%,rgba(163,184,255,0.22)_62%,rgba(255,255,255,0.08))] opacity-80" />
-            <div className="relative min-w-0 overflow-hidden rounded-[28px] border border-white/[0.08] bg-black/58 p-4 shadow-[0_40px_120px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl sm:p-6 lg:p-7">
+            <div className="relative min-w-0 overflow-hidden rounded-[26px] border border-white/[0.08] bg-black/58 p-4 shadow-[0_32px_90px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl sm:p-5 lg:p-6">
               <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.08),transparent_32%,rgba(163,184,255,0.04)_72%,transparent)]" />
 
@@ -201,7 +201,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                 <SuccessPanel onReset={resetRequest} />
               ) : (
                 <form onSubmit={handleSubmit} className="relative">
-                  <div className="mb-7 flex flex-col gap-5 border-b border-white/[0.08] pb-6 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="mb-5 flex flex-col gap-4 border-b border-white/[0.08] pb-5 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                       <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-3 py-1.5">
                         <Sparkles className="h-3.5 w-3.5 text-secondary" />
@@ -209,10 +209,10 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                           {steps[activeStep].eyebrow}
                         </span>
                       </div>
-                      <h2 className="font-display-lg text-[30px] leading-tight tracking-tight text-white sm:text-[38px]">
+                      <h2 className="font-display-lg text-[27px] leading-tight tracking-tight text-white sm:text-[34px]">
                         {steps[activeStep].title}
                       </h2>
-                      <p className="mt-3 max-w-xl font-body-md text-[14px] leading-relaxed text-white/52">
+                      <p className="mt-2.5 max-w-xl font-body-md text-[13px] leading-relaxed text-white/52">
                         {steps[activeStep].description}
                       </p>
                     </div>
@@ -240,7 +240,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                       animate="animate"
                       exit="exit"
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                      className="min-h-[520px] min-w-0"
+                      className="min-h-[430px] min-w-0"
                     >
                       {activeStep === 0 && (
                         <StepOne form={form} updateField={updateField} />
@@ -258,7 +258,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                     </motion.div>
                   </AnimatePresence>
 
-                  <div className="mt-7 flex flex-col gap-4 border-t border-white/[0.08] pt-6 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="mt-6 flex flex-col gap-4 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-2 text-[12px] font-light text-white/42">
                       <Paperclip className="h-3.5 w-3.5" />
                       <span>Links, screenshots, and rough notes are all welcome.</span>
@@ -269,7 +269,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                         <button
                           type="button"
                           onClick={() => setActiveStep((step) => Math.max(step - 1, 0))}
-                          className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-5 font-label-mono text-[10px] uppercase tracking-[0.16em] text-white/68 transition duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:text-white"
+                          className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-5 font-label-mono text-[10px] uppercase tracking-[0.16em] text-white/68 transition duration-300 hover:border-white/20 hover:bg-white/[0.07] hover:text-white sm:w-auto"
                         >
                           <ChevronLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
                           Back
@@ -278,7 +278,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
 
                       <button
                         type="submit"
-                        className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 font-label-mono text-[10px] uppercase tracking-[0.18em] text-black shadow-[0_0_42px_rgba(255,255,255,0.22),0_24px_70px_rgba(0,0,0,0.55)] transition duration-500 hover:bg-zinc-100 hover:shadow-[0_0_56px_rgba(255,255,255,0.28),0_28px_90px_rgba(0,0,0,0.7)]"
+                        className="group inline-flex min-h-11 w-full items-center justify-center gap-3 whitespace-nowrap rounded-full bg-white px-6 font-label-mono text-[10px] uppercase tracking-[0.18em] text-black shadow-[0_0_36px_rgba(255,255,255,0.2),0_20px_58px_rgba(0,0,0,0.52)] transition duration-500 hover:bg-zinc-100 hover:shadow-[0_0_48px_rgba(255,255,255,0.25),0_24px_76px_rgba(0,0,0,0.68)] sm:w-auto sm:min-w-[156px]"
                       >
                         {primaryLabel}
                         <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -303,39 +303,39 @@ function RequestStudioPanel({
   submitted: boolean
 }) {
   return (
-    <aside className="relative min-w-0 lg:sticky lg:top-28">
-      <div className="relative min-w-0 overflow-hidden rounded-[28px] border border-white/[0.08] bg-black/45 p-5 shadow-[0_32px_100px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl sm:p-8 lg:p-9">
+    <aside className="relative min-w-0 lg:sticky lg:top-24">
+      <div className="relative min-w-0 overflow-hidden rounded-[26px] border border-white/[0.08] bg-black/45 p-5 shadow-[0_28px_80px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl sm:p-7 lg:p-8">
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(150deg,rgba(255,255,255,0.08),transparent_36%,rgba(163,184,255,0.05)_76%,transparent)]" />
 
         <div className="relative">
-          <div className="mb-7 inline-flex max-w-full items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-2">
+          <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-3.5 py-1.5">
             <ShieldCheck className="h-3.5 w-3.5 text-secondary" />
             <span className="truncate font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/58 sm:tracking-[0.22em]">
               Private Request Studio
             </span>
           </div>
 
-          <h1 className="break-words font-display-lg text-[38px] leading-[1.02] tracking-tight text-gradient sm:text-[56px] sm:leading-[0.98] lg:text-[64px]">
+          <h1 className="break-words font-display-lg text-[34px] leading-[1.04] tracking-tight text-gradient sm:text-[46px] sm:leading-[1] lg:text-[52px]">
             Build a brief that feels investable.
           </h1>
 
-          <p className="mt-6 max-w-xl font-body-lg text-[15px] font-light leading-relaxed text-white/56 sm:text-[16px]">
+          <p className="mt-5 max-w-xl font-body-lg text-[14px] font-light leading-relaxed text-white/56 sm:text-[15px]">
             A focused intake for turning a raw idea into a clear product direction,
             scope, and next step without forcing you to speak technical language.
           </p>
 
-          <div className="mt-8 grid min-w-0 grid-cols-3 gap-2 sm:gap-3">
+          <div className="mt-6 grid min-w-0 grid-cols-3 gap-2 sm:gap-3">
             {[
-              ['48h', 'Reply'],
+              ['48h', 'Review'],
               ['01', 'Founder led'],
-              ['Zero', 'Tech brief'],
+              ['Zero', 'Jargon'],
             ].map(([value, label]) => (
               <div
                 key={label}
-                className="min-w-0 rounded-2xl border border-white/[0.08] bg-white/[0.035] px-2 py-4 text-center backdrop-blur-xl sm:px-3"
+                className="min-w-0 rounded-2xl border border-white/[0.08] bg-white/[0.035] px-2 py-3 text-center backdrop-blur-xl sm:px-3"
               >
-                <div className="font-display-lg text-[20px] leading-none text-white">{value}</div>
+                <div className="font-display-lg text-[18px] leading-none text-white">{value}</div>
                 <div className="mt-2 truncate font-label-mono text-[8px] uppercase tracking-[0.12em] text-white/38 sm:text-[9px] sm:tracking-[0.16em]">
                   {label}
                 </div>
@@ -343,8 +343,8 @@ function RequestStudioPanel({
             ))}
           </div>
 
-          <div className="mt-8 rounded-2xl border border-white/[0.08] bg-black/32 p-5">
-            <div className="mb-5 flex items-center justify-between">
+          <div className="mt-6 rounded-2xl border border-white/[0.08] bg-black/32 p-4">
+            <div className="mb-4 flex items-center justify-between">
               <span className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
                 Intake Status
               </span>
@@ -362,7 +362,7 @@ function RequestStudioPanel({
                   <div key={step.title} className="flex items-center gap-3">
                     <span
                       className={cn(
-                        'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[11px] transition duration-300',
+                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[10px] transition duration-300',
                         isDone
                           ? 'border-white/30 bg-white text-black'
                           : isActive
@@ -370,10 +370,10 @@ function RequestStudioPanel({
                             : 'border-white/[0.08] bg-white/[0.03] text-white/32',
                       )}
                     >
-                      {isDone ? <Check className="h-3.5 w-3.5" /> : index + 1}
+                      {isDone ? <Check className="h-3 w-3" /> : index + 1}
                     </span>
                     <div>
-                      <div className={cn('text-[13px]', isActive ? 'text-white' : 'text-white/62')}>
+                      <div className={cn('text-[12px]', isActive ? 'text-white' : 'text-white/62')}>
                         {step.title}
                       </div>
                       <div className="font-label-mono text-[9px] uppercase tracking-[0.15em] text-white/30">
@@ -386,7 +386,7 @@ function RequestStudioPanel({
             </div>
           </div>
 
-          <div className="mt-6 flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-5 text-[13px] leading-relaxed text-white/50">
+          <div className="mt-5 flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4 text-[12px] leading-relaxed text-white/50">
             <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />
             <p>
               After submit, the next deliverable is a crisp scope, suggested stack,
@@ -453,7 +453,7 @@ function StepTwo({
         <textarea
           value={form.description}
           onChange={(event) => updateField('description', event.target.value)}
-          className={cn(inputClass, 'min-h-40 resize-none leading-relaxed')}
+          className={cn(inputClass, 'min-h-32 resize-none leading-relaxed sm:min-h-36')}
           placeholder='Example: "I want an AI website where users can upload files, ask questions, and download reports."'
         />
       </label>
@@ -488,7 +488,7 @@ function StepTwo({
           />
         </label>
 
-        <label className="flex min-h-[78px] cursor-pointer items-center justify-center gap-3 rounded-xl border border-dashed border-white/[0.14] bg-white/[0.03] px-4 py-4 text-center text-[13px] font-light text-white/64 transition duration-300 hover:border-white/25 hover:bg-white/[0.06] lg:mt-7">
+        <label className="flex min-h-[68px] cursor-pointer items-center justify-center gap-3 rounded-xl border border-dashed border-white/[0.14] bg-white/[0.03] px-4 py-3 text-center text-[12px] font-light text-white/64 transition duration-300 hover:border-white/25 hover:bg-white/[0.06] lg:mt-6">
           <Upload className="h-4 w-4 shrink-0 text-white/45" />
           <span className="line-clamp-2">
             {form.fileName || 'Upload screenshot'}
@@ -571,8 +571,8 @@ function StepThree({
         </label>
       </div>
 
-      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-5">
-        <div className="mb-4 flex items-center justify-between gap-4">
+      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4">
+        <div className="mb-3 flex items-center justify-between gap-4">
           <span className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-white/42">
             Request Snapshot
           </span>
@@ -606,7 +606,7 @@ function ChoiceTile({
       aria-pressed={selected}
       onClick={onClick}
       className={cn(
-        'group relative flex min-h-[132px] min-w-0 w-full flex-col items-start overflow-hidden rounded-2xl border p-4 text-left transition duration-300',
+        'group relative flex min-h-[116px] min-w-0 w-full flex-col items-start overflow-hidden rounded-2xl border p-3.5 text-left transition duration-300',
         selected
           ? 'border-white/28 bg-white/[0.08] shadow-[0_0_36px_rgba(163,184,255,0.14),inset_0_1px_0_rgba(255,255,255,0.12)]'
           : 'border-white/[0.08] bg-white/[0.025] hover:border-white/18 hover:bg-white/[0.05]',
@@ -615,16 +615,24 @@ function ChoiceTile({
       <span className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
       <span
         className={cn(
-          'mb-4 flex h-10 w-10 items-center justify-center rounded-xl border transition duration-300',
+          'absolute right-3.5 top-3.5 flex h-5 w-5 items-center justify-center rounded-full border transition duration-300',
+          selected ? 'border-white bg-white text-black' : 'border-white/[0.1] text-transparent',
+        )}
+      >
+        <Check className="h-3 w-3" />
+      </span>
+      <span
+        className={cn(
+          'mb-3 flex h-9 w-9 items-center justify-center rounded-xl border transition duration-300',
           selected
             ? 'border-white/25 bg-white text-black'
             : 'border-white/[0.08] bg-black/25 text-white/58 group-hover:text-white',
         )}
       >
-        <Icon className="h-4.5 w-4.5" />
+        <Icon className="h-[18px] w-[18px]" />
       </span>
-      <span className="text-[15px] font-medium text-white">{choice.label}</span>
-      <span className="mt-2 text-[12px] font-light leading-relaxed text-white/45">
+      <span className="text-[14px] font-medium text-white">{choice.label}</span>
+      <span className="mt-1.5 text-[11px] font-light leading-relaxed text-white/45">
         {choice.description}
       </span>
     </button>
@@ -648,7 +656,7 @@ function FeatureTile({
       aria-pressed={selected}
       onClick={onClick}
       className={cn(
-        'group flex min-h-[112px] min-w-0 flex-col justify-between rounded-2xl border p-3.5 text-left transition duration-300',
+        'group flex min-h-[96px] min-w-0 flex-col justify-between rounded-2xl border p-3 text-left transition duration-300',
         selected
           ? 'border-white/25 bg-white/[0.08] shadow-[0_0_26px_rgba(255,255,255,0.08)]'
           : 'border-white/[0.08] bg-white/[0.025] hover:border-white/18 hover:bg-white/[0.05]',
@@ -657,7 +665,7 @@ function FeatureTile({
       <div className="flex items-center justify-between">
         <span
           className={cn(
-            'flex h-8 w-8 items-center justify-center rounded-lg border transition duration-300',
+            'flex h-7 w-7 items-center justify-center rounded-lg border transition duration-300',
             selected
               ? 'border-white/25 bg-white text-black'
               : 'border-white/[0.08] bg-black/25 text-white/52 group-hover:text-white',
@@ -675,7 +683,7 @@ function FeatureTile({
         </span>
       </div>
       <div>
-        <div className="text-[13px] font-medium text-white">{choice.label}</div>
+        <div className="text-[12px] font-medium text-white">{choice.label}</div>
         <div className="mt-1 text-[11px] font-light leading-snug text-white/40">
           {choice.description}
         </div>
@@ -701,7 +709,7 @@ function CompactChoiceTile({
       aria-pressed={selected}
       onClick={onClick}
       className={cn(
-        'group flex min-h-[72px] min-w-0 items-center gap-3 rounded-2xl border px-4 py-3 text-left transition duration-300',
+        'group flex min-h-[62px] min-w-0 items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition duration-300',
         selected
           ? 'border-white/25 bg-white/[0.08] shadow-[0_0_26px_rgba(163,184,255,0.1)]'
           : 'border-white/[0.08] bg-white/[0.025] hover:border-white/18 hover:bg-white/[0.05]',
@@ -709,7 +717,7 @@ function CompactChoiceTile({
     >
       <span
         className={cn(
-          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border transition duration-300',
+          'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition duration-300',
           selected
             ? 'border-white/25 bg-white text-black'
             : 'border-white/[0.08] bg-black/25 text-white/52 group-hover:text-white',
@@ -718,7 +726,7 @@ function CompactChoiceTile({
         <Icon className="h-4 w-4" />
       </span>
       <span className="min-w-0">
-        <span className="block text-[13px] font-medium text-white">{choice.label}</span>
+        <span className="block text-[12px] font-medium text-white">{choice.label}</span>
         <span className="mt-1 block text-[11px] font-light leading-snug text-white/42">
           {choice.description}
         </span>
@@ -729,7 +737,7 @@ function CompactChoiceTile({
 
 function SnapshotItem({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-black/22 px-4 py-3">
+    <div className="rounded-xl border border-white/[0.06] bg-black/22 px-3.5 py-2.5">
       <div className="font-label-mono text-[9px] uppercase tracking-[0.15em] text-white/30">
         {label}
       </div>
@@ -744,35 +752,35 @@ function SuccessPanel({ onReset }: { onReset: () => void }) {
       initial={{ opacity: 0, y: 18, filter: 'blur(8px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-[22px] border border-white/[0.08] bg-white/[0.035] p-7 text-center sm:p-10"
+      className="relative overflow-hidden rounded-[22px] border border-white/[0.08] bg-white/[0.035] p-6 text-center sm:p-8"
     >
       <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
 
-      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-white text-black shadow-[0_0_52px_rgba(255,255,255,0.22)]">
-        <CheckCircle2 className="h-7 w-7" />
+      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white text-black shadow-[0_0_42px_rgba(255,255,255,0.2)]">
+        <CheckCircle2 className="h-6 w-6" />
       </div>
 
-      <div className="mx-auto mt-7 max-w-xl">
+      <div className="mx-auto mt-6 max-w-xl">
         <div className="font-label-mono text-[10px] uppercase tracking-[0.24em] text-secondary">
           Request Sealed
         </div>
-        <h2 className="mt-3 font-display-lg text-[36px] leading-tight tracking-tight text-white sm:text-[48px]">
+        <h2 className="mt-3 font-display-lg text-[31px] leading-tight tracking-tight text-white sm:text-[40px]">
           Your project brief is ready for review.
         </h2>
-        <p className="mt-4 text-[15px] font-light leading-relaxed text-white/55">
+        <p className="mt-4 text-[14px] font-light leading-relaxed text-white/55">
           The next step is a clean scope, suggested build path, estimated milestone,
           and the questions needed to turn this into a real product.
         </p>
       </div>
 
-      <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-3 text-left sm:grid-cols-3">
+      <div className="mx-auto mt-6 grid max-w-2xl grid-cols-1 gap-3 text-left sm:grid-cols-3">
         {[
           ['Scope Review', 'Idea and core flow'],
           ['Build Path', 'Stack and phases'],
           ['Next Step', 'Clear milestone'],
         ].map(([title, body]) => (
-          <div key={title} className="rounded-2xl border border-white/[0.08] bg-black/24 p-4">
-            <div className="text-[13px] font-medium text-white">{title}</div>
+          <div key={title} className="rounded-2xl border border-white/[0.08] bg-black/24 p-3.5">
+            <div className="text-[12px] font-medium text-white">{title}</div>
             <div className="mt-1 text-[11px] font-light text-white/40">{body}</div>
           </div>
         ))}
@@ -781,7 +789,7 @@ function SuccessPanel({ onReset }: { onReset: () => void }) {
       <button
         type="button"
         onClick={onReset}
-        className="group mx-auto mt-8 inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/[0.12] bg-white/[0.04] px-6 font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/75 transition duration-300 hover:border-white/22 hover:bg-white/[0.08] hover:text-white"
+        className="group mx-auto mt-6 inline-flex min-h-11 items-center justify-center gap-3 rounded-full border border-white/[0.12] bg-white/[0.04] px-5 font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/75 transition duration-300 hover:border-white/22 hover:bg-white/[0.08] hover:text-white"
       >
         <RefreshCw className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180" />
         Start another request
@@ -794,12 +802,12 @@ function ProjectRequestPreview() {
   return (
     <section
       id="services"
-      className="relative z-10 overflow-hidden border-t border-white/5 bg-surface-container-lowest/80 py-40"
+      className="relative z-10 overflow-hidden border-t border-white/5 bg-surface-container-lowest/80 py-32"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,255,255,0.03)_0%,_transparent_60%)]" />
 
       <div className="mx-auto max-w-[1200px] px-8">
-        <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-28">
             <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2">
               <Sparkles className="h-3.5 w-3.5 text-secondary" />
@@ -808,14 +816,14 @@ function ProjectRequestPreview() {
               </span>
             </div>
 
-            <h2 className="mb-7 font-display-lg text-[48px] leading-[1.05] tracking-tighter text-gradient md:text-[60px]">
+            <h2 className="mb-6 font-display-lg text-[42px] leading-[1.05] tracking-tighter text-gradient md:text-[54px]">
               Tell Me What You Want to Build
             </h2>
-            <p className="mb-8 max-w-xl font-body-lg text-[16px] font-light leading-relaxed text-on-surface-variant">
+            <p className="mb-7 max-w-xl font-body-lg text-[15px] font-light leading-relaxed text-on-surface-variant">
               Describe your idea in simple words. I&apos;ll help turn it into a real product without asking you to know the technical details.
             </p>
 
-            <ul className="mb-10 space-y-5">
+            <ul className="mb-8 space-y-4">
               {[
                 'Share your idea in 2 minutes',
                 'Pick only what you already know',
@@ -835,7 +843,7 @@ function ProjectRequestPreview() {
 
             <Link
               href="/project-request"
-              className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-3.5 font-label-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-500 hover:bg-white/90 hover-float"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-6 py-3 font-label-mono text-[10px] uppercase tracking-widest text-black shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-500 hover:bg-white/90 hover-float"
             >
               Start Your Request
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -844,8 +852,8 @@ function ProjectRequestPreview() {
 
           <div className="relative w-full max-w-2xl lg:ml-auto">
             <div className="absolute inset-0 rounded-full bg-secondary/10 blur-[100px] mix-blend-screen ambient-motion" />
-            <div className="relative rounded-2xl bg-glass-heavy p-7 premium-shadow hover-float border-glass inner-glow lg:p-8">
-              <div className="mb-7 flex items-center justify-between border-b border-white/10 pb-6">
+            <div className="relative rounded-2xl bg-glass-heavy p-6 premium-shadow hover-float border-glass inner-glow lg:p-7">
+              <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-5">
                 <div className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
                   Simple Start
                 </div>
