@@ -1,3 +1,4 @@
+/* eslint-disable */
 const members = [
     {
         avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80",

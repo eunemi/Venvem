@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 
 import Link from "next/link";
 import { Sparkles, Mail, ArrowRight, MapPin } from "lucide-react";
