@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
+import { useRouter } from 'next/navigation';
 
 const LiquidBackground = () => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -64,6 +65,7 @@ export const Component = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -109,19 +111,19 @@ export const Component = () => {
              <div className="relative w-2.5 h-2.5 bg-white rounded-full">
                 <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-30" />
              </div>
-             <span className="font-mono text-[11px] font-bold text-white tracking-[0.2em] uppercase">HAIK.DEV</span>
+             <span className="font-mono text-[11px] font-bold text-white tracking-[0.2em] uppercase">VENVEM</span>
           </div>
 
           <div className="max-w-4xl lg:-translate-y-8 pr-12">
             <h1 className="text-[clamp(3.5rem,9.5vw,11.5rem)] font-black leading-[0.87] tracking-tighter text-white uppercase italic-none">
-              CREATIVE <br /> <span className="text-outline">AGENCY</span>
+              PRODUCT <br /> <span className="text-outline">STUDIO</span>
             </h1>
             <p className="mt-8 font-mono text-[11px] text-white/40 uppercase tracking-[0.35em] max-w-sm leading-relaxed">
-              We engineer immersive digital experiences through spatial logic and advanced WebGL.
+              We engineer premium digital products, AI tools, and immersive experiences for forward-thinking brands.
             </p>
           </div>
           
-          <button ref={ctaRef} className="w-fit flex items-center gap-6 group lg:-translate-y-20">
+          <button ref={ctaRef} onClick={() => router.push('/project-request')} className="w-fit flex items-center gap-6 group lg:-translate-y-20">
              <div className="w-14 h-14 rounded-full border border-white/15 flex items-center justify-center group-hover:bg-white transition-all duration-500 overflow-hidden">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:stroke-black stroke-white transition-colors duration-500">
                   <path d="M7 17L17 7M17 7H8M17 7V16" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -135,8 +137,8 @@ export const Component = () => {
         <div className="w-full md:w-80 lg:w-96 flex-shrink-0 flex flex-col gap-4 justify-center z-20">
           {[
             { id: "001", title: "AVAILABILITY", val: "Open", type: "progress" },
-            { id: "002", title: "STUDIO STATS", val: "20+ Wins", type: "data" },
-            { id: "003", title: "EXPERTISE", val: "Creative Dev", type: "text" }
+            { id: "002", title: "STUDIO STATS", val: "100% Win", type: "data" },
+            { id: "003", title: "EXPERTISE", val: "AI & Web", type: "text" }
           ].map((item) => (
             <div key={item.id} className="command-cell glass-panel p-6 sm:p-7 block opacity-1">
               <span className="font-mono text-[9px] text-white/25 uppercase tracking-widest block mb-3">{item.id} // {item.title}</span>
@@ -150,18 +152,18 @@ export const Component = () => {
               ) : item.type === "data" ? (
                 <div className="mt-4 flex flex-col gap-3">
                   <div className="flex justify-between text-[10px] font-mono text-white/50">
-                    <span>Awwwards Tier</span>
-                    <span>2024-25</span>
+                    <span>Client Satisfaction</span>
+                    <span>100%</span>
                   </div>
                   <div className="h-[1px] w-full bg-white/5" />
                   <div className="flex justify-between text-[10px] font-mono text-white/50">
-                    <span>Retention Rate</span>
-                    <span>98.2%</span>
+                    <span>Delivery Rate</span>
+                    <span>100%</span>
                   </div>
                 </div>
               ) : (
                 <h3 className="text-sm font-medium text-white/70 mt-3 leading-snug">
-                  Transforming static interfaces into <span className="italic text-white">narrative apertures</span>.
+                  Turning raw ideas into <span className="italic text-white">investable products</span>.
                 </h3>
               )}
             </div>
