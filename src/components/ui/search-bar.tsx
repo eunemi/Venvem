@@ -168,7 +168,7 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
     x: (Math.random() - 0.5) * 40,
     y: (Math.random() - 0.5) * 40,
     scale: Math.random() * 0.8 + 0.4,
-    duration: particleValues[i].duration,
+    duration: Math.random() * 1.5 + 1.5,
     left: Math.random() * 100,
     top: Math.random() * 100,
 })), [])
@@ -201,8 +201,8 @@ const SearchBar = ({ placeholder = "Search...", onSearch }: SearchBarProps) => {
   const clickValues = useMemo(() => Array.from({ length: 14 }, () => ({
     xOffset: (Math.random() - 0.5) * 160,
     yOffset: (Math.random() - 0.5) * 160,
-    scale: clickValues[i].scale,
-    duration: clickValues[i].duration,
+    scale: Math.random() * 0.8 + 0.2,
+    duration: Math.random() * 0.8 + 0.5,
     r: Math.floor(Math.random() * 255),
     g: Math.floor(Math.random() * 200) + 55,
     b: Math.floor(Math.random() * 255),
