@@ -69,11 +69,11 @@ export const Component = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(revealRef.current, 
+      gsap.fromTo(revealRef.current,
         { filter: "blur(30px)", opacity: 0, scale: 1.02 },
         { filter: "blur(0px)", opacity: 1, scale: 1, duration: 2.2, ease: "expo.out" }
       );
-      
+
       gsap.from(".command-cell", {
         x: 60, opacity: 0, stagger: 0.1, duration: 1.5, ease: "power4.out", delay: 1, clearProps: "all"
       });
@@ -83,7 +83,7 @@ export const Component = () => {
         const rect = ctaRef.current.getBoundingClientRect();
         const dist = Math.hypot(e.clientX - (rect.left + rect.width / 2), e.clientY - (rect.top + rect.height / 2));
         if (dist < 150) {
-          gsap.to(ctaRef.current, { x: (e.clientX - (rect.left + rect.width/2)) * 0.4, y: (e.clientY - (rect.top + rect.height/2)) * 0.4, duration: 0.6 });
+          gsap.to(ctaRef.current, { x: (e.clientX - (rect.left + rect.width / 2)) * 0.4, y: (e.clientY - (rect.top + rect.height / 2)) * 0.4, duration: 0.6 });
         } else {
           gsap.to(ctaRef.current, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
         }
@@ -107,12 +107,12 @@ export const Component = () => {
 
       <div ref={revealRef} className="relative z-10 w-full flex flex-col md:flex-row p-8 md:p-14 lg:p-20 min-h-screen items-center md:items-stretch gap-10">
         <div className="flex-1 min-w-0 flex flex-col justify-between pb-12 md:pb-8 w-full">
-          <div className="flex items-center gap-3">
-             <div className="relative w-2.5 h-2.5 bg-white rounded-full">
-                <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-30" />
+          <button onClick={() => router.push('/')} className="flex items-center gap-3 group cursor-pointer w-fit focus:outline-none">
+             <div className="relative w-2.5 h-2.5 bg-orange-600 rounded-full">
+                <div className="absolute inset-0 bg-orange-500 rounded-full animate-ping opacity-40" />
              </div>
-             <span className="font-mono text-[11px] font-bold text-white tracking-[0.2em] uppercase">VENVEM</span>
-          </div>
+             <span className="font-mono text-[11px] font-bold text-white group-hover:text-orange-500 transition-colors duration-300 tracking-[0.2em] uppercase">VENVEM</span>
+          </button>
 
           <div className="max-w-4xl lg:-translate-y-8 pr-12">
             <h1 className="text-[clamp(3.5rem,9.5vw,11.5rem)] font-black leading-[0.87] tracking-tighter text-white uppercase italic-none">
@@ -122,14 +122,14 @@ export const Component = () => {
               We engineer premium digital products, AI tools, and immersive experiences for forward-thinking brands.
             </p>
           </div>
-          
+
           <button ref={ctaRef} onClick={() => router.push('/project-request')} className="w-fit flex items-center gap-6 group lg:-translate-y-20">
-             <div className="w-14 h-14 rounded-full border border-white/15 flex items-center justify-center group-hover:bg-white transition-all duration-500 overflow-hidden">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:stroke-black stroke-white transition-colors duration-500">
-                  <path d="M7 17L17 7M17 7H8M17 7V16" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-             </div>
-             <span className="font-mono text-[11px] font-bold text-white uppercase tracking-[0.2em]">Start a Project</span>
+            <div className="w-14 h-14 rounded-full border border-white/15 flex items-center justify-center group-hover:bg-white transition-all duration-500 overflow-hidden">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:stroke-black stroke-white transition-colors duration-500">
+                <path d="M7 17L17 7M17 7H8M17 7V16" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <span className="font-mono text-[11px] font-bold text-white uppercase tracking-[0.2em]">Start a Project</span>
           </button>
         </div>
 
@@ -146,7 +146,7 @@ export const Component = () => {
                 <div className="flex justify-between items-end mt-2">
                   <h4 className="text-2xl sm:text-3xl font-bold text-white tracking-tighter">{item.val}</h4>
                   <div className="h-[2px] w-20 bg-white/5 rounded-full overflow-hidden">
-                     <div className="h-full bg-white w-[60%] animate-loading" />
+                    <div className="h-full bg-white w-[60%] animate-loading" />
                   </div>
                 </div>
               ) : item.type === "data" ? (
