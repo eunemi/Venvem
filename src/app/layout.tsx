@@ -32,6 +32,8 @@ const matrixType = localFont({
   variable: '--font-matrixtype'
 });
 
+import { NoiseLayer } from "@/components/layout/NoiseLayer";
+
 export const metadata: Metadata = {
   title: "Venvem | Premium AI Ecosystem",
   description: "A luxury platform for AI products, software downloads, and service booking.",
@@ -50,7 +52,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${matrixType.variable} bg-background text-on-background font-body-md min-h-screen flex flex-col selection:bg-secondary-container selection:text-on-secondary-container antialiased`}
       >
-        <div className="bg-grain"></div>
+        <NoiseLayer />
 
         <SmoothScroll>
           {children}
