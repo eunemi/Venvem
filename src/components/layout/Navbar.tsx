@@ -101,8 +101,12 @@ export function Navbar() {
   const navLinksData = [
     { label: 'Home', href: '/' },
     { label: 'Products', href: '#products' },
-    { label: 'Services', href: '#services' },
-    { label: 'Request', href: '/experience' },
+    { 
+      label: 'Services', 
+      dropdown: [
+        { label: 'Request', href: '/experience' }
+      ]
+    },
     { label: 'Tracking', href: '/tracking' },
   ];
 
@@ -148,9 +152,31 @@ export function Navbar() {
 
         <nav className="hidden md:flex items-center space-x-12 text-sm">
           {navLinksData.map((link) => (
-            <AnimatedNavLink key={link.href} href={link.href}>
-              {link.label}
-            </AnimatedNavLink>
+            link.dropdown ? (
+              <div key={link.label} className="relative group">
+                <div className="flex items-center gap-1 text-gray-300 hover:text-white transition-colors cursor-pointer text-sm py-2">
+                  {link.label}
+                  <svg className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </div>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200">
+                  <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-2 w-48 shadow-2xl backdrop-blur-xl">
+                    {link.dropdown.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="block px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors font-medium"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <AnimatedNavLink key={link.href} href={link.href!}>
+                {link.label}
+              </AnimatedNavLink>
+            )
           ))}
         </nav>
 
@@ -172,9 +198,20 @@ export function Navbar() {
                        ${isOpen ? 'max-h-[1000px] opacity-100 pt-6' : 'max-h-0 opacity-0 pt-0 pointer-events-none'}`}>
         <nav className="flex flex-col items-center space-y-4 text-base w-full mb-6">
           {navLinksData.map((link) => (
-            <a key={link.href} href={link.href} className="text-gray-300 hover:text-white transition-colors w-full text-center">
-              {link.label}
-            </a>
+            link.dropdown ? (
+              <React.Fragment key={link.label}>
+                <div className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">{link.label}</div>
+                {link.dropdown.map(item => (
+                  <a key={item.href} href={item.href} className="text-gray-300 hover:text-white transition-colors w-full text-center">
+                    {item.label}
+                  </a>
+                ))}
+              </React.Fragment>
+            ) : (
+              <a key={link.href} href={link.href!} className="text-gray-300 hover:text-white transition-colors w-full text-center">
+                {link.label}
+              </a>
+            )
           ))}
         </nav>
         <div className="flex flex-col items-center space-y-4 w-full">
