@@ -103,6 +103,7 @@ export function Navbar() {
     { label: 'Products', href: '#products' },
     { label: 'Services', href: '#services' },
     { label: 'Request', href: '/experience' },
+    { label: 'Tracking', href: '/tracking' },
   ];
 
   const signupButtonElement = (
