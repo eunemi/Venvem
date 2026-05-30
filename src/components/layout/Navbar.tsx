@@ -104,10 +104,10 @@ export function Navbar() {
     { 
       label: 'Services', 
       dropdown: [
-        { label: 'Request', href: '/experience' }
+        { label: 'Request', href: '/experience' },
+        { label: 'Tracking', href: '/tracking' }
       ]
     },
-    { label: 'Tracking', href: '/tracking' },
   ];
 
   const signupButtonElement = (
