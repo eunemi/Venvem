@@ -6,7 +6,7 @@ import { ArrowUpRight, Activity, MapPin, Navigation, Radio } from 'lucide-react'
 
 import { Navbar } from '@/components/layout/Navbar'
 import { CinematicFooter } from '@/components/ui/motion-footer'
-import { statusLabel, trackingRequests, trackingUser } from '@/lib/tracking-demo'
+import { statusLabel, trackingRequests } from '@/lib/tracking-demo'
 import { useEffect, useState } from 'react'
 
 function TrackingAnimatedBackground() {
@@ -102,22 +102,7 @@ export default function TrackingPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-6 rounded-xl bg-zinc-900/60 backdrop-blur-xl border border-zinc-800 p-5 shadow-2xl">
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Authorized User</span>
-                <span className="text-base font-semibold text-white">{trackingUser.name}</span>
-                <span className="text-xs text-zinc-400">{trackingUser.email}</span>
-              </div>
-              <div className="h-10 w-px bg-zinc-800"></div>
-              <div className="flex flex-col items-end">
-                <span className="text-2xl font-bold tracking-tight text-white">
-                  {trackingRequests.length}
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">
-                  Active
-                </span>
-              </div>
-            </div>
+
           </div>
 
           {/* List Section */}
