@@ -61,10 +61,10 @@ Unleash the ecosystem locally.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/eunemi/Ai-Service-provider.git
+git clone https://github.com/eunemi/Venvem.git
 
 # 2. Navigate into the project
-cd Ai-Service-provider
+cd Venvem
 
 # 3. Install dependencies
 npm install
