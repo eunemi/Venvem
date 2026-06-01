@@ -53,16 +53,18 @@ Venvem's atmosphere is crafted with meticulous attention to detail:
 - **Glass Borders** to define structural hierarchy without solid, boring lines.
 - **Typography**: `Inter` for extreme readability, `Geist` for technical data, and tight letter spacing for that premium editorial feel.
 
+> 🎨 **See the full [Design System Specification](DESIGN.md)** for detailed tokens, CSS variables, and utility classes.
+
 ## 🏎️ Getting Started
 
 Unleash the ecosystem locally.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/venvem.git
+git clone https://github.com/eunemi/Ai-Service-provider.git
 
 # 2. Navigate into the project
-cd venvem
+cd Ai-Service-provider
 
 # 3. Install dependencies
 npm install
