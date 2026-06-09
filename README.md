@@ -10,6 +10,7 @@
 [![Three.js](https://img.shields.io/badge/Three.js-black?style=for-the-badge&logo=three.js&logoColor=white)](#)
 [![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](#)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](#)
 
 *A high-fidelity, luxury platform showcasing AI products, software downloads, and specialized AI service booking.*
 
@@ -29,6 +30,14 @@ Expect deep blacks, subtle noise grain, atmospheric lighting, and layered glass 
 - 🧠 **AI Product Ecosystem**: A sleek showcase for AI products with integrated downloads and management.
 - 📅 **Service Booking**: A high-end inquiry and scheduling system for elite AI consultations.
 - 🛠️ **Developer Experience**: Modern Next.js stack with Supabase backend, built for performance and scale.
+
+## ✨ Key Features
+
+- **Dark Premium Aesthetics**: Designed to wow users with deep blacks, electric purple accents, and subtle noise grain.
+- **Dynamic 3D Elements**: Interactive WebGL components built with Three.js that react to user input.
+- **Cinematic Page Transitions**: Seamless navigation experiences that feel like a high-end application.
+- **Secure File Delivery**: Download premium software and assets through secure, temporary links.
+- **Automated Booking Workflow**: Streamlined scheduling for AI consultation services with automated calendar syncing.
 
 ## 🛠️ The Arsenal (Tech Stack)
 
@@ -69,7 +78,11 @@ cd Venvem
 # 3. Install dependencies
 npm install
 
-# 4. Start the development server
+# 4. Set up Environment Variables
+cp .env.example .env.local
+# Fill in the required Supabase and configuration variables in .env.local
+
+# 5. Start the development server
 npm run dev
 ```
 
