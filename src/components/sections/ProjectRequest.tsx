@@ -203,12 +203,7 @@ export function ProjectRequest({ mode = 'preview' }: ProjectRequestProps) {
                 <form onSubmit={handleSubmit} className="relative">
                   <div className="mb-5 flex flex-col gap-4 border-b border-white/[0.08] pb-5 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                      <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-3 py-1.5">
-                        <Sparkles className="h-3.5 w-3.5 text-secondary" />
-                        <span className="font-label-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
-                          {steps[activeStep].eyebrow}
-                        </span>
-                      </div>
+
                       <h2 className="font-display-lg text-[27px] leading-tight tracking-tight text-white sm:text-[34px]">
                         {steps[activeStep].title}
                       </h2>
@@ -309,12 +304,7 @@ function RequestStudioPanel({
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(150deg,rgba(255,255,255,0.08),transparent_36%,rgba(163,184,255,0.05)_76%,transparent)]" />
 
         <div className="relative">
-          <div className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-3.5 py-1.5">
-            <ShieldCheck className="h-3.5 w-3.5 text-secondary" />
-            <span className="truncate font-label-mono text-[10px] uppercase tracking-[0.18em] text-white/58 sm:tracking-[0.22em]">
-              Private Request Studio
-            </span>
-          </div>
+
 
           <h1 className="break-words font-display-lg text-[34px] leading-[1.04] tracking-tight text-gradient sm:text-[46px] sm:leading-[1] lg:text-[52px]">
             Build a brief that feels investable.
@@ -809,12 +799,7 @@ function ProjectRequestPreview() {
       <div className="mx-auto max-w-[1200px] px-8">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-28">
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2">
-              <Sparkles className="h-3.5 w-3.5 text-secondary" />
-              <span className="font-label-mono text-[10px] uppercase tracking-[0.22em] text-on-surface-variant">
-                Project Request
-              </span>
-            </div>
+
 
             <h2 className="mb-6 font-display-lg text-[42px] leading-[1.05] tracking-tighter text-gradient md:text-[54px]">
               Tell Me What You Want to Build
