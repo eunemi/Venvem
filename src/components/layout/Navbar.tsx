@@ -13,12 +13,12 @@ const AnimatedNavLink = ({ href, children }: { href: string; children: React.Rea
   const textSizeClass = 'text-sm';
 
   return (
-    <a href={href} className={`group relative inline-block overflow-hidden h-5 flex items-center ${textSizeClass}`}>
+    <Link href={href} className={`group relative inline-block overflow-hidden h-5 flex items-center ${textSizeClass}`}>
       <div className="flex flex-col transition-transform duration-400 ease-out transform group-hover:-translate-y-1/2">
         <span className={defaultTextColor}>{children}</span>
         <span className={hoverTextColor}>{children}</span>
       </div>
-    </a>
+    </Link>
   );
 };
 
@@ -100,7 +100,7 @@ export function Navbar() {
 
   const navLinksData = [
     { label: 'Home', href: '/' },
-    { label: 'Products', href: '#products' },
+    { label: 'Products', href: '/#products' },
     { 
       label: 'Services', 
       dropdown: [
@@ -202,15 +202,15 @@ export function Navbar() {
               <React.Fragment key={link.label}>
                 <div className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">{link.label}</div>
                 {link.dropdown.map(item => (
-                  <a key={item.href} href={item.href} className="text-gray-300 hover:text-white transition-colors w-full text-center">
+                  <Link key={item.href} href={item.href} className="text-gray-300 hover:text-white transition-colors w-full text-center">
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </React.Fragment>
             ) : (
-              <a key={link.href} href={link.href!} className="text-gray-300 hover:text-white transition-colors w-full text-center">
+              <Link key={link.href} href={link.href!} className="text-gray-300 hover:text-white transition-colors w-full text-center">
                 {link.label}
-              </a>
+              </Link>
             )
           ))}
         </nav>
