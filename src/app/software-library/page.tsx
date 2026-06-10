@@ -195,11 +195,7 @@ export default function SoftwareLibraryPage() {
         
         {/* Page Header */}
         <div className="mb-24 text-center max-w-4xl mx-auto flex flex-col items-center">
-          <div className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-[11px] uppercase tracking-wider font-semibold text-zinc-300 mb-8 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.8)] overflow-hidden group">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]" />
-            <span className="relative z-10 text-zinc-300/90 group-hover:text-white transition-colors duration-300">The Complete Ecosystem</span>
-            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/5 to-transparent transition-transform duration-1000 ease-out" />
-          </div>
+
           
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl tracking-tight text-white mb-6 font-extrabold leading-[1.05] filter drop-shadow-[0_2px_15px_rgba(255,255,255,0.05)]">
             AI Software <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-zinc-300 to-zinc-500 font-extrabold">Vault</span>
