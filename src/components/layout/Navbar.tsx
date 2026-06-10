@@ -100,7 +100,7 @@ export function Navbar() {
 
   const navLinksData = [
     { label: 'Home', href: '/' },
-    { label: 'Products', href: '/#products' },
+    { label: 'Products', href: '/software-library' },
     { 
       label: 'Services', 
       dropdown: [
