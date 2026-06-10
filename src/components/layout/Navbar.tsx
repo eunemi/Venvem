@@ -108,6 +108,7 @@ export function Navbar() {
         { label: 'Tracking', href: '/tracking' }
       ]
     },
+    { label: 'Community', href: '/community' },
   ];
 
   const signupButtonElement = (
