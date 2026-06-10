@@ -33,10 +33,7 @@ export default function TermsOfServicePage() {
           <p className="text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed">
             These terms set forth the legally binding terms and conditions for your use of the Venvem website and services.
           </p>
-          <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/60">
-            <span className="size-2 rounded-full bg-orange-500 animate-pulse" />
-            Effective Date: May 25, 2026
-          </div>
+
         </div>
       </div>
 
