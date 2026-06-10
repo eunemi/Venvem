@@ -33,10 +33,7 @@ export default function PrivacyPolicyPage() {
           <p className="text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed">
             We are committed to protecting your personal information and your right to privacy. Please read our policy carefully.
           </p>
-          <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/60">
-            <span className="size-2 rounded-full bg-green-500 animate-pulse" />
-            Last updated: May 25, 2026
-          </div>
+
         </div>
       </div>
 
