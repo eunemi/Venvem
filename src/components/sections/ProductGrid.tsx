@@ -124,13 +124,7 @@ export function ProductGrid() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 md:mb-24 text-left max-w-3xl"
         >
-          {/* Elegant Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.1] mb-6 backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
-            <span className="text-[11px] font-medium text-zinc-300 tracking-widest uppercase">
-              The Ecosystem
-            </span>
-          </div>
+
 
           <h2 className="font-display-lg text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-6 font-medium text-white">
             AI Software <span className="text-zinc-500 font-light">Library</span>
