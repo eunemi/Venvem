@@ -90,10 +90,7 @@ export default function TrackingPage() {
           {/* Header Section */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8 border-b border-zinc-800">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full bg-zinc-900 border border-zinc-800 px-3 py-1.5 text-xs font-semibold text-zinc-300 tracking-wider uppercase">
-                <Radio className="h-3.5 w-3.5 text-indigo-400 animate-pulse" />
-                Live Logistics Network
-              </div>
+
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
                 Active Operations
               </h1>
