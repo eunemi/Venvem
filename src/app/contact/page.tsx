@@ -36,13 +36,7 @@ export default function ContactPage() {
           {/* Left Column: Typography & Info */}
           <div className="space-y-10">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-white/80 backdrop-blur-md">
-                <span className="relative flex size-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full size-2 bg-purple-500"></span>
-                </span>
-                Available for new projects
-              </div>
+
               <h1 className="text-5xl lg:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50 leading-[1.1]">
                 Let's start <br/>a conversation.
               </h1>
