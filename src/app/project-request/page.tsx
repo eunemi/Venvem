@@ -16,7 +16,7 @@ export default function ProjectRequestPage() {
         <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.72)_58%,#000_100%)]" />
         <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_top,transparent_0%,rgba(0,0,0,0.52)_62%,#000_100%)]" />
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 bg-gradient-to-b from-black/80 to-transparent" />
-        <div className="relative z-10">
+        <div className="relative z-50">
           <Navbar />
         </div>
         <div className="relative z-10 flex-grow pt-16">
