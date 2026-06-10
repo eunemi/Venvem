@@ -72,7 +72,7 @@ export function Hero() {
             Explore <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
 
-          <GradientButton href="#">Projects</GradientButton>
+          <GradientButton href="/software-library">Projects</GradientButton>
         </motion.div>
 
       </motion.div>
