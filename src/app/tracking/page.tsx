@@ -1,449 +1,184 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView, type Variants } from "framer-motion";
-import { Navbar } from "@/components/layout/Navbar";
-import {
-  Activity,
-  Clock,
-  CheckCircle,
-  Zap,
-  Cpu,
-  ScanSearch,
-  PackageCheck,
-  ArrowUpRight,
-  Navigation2,
-  User,
-  Shield,
-  ExternalLink,
-} from "lucide-react";
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { ArrowUpRight, Activity, MapPin, Navigation, Radio } from 'lucide-react'
 
-// ─── ANIMATION VARIANTS ──────────────────────────────────────────────────────────
-const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } },
-};
+import { Navbar } from '@/components/layout/Navbar'
+import { CinematicFooter } from '@/components/ui/motion-footer'
+import { statusLabel, trackingRequests } from '@/lib/tracking-demo'
+import { useEffect, useState } from 'react'
 
-const staggerContainer: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-};
+function TrackingAnimatedBackground() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
-const slideUpLeft: Variants = {
-  hidden: { opacity: 0, y: 20, x: -20 },
-  visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } },
-};
-
-// ─── MOCK DATA ───────────────────────────────────────────────────────────────────
-interface ProjectData {
-  id: string;
-  type: string;
-  name: string;
-  status: string;
-  statusType: "active" | "review" | "delivery";
-  progress: number;
-  daysRemaining: number;
-  initiated: string;
-}
-
-const MOCK_PROJECTS: ProjectData[] = [
-  {
-    id: "VRQ-482917",
-    type: "WEB",
-    name: "AI Customer Support Portal",
-    status: "Build Started",
-    statusType: "active",
-    progress: 68,
-    daysRemaining: 4,
-    initiated: "14 days ago",
-  },
-  {
-    id: "VRQ-219604",
-    type: "WEB",
-    name: "Premium Portfolio Website",
-    status: "Under Review",
-    statusType: "review",
-    progress: 34,
-    daysRemaining: 11,
-    initiated: "6 days ago",
-  },
-  {
-    id: "VRQ-730155",
-    type: "DESKTOP",
-    name: "Operations Automation Dashboard",
-    status: "Delivery Prep",
-    statusType: "delivery",
-    progress: 86,
-    daysRemaining: 1,
-    initiated: "28 days ago",
-  },
-];
-
-const STATUS_CONFIG = {
-  active: {
-    bg: "bg-purple-500/10",
-    border: "border-purple-500/30",
-    text: "text-purple-300",
-    ping: "bg-cyan-400",
-    statusDot: "bg-purple-400",
-    icon: Cpu,
-    gradientFrom: "from-purple-500",
-    gradientTo: "to-cyan-500",
-    hoverBorder: "border-purple-500/50",
-    hoverShadow: "shadow-[0_0_40px_rgba(168,85,247,0.08)]",
-  },
-  review: {
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/30",
-    text: "text-amber-300",
-    ping: "bg-orange-400",
-    statusDot: "bg-amber-400",
-    icon: ScanSearch,
-    gradientFrom: "from-amber-500",
-    gradientTo: "to-orange-500",
-    hoverBorder: "border-amber-500/50",
-    hoverShadow: "shadow-[0_0_40px_rgba(245,158,11,0.08)]",
-  },
-  delivery: {
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/30",
-    text: "text-emerald-300",
-    ping: "bg-emerald-400",
-    statusDot: "bg-emerald-400",
-    icon: PackageCheck,
-    gradientFrom: "from-emerald-500",
-    gradientTo: "to-teal-500",
-    hoverBorder: "border-emerald-500/50",
-    hoverShadow: "shadow-[0_0_40px_rgba(16,185,129,0.08)]",
-  },
-};
-
-// ─── HELPER COMPONENTS ───────────────────────────────────────────────────────────
-function AnimatedNumber({ target, duration = 1500 }: { target: number; duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(start);
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
-
-  const isDecimal = target % 1 !== 0;
-  return <span ref={ref}>{isDecimal ? count.toFixed(1) : Math.floor(count)}</span>;
-}
-
-function SystemClock() {
-  const [time, setTime] = useState<Date | null>(null);
-
-  useEffect(() => {
-    setTime(new Date());
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  if (!time) return null;
+  if (!mounted) return <div className="fixed inset-0 z-0 bg-zinc-950" />
 
   return (
-    <div className="flex flex-col items-end justify-center">
-      <span className="font-mono text-cyan-400 text-2xl tracking-tight">
-        {time.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })}
-      </span>
-      <span className="font-mono text-white/30 text-xs mt-0.5 uppercase">
-        {time.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-      </span>
+    <div className="fixed inset-0 z-0 overflow-hidden bg-zinc-950 pointer-events-none">
+      {/* Multi-color ambient glow in the center */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(244,63,94,0.08)_0%,transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(139,92,246,0.08)_0%,transparent_50%)]" />
+
+      {/* Grid Pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.12]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #52525b 1px, transparent 1px),
+            linear-gradient(to bottom, #52525b 1px, transparent 1px)
+          `,
+          backgroundSize: '4rem 4rem',
+          maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, #000 30%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, #000 30%, transparent 100%)'
+        }}
+      />
+
+      {/* Data Packets Moving on Grid (Mixed Colors - kept from previous for background) */}
+      <motion.div
+        className="absolute top-[20%] left-0 h-[2px] w-24 bg-gradient-to-r from-transparent to-amber-500 shadow-[0_0_10px_#f59e0b]"
+        animate={{ left: ['-10%', '110%'] }}
+        transition={{ duration: 8, ease: "linear", repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute top-[60%] left-0 h-[2px] w-16 bg-gradient-to-l from-transparent to-rose-500 shadow-[0_0_10px_#f43f5e]"
+        animate={{ left: ['110%', '-10%'] }}
+        transition={{ duration: 12, ease: "linear", repeat: Infinity, delay: 2 }}
+      />
+      <motion.div
+        className="absolute top-[80%] left-0 h-[2px] w-32 bg-gradient-to-r from-transparent to-indigo-500 shadow-[0_0_10px_#6366f1]"
+        animate={{ left: ['-10%', '110%'] }}
+        transition={{ duration: 15, ease: "linear", repeat: Infinity, delay: 1 }}
+      />
+
+      {/* Vertical Data Packets */}
+      <motion.div
+        className="absolute left-[25%] top-0 w-[2px] h-32 bg-gradient-to-b from-transparent to-emerald-500 shadow-[0_0_10px_#10b981]"
+        animate={{ top: ['-10%', '110%'] }}
+        transition={{ duration: 10, ease: "linear", repeat: Infinity, delay: 3 }}
+      />
+      <motion.div
+        className="absolute left-[75%] top-0 w-[2px] h-20 bg-gradient-to-t from-transparent to-violet-500 shadow-[0_0_10px_#8b5cf6]"
+        animate={{ top: ['110%', '-10%'] }}
+        transition={{ duration: 9, ease: "linear", repeat: Infinity, delay: 1.5 }}
+      />
+
+      {/* Static Tracking Nodes */}
+      <div className="absolute top-[20%] left-[25%] h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_8px_#f59e0b] animate-pulse" />
+      <div className="absolute top-[60%] left-[75%] h-2 w-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e] animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-[80%] left-[25%] h-2 w-2 rounded-full bg-indigo-500 shadow-[0_0_8px_#6366f1] animate-pulse" style={{ animationDelay: '0.5s' }} />
     </div>
-  );
+  )
 }
 
-// ─── MAIN PAGE COMPONENT ─────────────────────────────────────────────────────────
 export default function TrackingPage() {
   return (
-    <div className="min-h-screen bg-[#080810] text-white font-sans flex flex-col relative overflow-x-hidden">
-      {/* SECTION 1 — FULL PAGE BACKGROUND */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute -top-[100px] -right-[100px] w-[600px] h-[600px] bg-[#a855f7] opacity-8 blur-[100px] rounded-full" />
-        <div className="absolute -bottom-[100px] -left-[100px] w-[500px] h-[500px] bg-[#06b6d4] opacity-6 blur-[100px] rounded-full" />
-        <div
-          className="absolute inset-0 opacity-4"
-          style={{
-            backgroundImage: "radial-gradient(circle at center, white 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+    <div className="relative min-h-screen overflow-x-hidden bg-zinc-950 text-zinc-200 selection:bg-indigo-500/30">
+      <TrackingAnimatedBackground />
+
+      <div className="relative z-20">
+        <Navbar />
       </div>
 
-      <Navbar />
-
-      <main className="flex-1 w-full max-w-6xl mx-auto px-6 pt-32 pb-12 z-10">
-        
-        {/* SECTION 2 — TOP HEADER AREA */}
+      <main className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col px-5 pb-20 pt-32 sm:px-8">
         <motion.div
-          variants={fadeInUp}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-grow flex-col space-y-12"
         >
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-[2px] h-[20px] bg-cyan-400" />
-              <span className="text-white/30 tracking-[0.3em] text-xs font-bold uppercase">
-                Mission Control
-              </span>
+          {/* Header Section */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8 border-b border-zinc-800">
+            <div className="space-y-4">
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
+                Active Operations
+              </h1>
+              <p className="text-zinc-400 max-w-xl text-lg">
+                Monitor and inspect real-time progress of your ongoing project deliveries across the globe.
+              </p>
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 leading-none">
-              <span className="text-white/90">Active</span>{" "}
-              <span className="bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                Operations
-              </span>
-            </h1>
-            <p className="text-white/40 max-w-lg text-base">
-              Monitor and inspect real-time progress of your ongoing project deliveries across the globe.
-            </p>
+
+
           </div>
 
-          <div className="flex flex-col items-end gap-4 shrink-0">
-            <div className="bg-white/[0.03] border border-cyan-400/20 backdrop-blur-xl rounded-2xl py-3 px-5 flex flex-col items-end shadow-[0_0_15px_rgba(6,182,212,0.1)] min-w-[160px] h-[80px]">
-              <SystemClock />
-            </div>
-            <div className="flex items-center gap-2 pr-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-mono text-emerald-500 text-xs font-bold tracking-widest">
-                SYSTEM ONLINE
-              </span>
-            </div>
-          </div>
-        </motion.div>
+          {/* List Section */}
+          <div className="space-y-4">
+            <div className="space-y-4">
+              {trackingRequests.map((request, index) => (
+                <motion.div
+                  key={request.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+                >
+                  <Link
+                    href={`/tracking/${request.id}`}
+                    className="group relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/60 backdrop-blur-md p-6 transition-all duration-300 hover:border-zinc-600 hover:bg-zinc-800/80 hover:shadow-xl"
+                  >
+                    {/* Clean single-color hover indicator */}
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 scale-y-0 opacity-0 group-hover:scale-y-100 group-hover:opacity-100 transition-all duration-300 origin-center" />
 
-        {/* SECTION 3 — KPI STATS BAR */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16"
-        >
-          {[
-            { icon: Activity, color: "text-purple-400", glowHover: "hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]", value: 3, label: "Active Projects", suffix: "" },
-            { icon: Clock, color: "text-cyan-400", glowHover: "hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]", value: 12, label: "Avg. Days to Deliver", suffix: "" },
-            { icon: CheckCircle, color: "text-emerald-400", glowHover: "hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]", value: 47, label: "Projects Completed", suffix: "" },
-            { icon: Zap, color: "text-orange-400", glowHover: "hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.15)]", value: 99.8, label: "Uptime SLA", suffix: "%" },
-          ].map((stat, i) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                className={`bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl rounded-2xl p-6 transition-all duration-300 cursor-default ${stat.glowHover}`}
-              >
-                <div className="flex flex-col gap-5">
-                  <Icon className={`${stat.color}`} size={26} />
-                  <div>
-                    <div className="text-4xl font-bold text-white mb-1 tracking-tight">
-                      <AnimatedNumber target={stat.value} />
-                      {stat.suffix}
-                    </div>
-                    <div className="text-white/40 text-sm font-medium">{stat.label}</div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* SECTION 4 — OPERATION CARDS (MAIN) */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6"
-        >
-          {MOCK_PROJECTS.map((proj) => {
-            const config = STATUS_CONFIG[proj.statusType];
-            const StatusIcon = config.icon;
-
-            return (
-              <motion.div
-                key={proj.id}
-                variants={slideUpLeft}
-                whileHover={{ scale: 1.005 }}
-                className={`bg-white/[0.03] backdrop-blur-2xl border border-white/[0.07] rounded-2xl p-7 transition-all duration-300 hover:${config.hoverBorder} hover:${config.hoverShadow}`}
-              >
-                {/* ROW 1: TOP META BAR */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                  <div className="flex items-center gap-4">
-                    <span className="bg-white/5 border border-white/10 rounded-full px-3.5 py-1 text-xs text-white/50 font-mono tracking-wide">
-                      {proj.id}
-                    </span>
-                    <span className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase shadow-sm">
-                      {proj.type}
-                    </span>
-                  </div>
-                  <span className="text-white/25 text-xs font-medium">Initiated {proj.initiated}</span>
-                </div>
-
-                {/* ROW 2: PROJECT IDENTITY */}
-                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
-                  <div className="flex items-center gap-5 w-full lg:w-3/5">
-                    <div className="relative flex items-center justify-center shrink-0 w-5 h-5">
-                      <span className={`absolute inline-flex h-full w-full rounded-full ${config.ping} opacity-30 animate-ping`} />
-                      <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${config.ping}`} />
-                    </div>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white transition-colors">
-                      {proj.name}
-                    </h2>
-                  </div>
-
-                  <div className="w-full lg:w-auto flex justify-start lg:justify-end">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className={`flex items-center gap-3.5 px-5 py-2.5 rounded-full border ${config.bg} ${config.border}`}
-                    >
-                      <span className={`w-2.5 h-2.5 rounded-full ${config.statusDot} animate-pulse`} />
-                      <StatusIcon size={18} className={`${config.text}`} />
-                      <div className="flex flex-col">
-                        <span className={`text-sm font-bold ${config.text} leading-tight`}>
-                          {proj.status}
-                        </span>
-                        <span className="text-white/30 text-[10px] tracking-wide leading-tight mt-0.5 uppercase font-semibold">
-                          Current Phase
-                        </span>
+                    <div className="flex items-start sm:items-center gap-5 w-full sm:w-auto">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-zinc-950/50 text-zinc-400 border border-zinc-800 group-hover:bg-indigo-500/10 group-hover:text-indigo-400 transition-colors">
+                        <MapPin className="h-5 w-5" />
                       </div>
-                    </motion.div>
-                  </div>
-                </div>
 
-                {/* ROW 3: PROGRESS SECTION */}
-                <div className="mb-10 w-full">
-                  <div className="flex items-end justify-between mb-4">
-                    <span className="tracking-[0.2em] text-white/30 text-[10px] uppercase font-bold">
-                      Progress
-                    </span>
-                    <div className={`text-4xl font-extrabold ${config.text}`}>
-                      <AnimatedNumber target={proj.progress} duration={1500} />%
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-3 mb-1.5">
+                          <span className="font-mono text-xs text-zinc-400 tracking-wider">{request.id}</span>
+                          <span className="inline-flex items-center rounded bg-zinc-800 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 border border-zinc-700">
+                            {request.platform}
+                          </span>
+                        </div>
+                        <h2 className="text-xl font-bold text-white transition-colors">
+                          {request.title}
+                        </h2>
+                        <p className="mt-1 text-sm font-medium text-zinc-400 sm:hidden">
+                          {statusLabel[request.status]} • {request.phase}
+                        </p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="relative w-full">
-                    {/* Track Background */}
-                    <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden absolute inset-0" />
-                    
-                    {/* Fill */}
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${proj.progress}%` }}
-                      transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-                      className={`relative h-2.5 rounded-full bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} z-10`}
-                    >
-                      {/* Leading edge glow dot */}
-                      <div className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-2 h-2 rounded-full bg-white shadow-[0_0_12px_2px_currentColor] ${config.text}`} />
-                    </motion.div>
+                    <div className="flex w-full sm:w-auto items-center justify-between sm:justify-end gap-8 pt-4 sm:pt-0 border-t border-zinc-800 sm:border-0">
+                      <div className="hidden sm:flex flex-col items-end">
+                        <span className="text-sm font-semibold text-zinc-200">{statusLabel[request.status]}</span>
+                        <span className="text-xs text-zinc-500 mt-1">{request.phase}</span>
+                      </div>
 
-                    {/* Milestone Markers */}
-                    {[25, 50, 75, 100].map((percent) => {
-                      const isPast = proj.progress >= percent;
-                      return (
-                        <div
-                          key={percent}
-                          className={`absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full z-20 ${
-                            isPast ? "bg-white/40" : "bg-white/15"
-                          }`}
-                          style={{ left: `${percent}%`, transform: "translate(-50%, -50%)" }}
-                        />
-                      );
-                    })}
-                  </div>
+                      <div className="w-full sm:w-32 flex flex-col items-end gap-2">
+                        <div className="flex w-full items-center justify-between font-mono text-xs">
+                          <span className="text-zinc-500">PROGRESS</span>
+                          <span className="text-white font-bold">{request.progress}%</span>
+                        </div>
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800 border border-zinc-700/50">
+                          <div
+                            className="h-full rounded-full bg-white transition-all group-hover:bg-indigo-400"
+                            style={{ width: `${request.progress}%` }}
+                          />
+                        </div>
+                      </div>
 
-                  {/* Milestone Labels */}
-                  <div className="relative w-full mt-4 h-4">
-                    {["Review", "Build", "Test", "Deploy"].map((label, idx) => {
-                      const percent = (idx + 1) * 25;
-                      return (
-                        <span
-                          key={label}
-                          className="absolute text-[10px] font-semibold text-white/20 uppercase"
-                          style={{ left: `${percent}%`, transform: "translateX(-50%)" }}
-                        >
-                          {label}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* ROW 4: BOTTOM ACTION BAR */}
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pt-6 border-t border-white/[0.05]">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center gap-2 bg-white/[0.03] border border-white/5 rounded-full px-3.5 py-1.5 text-[11px] font-medium text-white/35">
-                      <Clock size={13} className="text-white/20" />
-                      <span>Est. {proj.daysRemaining} days remaining</span>
+                      <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-zinc-400 transition-all duration-300 group-hover:bg-indigo-500 group-hover:text-white group-hover:border-transparent">
+                        <Navigation className="h-4 w-4 transform group-hover:rotate-45 transition-transform" />
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 bg-white/[0.03] border border-white/5 rounded-full px-3.5 py-1.5 text-[11px] font-medium text-white/35">
-                      <User size={13} className="text-white/20" />
-                      <span>Assigned to Venvem Core Team</span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-white/[0.03] border border-white/5 rounded-full px-3.5 py-1.5 text-[11px] font-medium text-white/35">
-                      <Shield size={13} className="text-emerald-500/50" />
-                      <span>Encrypted & Secure</span>
-                    </div>
-                  </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
 
-                  <div className="flex items-center gap-3 w-full md:w-auto">
-                    <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-transparent border border-white/10 text-sm font-semibold text-white hover:border-purple-500/50 hover:bg-purple-500/5 hover:text-purple-300 transition-all group">
-                      View Details{" "}
-                      <ArrowUpRight
-                        size={16}
-                        className="text-white/50 group-hover:text-purple-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
-                      />
-                    </button>
-                    <button className="p-3 bg-white/5 hover:bg-purple-500/20 rounded-xl transition-all text-white group border border-transparent hover:border-purple-500/30">
-                      <Navigation2
-                        size={18}
-                        className="group-hover:text-purple-300 transition-colors"
-                      />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </main>
-
-      {/* SECTION 5 — BOTTOM FOOTER BAR */}
-      <div className="w-full bg-white/[0.02] border-t border-white/[0.05] backdrop-blur-xl py-5 px-6 md:px-8 mt-auto z-10">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-6xl mx-auto">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-            <span className="text-white/30 tracking-widest text-xs font-mono font-bold">
-              NETWORK STATUS: SECURE
+          <div className="mt-auto flex flex-col gap-4 border-t border-zinc-800 pt-8 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+            <span className="font-mono text-xs tracking-wider">NETWORK STATUS: SECURE</span>
+            <span className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer font-medium">
+              View Global Route Map
+              <ArrowUpRight className="h-4 w-4" />
             </span>
           </div>
-
-          <div className="text-white/15 text-xs font-mono tracking-wider">
-            VENVEM OPS v2.4.1
-          </div>
-
-          <div className="flex items-center gap-2 text-cyan-400/70 hover:text-cyan-300 text-sm font-semibold cursor-pointer transition-colors group">
-            <span>View Global Route Map</span>
-            <ExternalLink size={15} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-          </div>
-        </div>
-      </div>
+        </motion.div>
+      </main>
+      <CinematicFooter />
     </div>
-  );
+  )
 }
