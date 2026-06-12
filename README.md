@@ -101,6 +101,9 @@ Visit `http://localhost:3000` to experience the matrix.
 
 <div align="center">
   <i>"Built for the future, designed for today."</i>
+  <br/>
+  <br/>
+  <b>Status: Actively under development 🚀</b>
 </div>
 
 <!-- End of document -->
